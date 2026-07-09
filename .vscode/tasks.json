@@ -1,0 +1,46 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Wave Browser: Build Frontend",
+      "type": "shell",
+      "command": "${workspaceFolder}/build_frontend.sh",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Wave Browser: Start Server",
+      "type": "shell",
+      "command": "${workspaceFolder}/start_wave_browser.sh",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "."
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Starting Wave Browser",
+          "endsPattern": "Wave Browser started"
+        }
+      }
+    },
+    {
+      "label": "Wave Browser: Open in Simple Browser",
+      "type": "shell",
+      "command": "echo Open http://localhost:8000/ in Simple Browser (Ctrl+Shift+P → Simple Browser: Show)",
+      "dependsOn": ["Wave Browser: Start Server"],
+      "presentation": {
+        "reveal": "silent"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

@@ -195,15 +195,20 @@ export const handlers = [
   http.post('/api/waveform/:sessionId/batch', async ({ request }) => {
     await delay(150);
     const body = await request.json() as {
-      signals: string[];
+      signal_paths: string[];
       start_time: number;
       end_time: number;
     };
-    
-    const waveforms = body.signals.map(signalPath => 
-      getWaveformData(signalPath, body.start_time, body.end_time)
-    );
-    
+
+    const waveforms: Record<string, ReturnType<typeof getWaveformData>> = {};
+    for (const signalPath of body.signal_paths ?? []) {
+      waveforms[signalPath] = getWaveformData(
+        signalPath,
+        body.start_time,
+        body.end_time
+      );
+    }
+
     return HttpResponse.json({ waveforms });
   }),
 

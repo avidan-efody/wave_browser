@@ -1,0 +1,11 @@
+{
+  "remote.autoForwardPorts": true,
+  "remote.autoForwardPortsSource": "output",
+  "remote.portsAttributes": {
+    "8000": {
+      "label": "Wave Browser",
+      "onAutoForward": "notify"
+    }
+  },
+  "remote.forwardOnOpen": true
+}

@@ -12,13 +12,16 @@ dist/
 build/
 *.egg-info/
 .vite/
+vite.config.ts.timestamp-*.mjs
 
 # IDE
 .idea/
-.vscode/
 *.swp
 *.swo
 *~
+.vscode/*
+!.vscode/tasks.json
+!.vscode/settings.json
 
 # OS
 .DS_Store
@@ -59,3 +62,6 @@ backend/npiLog/
 # Launcher runtime (if used)
 launcher/venv/
 launcher/npiLog/
+
+# Wave Browser runtime
+.wave-browser/

@@ -59,6 +59,30 @@ def _map_direction(npi_dir: int) -> SignalDirection:
     return dir_map.get(npi_dir, SignalDirection.NONE)
 
 
+def _npi_value(result, default=0):
+    """Extract a value from a low-level NPI API return.
+
+    Low-level pynpi.wave helpers return either a bare value or a
+    (status, value) tuple/list where status == 1 indicates success.
+    """
+    if isinstance(result, (list, tuple)):
+        if len(result) >= 2:
+            status, value = result[0], result[1]
+            if status == 1:
+                return value
+            return default
+        if len(result) == 1:
+            return result[0]
+    if result is None:
+        return default
+    return result
+
+
+def _npi_time_value(result, default: int = 0) -> int:
+    """Extract a time integer from a low-level NPI API return value."""
+    return int(_npi_value(result, default))
+
+
 class VerdiAdapter(BaseAdapter):
     """
     Adapter for Synopsys Verdi FSDB/KDB databases using NPI.
@@ -224,10 +248,10 @@ class VerdiAdapter(BaseAdapter):
         # If we have FSDB, get timing info from it
         if self._file_handle:
             time_unit = wave.file_property_str(wave.FileScaleUnit, self._file_handle) or "ns"
-            min_time = wave.min_time(self._file_handle)
-            max_time = wave.max_time(self._file_handle)
+            min_time = _npi_time_value(wave.min_time(self._file_handle))
+            max_time = _npi_time_value(wave.max_time(self._file_handle))
             version = wave.file_property_str(wave.FileVersion, self._file_handle)
-            is_completed = wave.file_property(wave.FileIsCompleted, self._file_handle) == 1
+            is_completed = _npi_value(wave.file_property(wave.FileIsCompleted, self._file_handle)) == 1
         else:
             # Design-only mode - no timing information
             time_unit = "ns"
@@ -333,7 +357,7 @@ class VerdiAdapter(BaseAdapter):
         name = wave.scope_property_str(wave.ScopeName, scope) or ""
         full_name = wave.scope_property_str(wave.ScopeFullName, scope) or ""
         def_name = wave.scope_property_str(wave.ScopeDefName, scope)
-        scope_type_val = wave.scope_property(wave.ScopeType, scope)
+        scope_type_val = _npi_value(wave.scope_property(wave.ScopeType, scope))
         
         # Check if has children
         child_iter = wave.iter_child_scope(scope)
@@ -432,13 +456,13 @@ class VerdiAdapter(BaseAdapter):
         name = wave.sig_property_str(wave.SigName, sig) or ""
         full_name = wave.sig_property_str(wave.SigFullName, sig) or ""
         
-        left = wave.sig_property(wave.SigLeftRange, sig)
-        right = wave.sig_property(wave.SigRightRange, sig)
-        width = wave.sig_property(wave.SigRangeSize, sig) or 1
-        
-        direction = _map_direction(wave.sig_property(wave.SigDirection, sig))
-        is_real = wave.sig_property(wave.SigIsReal, sig) == 1
-        has_members = wave.sig_property(wave.SigHasMember, sig) == 1
+        left = _npi_value(wave.sig_property(wave.SigLeftRange, sig))
+        right = _npi_value(wave.sig_property(wave.SigRightRange, sig))
+        width = _npi_value(wave.sig_property(wave.SigRangeSize, sig), 1) or 1
+
+        direction = _map_direction(_npi_value(wave.sig_property(wave.SigDirection, sig)))
+        is_real = _npi_value(wave.sig_property(wave.SigIsReal, sig)) == 1
+        has_members = _npi_value(wave.sig_property(wave.SigHasMember, sig)) == 1
         
         return SignalInfo(
             path=full_name,
@@ -610,6 +634,9 @@ class VerdiAdapter(BaseAdapter):
         
         info = self.get_info()
         changes = []
+
+        # Load value changes for the requested window before iterating
+        wave.load_vc_by_range(self._file_handle, start_time, end_time)
         
         # Create VCT iterator for the signal
         vct = wave.create_vct(sig)
@@ -619,7 +646,7 @@ class VerdiAdapter(BaseAdapter):
         
         count = 0
         while count < max_changes:
-            time = wave.vct_time(vct)
+            time = _npi_time_value(wave.vct_time(vct))
             if time > end_time:
                 break
                 
@@ -627,7 +654,7 @@ class VerdiAdapter(BaseAdapter):
             changes.append(ValueChange(time=time, value=value or ""))
             count += 1
             
-            if not wave.goto_next(vct):
+            if not _npi_value(wave.goto_next(vct)):
                 break
         
         wave.release_vct(vct)
@@ -658,58 +685,29 @@ class VerdiAdapter(BaseAdapter):
     
     def get_waveforms_batch(self, signal_paths: List[str], start_time: int,
                             end_time: int, max_changes: int = 10000) -> Dict[str, WaveformData]:
-        """Get waveform data for multiple signals using time-based iteration."""
+        """Get waveform data for multiple signals."""
         if not self._file_handle:
             raise RuntimeError("No database open")
-        
-        info = self.get_info()
+
+        # Load value changes once for the whole time window
+        wave.load_vc_by_range(self._file_handle, start_time, end_time)
+
         results: Dict[str, WaveformData] = {}
-        changes_map: Dict[str, List[ValueChange]] = {path: [] for path in signal_paths}
-        sig_handles = {}
-        
-        # Get signal handles
         for path in signal_paths:
-            sig = wave.sig_by_name(self._file_handle, path, None)
-            if sig:
-                sig_handles[path] = sig
-        
-        # Use time-based iterator for efficiency
-        tb_iter = wave.TimeBasedVcIter()
-        for path, sig in sig_handles.items():
-            tb_iter.add(sig, 0)
-        
-        tb_iter.iter_start(start_time, end_time)
-        
-        total_count = 0
-        while total_count < max_changes * len(signal_paths):
-            result = tb_iter.iter_next()
-            if result[0] < 0:
-                break
-            
-            time = result[1]
-            sig = result[2]
-            
-            # Find which signal this is
-            sig_full_name = wave.sig_property_str(wave.SigFullName, sig) or ""
-            if sig_full_name in changes_map:
-                value = tb_iter.get_value_str()
-                changes_map[sig_full_name].append(
-                    ValueChange(time=time, value=value or "")
+            try:
+                results[path] = self.get_waveform(
+                    path, start_time, end_time, max_changes
                 )
-                total_count += 1
-        
-        tb_iter.iter_stop()
-        
-        # Build result
-        for path in signal_paths:
-            results[path] = WaveformData(
-                signal_path=path,
-                start_time=start_time,
-                end_time=end_time,
-                time_unit=info.time_unit,
-                changes=changes_map.get(path, [])
-            )
-        
+            except ValueError:
+                info = self.get_info()
+                results[path] = WaveformData(
+                    signal_path=path,
+                    start_time=start_time,
+                    end_time=end_time,
+                    time_unit=info.time_unit,
+                    changes=[],
+                )
+
         return results
 
 
