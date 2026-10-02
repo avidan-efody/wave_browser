@@ -3,10 +3,11 @@
  * 
  * Supports URL parameters for direct connection:
  *   ?server=host:port     - Connect to backend at host:port
- *   ?server=host:port&fsdb=/path/to/file.fsdb - Connect and open specific file
+ *   ?server=host:port&fsdb=/path/to/file.fsdb - Connect and open an FSDB
+ *   ?server=host:port&vcd=/path/to/file.vcd&design=/path/to/hierarchy.tree.json&rc_file=/path/to/waves.rc
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FolderOpen, Database, Play, Wifi, WifiOff, AlertCircle, RefreshCw } from 'lucide-react';
 import { HierarchyPanel } from './components/HierarchyPanel';
@@ -16,11 +17,13 @@ import { OpenDialog } from './components/OpenDialog';
 import { LogPanel, LogEntry } from './components/LogPanel';
 import { CodePanel } from './components/CodePanel';
 import { useWaveformStore } from './store';
-import { setBackendUrl, sessionsApi } from './api';
+import { setBackendUrl, sessionsApi, filesApi, examplesApi, type WaveExample } from './api';
+import { applySignalRc } from './rc/applySignalRc';
+import { applyStoryLinks } from './rc/applyStory';
 import { useUrlParams, buildConnectionUrl, clearConnectionUrl, useCodePanel } from './hooks';
 
 // Version for debugging - update when making changes
-const APP_VERSION = 'v0.4.0-dev';
+const APP_VERSION = 'v0.5.0-dev';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,11 +46,14 @@ function AppContent() {
   const codePanel = useCodePanel();
   
   const [connection, setConnection] = useState<ServerConnection | null>(null);
+  const connectionRef = useRef<ServerConnection | null>(null);
   const [showOpenDialog, setShowOpenDialog] = useState(false);
   const [showSessionDialog, setShowSessionDialog] = useState(false);
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
+  const [examples, setExamples] = useState<WaveExample[]>([]);
+  const [activeExampleId, setActiveExampleId] = useState<string | null>(null);
 
   // Add a log entry
   const addLog = useCallback((level: LogEntry['level'], message: string, details?: string) => {
@@ -70,7 +76,9 @@ function AppContent() {
   const connectToServer = useCallback(async (host: string, port: number) => {
     const backendUrl = `http://${host}:${port}`;
     setBackendUrl(backendUrl);
-    setConnection({ host, port, backendUrl });
+    const next = { host, port, backendUrl };
+    connectionRef.current = next;
+    setConnection(next);
     setConnectionError(null);
     addLog('info', `Connecting to ${host}:${port}...`);
 
@@ -90,9 +98,15 @@ function AppContent() {
     }
   }, [addLog]);
 
-  // Open a database file
-  const openDatabase = useCallback(async (fsdbPath: string) => {
-    if (!connection) {
+  // Open a database file. designPath/storyPath null clears that URL argument.
+  const openDatabase = useCallback(async (
+    fsdbPath: string,
+    rcPath: string | null = null,
+    designPath?: string | null,
+    storyPath?: string | null,
+  ) => {
+    const active = connectionRef.current;
+    if (!active) {
       addLog('error', 'Not connected to a server');
       return;
     }
@@ -100,19 +114,55 @@ function AppContent() {
     setIsLoading(true);
     addLog('info', `Opening database: ${fsdbPath}`);
 
+    const design = designPath === undefined ? (urlParams.design || undefined) : (designPath || undefined);
+    const story = storyPath || null;
+
     try {
+      const vendor = fsdbPath.toLowerCase().endsWith('.vcd') || (design || '').toLowerCase().endsWith('.json')
+        ? 'verilator'
+        : 'verdi';
       const response = await sessionsApi.create({
-        vendor: 'verdi',
+        vendor,
         wave_db: fsdbPath,
+        design_db: design,
       });
       
       addLog('success', 'Session created successfully');
       addLog('info', `Time range: ${response.session.min_time} - ${response.session.max_time} ${response.session.time_unit}`);
       
       setCurrentSession(response.session);
+
+      if (rcPath) {
+        addLog('info', `Loading RC file: ${rcPath}`);
+        try {
+          const file = await filesApi.getContent(rcPath);
+          const applied = await applySignalRc(response.session.id, response.session.time_unit, file.content);
+          addLog(
+            'success',
+            `RC applied: ${applied.signalCount} signals, ${applied.groupCount} groups, ${applied.dividerCount} dividers, ${applied.markerCount} markers, ${applied.noteCount} notes`,
+          );
+          if (applied.missing.length > 0) {
+            addLog('warn', `RC signals not in the design: ${applied.missing.join(', ')}`);
+          }
+        } catch (rcError) {
+          const rcMsg = rcError instanceof Error ? rcError.message : 'Unknown error';
+          addLog('error', 'Failed to load RC file', rcMsg);
+        }
+      }
+
+      if (story) {
+        try {
+          const file = await filesApi.getContent(story);
+          const parsed = JSON.parse(file.content) as { links?: { child: string; parent: string }[] };
+          const linked = applyStoryLinks(parsed.links ?? []);
+          addLog('success', `Story linked: ${linked} causes`);
+        } catch (storyError) {
+          const storyMsg = storyError instanceof Error ? storyError.message : 'Unknown error';
+          addLog('error', 'Failed to load story', storyMsg);
+        }
+      }
       
-      // Update URL to include fsdb path
-      const newUrl = buildConnectionUrl(connection.host, connection.port, fsdbPath);
+      const newUrl = buildConnectionUrl(active.host, active.port, fsdbPath, design, rcPath, story);
       window.history.replaceState({}, '', newUrl);
       
     } catch (error) {
@@ -122,20 +172,46 @@ function AppContent() {
     } finally {
       setIsLoading(false);
     }
-  }, [connection, addLog, setCurrentSession]);
+  }, [addLog, setCurrentSession, urlParams.design]);
 
-  // Handle URL params on mount
+  const openNamedExample = useCallback(async (example: WaveExample) => {
+    setActiveExampleId(example.id);
+    await openDatabase(example.wave, example.rc, example.design, example.story ?? null);
+  }, [openDatabase]);
+
+  // Handle URL params on mount. With no wave file, open the FIFO story.
   useEffect(() => {
     const initFromUrl = async () => {
-      if (urlParams.host && urlParams.port) {
-        const connected = await connectToServer(urlParams.host, urlParams.port);
-        
-        if (connected && urlParams.fsdb) {
-          await openDatabase(urlParams.fsdb);
+      const host = urlParams.host || '127.0.0.1';
+      const port = urlParams.port || 8000;
+      const connected = await connectToServer(host, port);
+      if (!connected) {
+        if (!urlParams.host) loadDemoMode();
+        return;
+      }
+
+      let catalog: WaveExample[] = [];
+      try {
+        const listed = await examplesApi.list();
+        catalog = listed.examples;
+        setExamples(listed.examples);
+        if (!urlParams.fsdb) {
+          const chosen = listed.examples.find((item) => item.id === listed.default) ?? listed.examples[0];
+          if (chosen) {
+            setActiveExampleId(chosen.id);
+            await openDatabase(chosen.wave, chosen.rc, chosen.design, chosen.story ?? null);
+            return;
+          }
         }
-      } else {
-        // No URL params, load demo mode
-        loadDemoMode();
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        addLog('warn', 'Could not list examples', message);
+      }
+
+      if (urlParams.fsdb) {
+        const match = catalog.find((item) => item.wave === urlParams.fsdb);
+        setActiveExampleId(match?.id ?? null);
+        await openDatabase(urlParams.fsdb, urlParams.rc, urlParams.design, urlParams.story);
       }
     };
 
@@ -144,6 +220,7 @@ function AppContent() {
 
   // Handle disconnect
   const handleDisconnect = () => {
+    connectionRef.current = null;
     setConnection(null);
     setCurrentSession(null);
     setConnectionError(null);
@@ -157,7 +234,7 @@ function AppContent() {
     if (urlParams.host && urlParams.port) {
       connectToServer(urlParams.host, urlParams.port).then(connected => {
         if (connected && urlParams.fsdb) {
-          openDatabase(urlParams.fsdb);
+          openDatabase(urlParams.fsdb, urlParams.rc, urlParams.design, urlParams.story);
         }
       });
     }
@@ -209,6 +286,25 @@ function AppContent() {
               {currentSession.wave_db?.split('/').pop() || currentSession.design_db?.split('/').pop() || 'Session'}
             </span>
           )}
+          {connection && examples.length > 0 && (
+            <div className="flex items-center rounded border border-wave-border overflow-hidden text-xs">
+              {examples.map((example) => (
+                <button
+                  key={example.id}
+                  type="button"
+                  title={example.description}
+                  onClick={() => openNamedExample(example)}
+                  className={`px-2 py-1 ${
+                    activeExampleId === example.id
+                      ? 'bg-wave-accent text-wave-bg'
+                      : 'hover:bg-wave-border text-wave-text'
+                  }`}
+                >
+                  {example.name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         
         <div className="flex items-center gap-2">
@@ -255,7 +351,7 @@ function AppContent() {
                 Start a backend server and add URL parameters to connect:
               </p>
               <code className="block mt-2 px-3 py-2 bg-wave-bg rounded text-xs font-mono text-wave-accent">
-                ?server=hostname:8000&fsdb=/path/to/file.fsdb
+                ?server=hostname:8000&vcd=/path/to/file.vcd&design=/path/to/hierarchy.tree.json&rc_file=/path/to/waves.rc
               </code>
             </div>
           </div>

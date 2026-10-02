@@ -14,6 +14,7 @@ from .base import (
 )
 
 from .verdi_adapter import VerdiAdapter, get_adapter
+from .verilator_adapter import VerilatorAdapter
 
 __all__ = [
     "BaseAdapter",
@@ -25,5 +26,6 @@ __all__ = [
     "SignalDirection",
     "ScopeType",
     "VerdiAdapter",
+    "VerilatorAdapter",
     "get_adapter"
 ]

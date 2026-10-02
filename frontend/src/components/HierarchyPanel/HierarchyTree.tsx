@@ -145,9 +145,12 @@ export function HierarchyTree({ sessionId, onViewCode }: HierarchyTreeProps) {
         const signals: SignalInfo[] = scopeSignals.map(({ signalType, ...rest }) => rest);
         addSignals(signals);
       }
+      return;
     }
-    // For non-demo mode, we'd need to fetch signals and add them
-  }, [isDemoMode, addSignals]);
+    hierarchyApi.getSignals(sessionId, scopePath).then((result) => {
+      addSignals(result.signals);
+    });
+  }, [isDemoMode, addSignals, sessionId]);
 
   if (!isDemoMode && isLoading) {
     return (

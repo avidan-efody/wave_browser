@@ -53,10 +53,15 @@ export function SessionDialog({ isOpen, onClose }: SessionDialogProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     sessionLogger.info('Opening database', { designDb, waveDb: waveDb || undefined });
+    const wave = waveDb.trim();
+    const design = designDb.trim();
+    const isVerilator = wave.toLowerCase().endsWith('.vcd') || design.toLowerCase().endsWith('.json');
     createSession.mutate({
-      vendor: 'verdi',
-      wave_db: waveDb || undefined,
-      design_db: designDb || undefined,
+      vendor: isVerilator ? 'verilator' : 'verdi',
+      wave_db: wave || undefined,
+      design_db: isVerilator
+        ? (design.toLowerCase().endsWith('.json') ? design : undefined)
+        : (design || undefined),
     });
   };
 

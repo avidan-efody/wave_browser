@@ -1,0 +1,26 @@
+Magic 271485
+Revision WaveBrowser
+
+; Window Layout
+openDirFile -d /
+windowTimeUnit 1ps
+cursor 35000.000000
+
+; user define markers
+; userMarker time_pos marker_name
+userMarker 20000.000000 "reset release"
+userMarker 35000.000000 "start"
+#--addNote 20000.000000 /tb_counter/clk "reset releases"
+
+addGroup "Clock and reset"
+addSignal -h 15 /tb_counter/clk
+addSignal -h 15 -holdScope rst_n
+addBlank "control"
+addGroup "Stimulus"
+addSignal -h 15 /tb_counter/start
+addSignal -h 15 -holdScope done
+addSignal -h 15 -holdScope count_out
+addGroup "Counter"
+addSignal -h 15 -UNSIGNED -HEX /tb_counter/dut/u_counter/count
+addSignal -h 15 -holdScope overflow
+addSignal -h 15 -holdScope enable

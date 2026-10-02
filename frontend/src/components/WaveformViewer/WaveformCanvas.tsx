@@ -4,20 +4,172 @@
 
 import { useEffect, useRef, useCallback, useState } from 'react';
 import type { WaveformData, SignalInfo } from '../../api/types';
-import { useWaveformStore, type SignalGroup } from '../../store';
+import { useWaveformStore, type NamedMarker, type WaveNote } from '../../store';
+import type { WaveMenuTarget } from './WaveContextMenu';
+import {
+  buildLayout,
+  dropTarget,
+  entryHeight,
+  RULER_HEIGHT,
+  SIGNAL_HEIGHT,
+  GROUP_HEADER_HEIGHT,
+  DIVIDER_HEIGHT,
+} from '../../rc/layout';
 
-const SIGNAL_HEIGHT = 30;
-const GROUP_HEADER_HEIGHT = 22;
 const PADDING = 4;
 const NAME_WIDTH = 150;
 const VALUE_WIDTH = 80;
-const RULER_HEIGHT = 24;
+const NOTE_LINE_HEIGHT = 14;
+const NOTE_PAD = 6;
+
+interface NoteBubble {
+  id: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  anchorX: number;
+  anchorY: number;
+  above: boolean;
+  lines: string[];
+  emphasis: boolean;
+  lineHeight: number;
+  pad: number;
+}
+
+function wrapNote(text: string): string[] {
+  const words = text.split(/\s+/).filter(Boolean);
+  const lines: string[] = [];
+  let current = '';
+  for (const word of words) {
+    const next = current ? `${current} ${word}` : word;
+    if (next.length > 24 && current) {
+      lines.push(current);
+      current = word;
+    } else {
+      current = next;
+    }
+  }
+  if (current) lines.push(current);
+  return lines.length > 0 ? lines : [''];
+}
+
+function noteBubbles(
+  notes: WaveNote[],
+  rows: Parameters<typeof buildLayout>[0],
+  signals: Parameters<typeof buildLayout>[1],
+  timeToX: (time: number) => number,
+  waveAreaStart: number,
+  canvasWidth: number,
+  emphasisId: string | null = null,
+): NoteBubble[] {
+  const yByPath = new Map<string, number>();
+  let currentY = RULER_HEIGHT;
+  for (const entry of buildLayout(rows, signals)) {
+    if (entry.kind === 'signal' && !yByPath.has(entry.signal.path)) {
+      yByPath.set(entry.signal.path, currentY + SIGNAL_HEIGHT / 2);
+    }
+    currentY += entryHeight(entry);
+  }
+
+  const bubbles: NoteBubble[] = [];
+  for (const note of notes) {
+    const anchorY = yByPath.get(note.signalPath);
+    if (anchorY == null) continue;
+    const anchorX = timeToX(note.time);
+    if (anchorX < waveAreaStart - 40 || anchorX > canvasWidth + 40) continue;
+    const lines = wrapNote(note.text);
+    const emphasis = note.id === emphasisId;
+    const pad = emphasis ? 8 : NOTE_PAD;
+    const lineHeight = emphasis ? 18 : NOTE_LINE_HEIGHT;
+    const textWidth = Math.max(...lines.map((line) => line.length * (emphasis ? 8.4 : 6.6)), 24);
+    const w = Math.min(240, textWidth + pad * 2);
+    const h = lines.length * lineHeight + pad * 2;
+    const aboveY = anchorY - h - 8;
+    const above = aboveY >= 2;
+    const y = above ? aboveY : anchorY + 10;
+    let x = anchorX - w / 2;
+    if (x < 4) x = 4;
+    if (x + w > canvasWidth - 4) x = Math.max(4, canvasWidth - 4 - w);
+    bubbles.push({ id: note.id, x, y, w, h, anchorX, anchorY, above, lines, emphasis, lineHeight, pad });
+  }
+  return bubbles;
+}
+
+function drawNoteBubble(ctx: CanvasRenderingContext2D, bubble: NoteBubble, selected: boolean) {
+  const { x, y, w, h, anchorX, anchorY, above, lines, emphasis, lineHeight, pad } = bubble;
+  const fill = emphasis ? '#d7e6ff' : selected ? '#fff3bf' : '#fff8e7';
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, 2);
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.lineWidth = emphasis ? 3.5 : selected ? 2.5 : 1.5;
+  ctx.strokeStyle = emphasis ? '#1e66f5' : '#11111b';
+  ctx.stroke();
+
+  const mid = Math.min(Math.max(anchorX, x + 12), x + w - 12);
+  ctx.beginPath();
+  if (above) {
+    ctx.moveTo(mid - 7, y + h);
+    ctx.lineTo(anchorX, anchorY);
+    ctx.lineTo(mid + 7, y + h);
+  } else {
+    ctx.moveTo(mid - 7, y);
+    ctx.lineTo(anchorX, anchorY);
+    ctx.lineTo(mid + 7, y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(anchorX, anchorY, emphasis ? 4.5 : 3, 0, Math.PI * 2);
+  ctx.fillStyle = emphasis ? '#1e66f5' : '#11111b';
+  ctx.fill();
+
+  ctx.fillStyle = '#11111b';
+  ctx.font = emphasis ? 'bold 14px monospace' : '11px monospace';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
+  lines.forEach((line, index) => {
+    ctx.fillText(line, x + pad, y + pad + index * lineHeight, w - pad * 2);
+  });
+}
 
 interface WaveformCanvasProps {
   signals: SignalInfo[];
   waveforms: Record<string, WaveformData>;
   width: number;
   height: number;
+  onContextMenuTarget?: (x: number, y: number, target: WaveMenuTarget) => void;
+}
+
+function hitMarker(
+  markers: NamedMarker[],
+  timeToX: (time: number) => number,
+  x: number,
+  y: number,
+  waveAreaStart: number,
+  width: number,
+): NamedMarker | null {
+  let best: NamedMarker | null = null;
+  let bestDist = Infinity;
+  for (const marker of markers) {
+    const markerX = timeToX(marker.time);
+    if (markerX < waveAreaStart - 8 || markerX > width) continue;
+    const inRuler = y < RULER_HEIGHT;
+    const nameEnd = markerX + 12 + Math.min(marker.name.length, 8) * 5.5;
+    const hit = inRuler
+      ? x >= markerX - 4 && x <= nameEnd
+      : Math.abs(x - markerX) <= 5;
+    const dist = Math.abs(x - markerX);
+    if (hit && dist < bestDist) {
+      best = marker;
+      bestDist = dist;
+    }
+  }
+  return best;
 }
 
 // Get value at a specific time from waveform data
@@ -50,20 +202,56 @@ function calculateGridInterval(range: number): number {
   return niceInterval * magnitude;
 }
 
-export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCanvasProps) {
+export function WaveformCanvas({ signals, waveforms, width, height, onContextMenuTarget }: WaveformCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { 
     viewStart, viewEnd, cursorTime, setCursorTime, setViewRange,
     markers, selectedSignal, setSelectedSignal,
-    signalGroups, toggleGroupCollapsed
+    notes, selectedNoteId, setSelectedNote,
+    selectedStoryId, setSelectedStory,
+    storyPlayback, stopStoryPlayback,
+    waveRows, toggleGroupCollapsed, setSelectedDivider, moveWaveRow,
   } = useWaveformStore();
+
+  const playing = storyPlayback?.running ?? false;
+  const focusId = playing ? storyPlayback?.focusId ?? null : null;
+  const drawnNotes = playing
+    ? notes.filter((note) => storyPlayback?.revealedIds.includes(note.id))
+    : notes;
+  const drawnMarkers = playing
+    ? markers.filter((marker) => storyPlayback?.revealedIds.includes(marker.id))
+    : markers;
 
   const waveAreaStart = NAME_WIDTH + VALUE_WIDTH;
 
-  // Drag selection state
+  useEffect(() => {
+    if (!playing || !selectedSignal) return;
+    const scroller = canvasRef.current?.parentElement;
+    if (!scroller) return;
+    let rowTop = RULER_HEIGHT;
+    for (const entry of buildLayout(waveRows, signals)) {
+      if (entry.kind === 'signal' && entry.signal.path === selectedSignal) {
+        const rowBottom = rowTop + SIGNAL_HEIGHT;
+        const viewTop = scroller.scrollTop;
+        const viewBottom = viewTop + scroller.clientHeight;
+        if (rowTop < viewTop || rowBottom > viewBottom) {
+          scroller.scrollTop = Math.max(0, rowTop - RULER_HEIGHT);
+        }
+        return;
+      }
+      rowTop += entryHeight(entry);
+    }
+  }, [playing, selectedSignal, waveRows, signals]);
+
+  // Drag selection state (zoom in the waveform area)
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState<number | null>(null);
   const [dragCurrentX, setDragCurrentX] = useState<number | null>(null);
+
+  // Reorder drag in the name column
+  const rowDragRef = useRef<{ rowId: string; startY: number; currentY: number; moved: boolean } | null>(null);
+  const suppressClickRef = useRef(false);
+  const [rowDropY, setRowDropY] = useState<number | null>(null);
 
   const timeToX = useCallback((time: number): number => {
     const waveWidth = width - waveAreaStart;
@@ -146,57 +334,64 @@ export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCa
     }
     ctx.textAlign = 'left';
 
-    // Build signal path to group mapping
-    const signalToGroup = new Map<string, SignalGroup>();
-    signalGroups.forEach(g => {
-      g.signalPaths.forEach(p => signalToGroup.set(p, g));
-    });
-
-    // Track current Y position and rendered group headers
+    const layout = buildLayout(waveRows, signals);
     let currentY = RULER_HEIGHT;
-    const renderedGroupHeaders = new Set<string>();
 
-    // === Draw Each Signal with Group Headers ===
-    signals.forEach((signal) => {
-      const group = signalToGroup.get(signal.path);
-      
-      // Draw group header if needed
-      if (group && !renderedGroupHeaders.has(group.id)) {
-        // Group header background
+    for (const entry of layout) {
+      if (entry.kind === 'group') {
         ctx.fillStyle = '#1a1a2e';
         ctx.fillRect(0, currentY, width, GROUP_HEADER_HEIGHT);
-        
-        // Collapse indicator
+
         ctx.fillStyle = '#89b4fa';
         ctx.font = '10px monospace';
-        ctx.fillText(group.collapsed ? '▶' : '▼', 6, currentY + GROUP_HEADER_HEIGHT / 2 + 1);
-        
-        // Group name
+        ctx.textBaseline = 'middle';
+        ctx.fillText(entry.collapsed ? '▶' : '▼', 6, currentY + GROUP_HEADER_HEIGHT / 2 + 1);
+
         ctx.fillStyle = '#89b4fa';
         ctx.font = 'bold 11px monospace';
-        ctx.fillText(group.name, 20, currentY + GROUP_HEADER_HEIGHT / 2 + 1);
-        
-        // Signal count
+        ctx.fillText(entry.name, 20, currentY + GROUP_HEADER_HEIGHT / 2 + 1);
+
         ctx.fillStyle = '#6a6a8d';
         ctx.font = '9px monospace';
-        ctx.fillText(`(${group.signalPaths.length})`, 20 + ctx.measureText(group.name).width + 8, currentY + GROUP_HEADER_HEIGHT / 2 + 1);
-        
-        // Bottom border
+        ctx.fillText(`(${entry.signalCount})`, 20 + ctx.measureText(entry.name).width + 8, currentY + GROUP_HEADER_HEIGHT / 2 + 1);
+
         ctx.strokeStyle = '#3a3a5d';
         ctx.beginPath();
         ctx.moveTo(0, currentY + GROUP_HEADER_HEIGHT);
         ctx.lineTo(width, currentY + GROUP_HEADER_HEIGHT);
         ctx.stroke();
-        
-        renderedGroupHeaders.add(group.id);
+
         currentY += GROUP_HEADER_HEIGHT;
-      }
-      
-      // Skip drawing signal if in collapsed group
-      if (group && group.collapsed) {
-        return;
+        continue;
       }
 
+      if (entry.kind === 'divider') {
+        const mid = currentY + DIVIDER_HEIGHT / 2;
+        ctx.fillStyle = '#161622';
+        ctx.fillRect(0, currentY, width, DIVIDER_HEIGHT);
+        ctx.strokeStyle = '#5a5a78';
+        ctx.beginPath();
+        ctx.moveTo(8, mid);
+        ctx.lineTo(width - 8, mid);
+        ctx.stroke();
+        if (entry.name) {
+          ctx.font = '10px monospace';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          const label = ` ${entry.name} `;
+          const labelWidth = ctx.measureText(label).width;
+          ctx.fillStyle = '#161622';
+          ctx.fillRect(NAME_WIDTH / 2 - labelWidth / 2, currentY, labelWidth, DIVIDER_HEIGHT);
+          ctx.fillStyle = '#c0c0d0';
+          ctx.fillText(entry.name, NAME_WIDTH / 2, mid);
+          ctx.textAlign = 'left';
+        }
+        currentY += DIVIDER_HEIGHT;
+        continue;
+      }
+
+      const signal = entry.signal;
+      const inGroup = entry.inGroup;
       const y = currentY;
       const waveform = waveforms[signal.path];
       const isSelected = selectedSignal === signal.path;
@@ -215,9 +410,9 @@ export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCa
       ctx.fillStyle = isSelected ? '#a6e3a1' : '#c0c0d0';
       ctx.font = isSelected ? 'bold 12px monospace' : '12px monospace';
       ctx.textBaseline = 'middle';
-      const indent = group ? 12 : 8;
+      const indent = inGroup ? 12 : 8;
       ctx.fillText(
-        signal.name.slice(0, group ? 16 : 18),
+        signal.name.slice(0, inGroup ? 16 : 18),
         indent,
         y + SIGNAL_HEIGHT / 2
       );
@@ -251,9 +446,13 @@ export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCa
       ctx.lineTo(waveAreaStart, y + SIGNAL_HEIGHT);
       ctx.stroke();
 
-      // Draw waveform background
+      // Draw waveform background. A reached note tints its signal row.
       ctx.fillStyle = '#1e1e2e';
       ctx.fillRect(waveAreaStart, y, width - waveAreaStart, SIGNAL_HEIGHT);
+      if (isSelected) {
+        ctx.fillStyle = 'rgba(166, 227, 161, 0.14)';
+        ctx.fillRect(waveAreaStart, y, width - waveAreaStart, SIGNAL_HEIGHT);
+      }
 
       // Draw waveform data
       if (waveform && waveform.changes.length > 0) {
@@ -422,20 +621,21 @@ export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCa
       ctx.lineTo(width, y + SIGNAL_HEIGHT);
       ctx.stroke();
       
-      // Update currentY for next signal
       currentY += SIGNAL_HEIGHT;
-    });
+    }
 
     // === Draw Named Markers ===
-    markers.forEach((marker, idx) => {
+    drawnMarkers.forEach((marker, idx) => {
       const markerX = timeToX(marker.time);
       if (markerX >= waveAreaStart && markerX <= width) {
         // Marker colors cycle through palette
         const colors = ['#89b4fa', '#f9e2af', '#a6e3a1', '#fab387', '#cba6f7'];
         const color = colors[idx % colors.length];
+        const focused = marker.id === focusId;
+        const selected = marker.id === selectedStoryId;
         
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = focused ? '#1e66f5' : selected ? '#ffffff' : color;
+        ctx.lineWidth = focused ? 5 : selected ? 4 : 2;
         ctx.setLineDash([]);
         ctx.beginPath();
         ctx.moveTo(markerX, RULER_HEIGHT);
@@ -452,8 +652,8 @@ export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCa
         ctx.fill();
         
         // Draw marker name
-        ctx.font = 'bold 9px monospace';
-        ctx.fillText(marker.name.slice(0, 8), markerX + 10, 8);
+        ctx.font = focused ? 'bold 12px monospace' : 'bold 9px monospace';
+        ctx.fillText(marker.name.slice(0, focused ? 16 : 8), markerX + 10, focused ? 14 : 8);
       }
     });
 
@@ -462,8 +662,8 @@ export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCa
       const cursorX = timeToX(cursorTime);
       if (cursorX >= waveAreaStart && cursorX <= width) {
         ctx.strokeStyle = '#f38ba8';
-        ctx.lineWidth = 1;
-        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = playing ? 2 : 1;
+        ctx.setLineDash(playing ? [] : [4, 4]);
         ctx.beginPath();
         ctx.moveTo(cursorX, RULER_HEIGHT);
         ctx.lineTo(cursorX, height);
@@ -477,6 +677,10 @@ export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCa
         ctx.fillText(`${cursorTime}`, cursorX, RULER_HEIGHT - 10);
         ctx.textAlign = 'left';
       }
+    }
+
+    for (const bubble of noteBubbles(drawnNotes, waveRows, signals, timeToX, waveAreaStart, width, focusId)) {
+      drawNoteBubble(ctx, bubble, bubble.id === selectedNoteId);
     }
 
     // === Draw Drag Selection Overlay ===
@@ -506,7 +710,18 @@ export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCa
       ctx.fillText(`${Math.round(endTime)}`, maxX, RULER_HEIGHT - 2);
       ctx.textAlign = 'left';
     }
-  }, [signals, waveforms, width, height, viewStart, viewEnd, cursorTime, timeToX, xToTime, waveAreaStart, markers, selectedSignal, signalGroups, isDragging, dragStartX, dragCurrentX]);
+
+    if (rowDropY !== null) {
+      const target = dropTarget(buildLayout(waveRows, signals), rowDropY);
+      ctx.strokeStyle = '#89b4fa';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.moveTo(0, target.y);
+      ctx.lineTo(width, target.y);
+      ctx.stroke();
+    }
+  }, [signals, waveforms, width, height, viewStart, viewEnd, cursorTime, timeToX, xToTime, waveAreaStart, drawnMarkers, drawnNotes, focusId, playing, selectedNoteId, selectedStoryId, selectedSignal, waveRows, isDragging, dragStartX, dragCurrentX, rowDropY]);
 
   // Find nearest edge in a waveform to a given time
   const findNearestEdge = useCallback((waveform: WaveformData | undefined, time: number): number | null => {
@@ -526,50 +741,70 @@ export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCa
   }, []);
 
   // Get element at Y position (group header or signal)
-  const getElementAtY = useCallback((clickY: number): { type: 'group'; group: SignalGroup } | { type: 'signal'; signal: SignalInfo } | null => {
+  const getElementAtY = useCallback((clickY: number):
+    | { type: 'group'; id: string }
+    | { type: 'divider'; id: string; name: string }
+    | { type: 'signal'; id: string; signal: SignalInfo }
+    | null => {
     if (clickY < RULER_HEIGHT) return null;
-    
-    // Build mapping of signal path to group
-    const signalToGroup = new Map<string, SignalGroup>();
-    signalGroups.forEach(g => {
-      g.signalPaths.forEach(p => signalToGroup.set(p, g));
-    });
-    
-    let currentY = RULER_HEIGHT;
-    const renderedGroupHeaders = new Set<string>();
-    
-    for (const signal of signals) {
-      const group = signalToGroup.get(signal.path);
-      
-      // Check if this is a group header position
-      if (group && !renderedGroupHeaders.has(group.id)) {
-        if (clickY >= currentY && clickY < currentY + GROUP_HEADER_HEIGHT) {
-          return { type: 'group', group };
-        }
-        renderedGroupHeaders.add(group.id);
-        currentY += GROUP_HEADER_HEIGHT;
-      }
-      
-      // Skip if in collapsed group
-      if (group && group.collapsed) {
-        continue;
-      }
-      
-      if (clickY >= currentY && clickY < currentY + SIGNAL_HEIGHT) {
-        return { type: 'signal', signal };
-      }
-      currentY += SIGNAL_HEIGHT;
-    }
-    
-    return null;
-  }, [signals, signalGroups]);
 
-  // Handle mouse down - start drag selection
+    let currentY = RULER_HEIGHT;
+    for (const entry of buildLayout(waveRows, signals)) {
+      const rowHeight = entryHeight(entry);
+      if (clickY >= currentY && clickY < currentY + rowHeight) {
+        if (entry.kind === 'group') return { type: 'group', id: entry.id };
+        if (entry.kind === 'divider') return { type: 'divider', id: entry.id, name: entry.name };
+        return { type: 'signal', id: entry.id, signal: entry.signal };
+      }
+      currentY += rowHeight;
+    }
+
+    return null;
+  }, [signals, waveRows]);
+
+  const finishRowDrag = useCallback((pointerY: number) => {
+    const drag = rowDragRef.current;
+    rowDragRef.current = null;
+    setRowDropY(null);
+    if (!drag?.moved) return;
+    suppressClickRef.current = true;
+    const target = dropTarget(buildLayout(waveRows, signals), pointerY);
+    if (target.beforeId === drag.rowId) return;
+    moveWaveRow(drag.rowId, target.beforeId);
+  }, [moveWaveRow, signals, waveRows]);
+
+  // Handle mouse down - reorder from the name column, or zoom-drag in the waveform area
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (e.button !== 0) return;
+    stopStoryPlayback();
     const rect = canvasRef.current?.getBoundingClientRect();
     if (!rect) return;
     
     const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const bubbleHit = noteBubbles(drawnNotes, waveRows, signals, timeToX, waveAreaStart, width)
+      .find((bubble) => x >= bubble.x && x <= bubble.x + bubble.w && y >= bubble.y && y <= bubble.y + bubble.h);
+    if (bubbleHit) {
+      setSelectedNote(bubbleHit.id);
+      return;
+    }
+
+    const markerHit = hitMarker(drawnMarkers, timeToX, x, y, waveAreaStart, width);
+    if (markerHit) {
+      setSelectedStory(markerHit.id);
+      return;
+    }
+
+    if (x <= waveAreaStart) {
+      const element = getElementAtY(y);
+      if (element?.type === 'signal' || element?.type === 'divider') {
+        rowDragRef.current = { rowId: element.id, startY: y, currentY: y, moved: false };
+        if (element.type === 'signal') setSelectedSignal(element.signal.path);
+        else setSelectedDivider(element.id);
+        return;
+      }
+    }
     
     // Only start drag in waveform area
     if (x > waveAreaStart) {
@@ -577,21 +812,46 @@ export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCa
       setDragStartX(x);
       setDragCurrentX(x);
     }
-  }, [waveAreaStart]);
+  }, [waveAreaStart, getElementAtY, setSelectedSignal, setSelectedDivider, drawnNotes, drawnMarkers, waveRows, signals, timeToX, width, setSelectedNote, setSelectedStory, stopStoryPlayback]);
 
   // Handle mouse move - update drag selection
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging) return;
-    
     const rect = canvasRef.current?.getBoundingClientRect();
     if (!rect) return;
-    
     const x = e.clientX - rect.left;
-    setDragCurrentX(x);
-  }, [isDragging]);
+    const y = e.clientY - rect.top;
 
-  // Handle mouse up - apply zoom to selected range
+    const drag = rowDragRef.current;
+    if (drag) {
+      drag.currentY = y;
+      if (Math.abs(y - drag.startY) > 3) {
+        drag.moved = true;
+        setRowDropY(y);
+      }
+      if (canvasRef.current) canvasRef.current.style.cursor = 'grabbing';
+      return;
+    }
+
+    if (canvasRef.current && !isDragging) {
+      const overBubble = noteBubbles(drawnNotes, waveRows, signals, timeToX, waveAreaStart, width)
+        .some((bubble) => x >= bubble.x && x <= bubble.x + bubble.w && y >= bubble.y && y <= bubble.y + bubble.h);
+      const overMarker = hitMarker(drawnMarkers, timeToX, x, y, waveAreaStart, width);
+      canvasRef.current.style.cursor = overBubble || overMarker ? 'pointer' : x <= waveAreaStart ? 'grab' : 'crosshair';
+    }
+
+    if (!isDragging) return;
+    setDragCurrentX(x);
+  }, [isDragging, waveAreaStart, drawnNotes, drawnMarkers, waveRows, signals, timeToX, width]);
+
+  // Handle mouse up - apply zoom to selected range, or commit a row reorder
   const handleMouseUp = useCallback((e: React.MouseEvent) => {
+    if (rowDragRef.current) {
+      const rect = canvasRef.current?.getBoundingClientRect();
+      const y = rect ? e.clientY - rect.top : rowDragRef.current.currentY;
+      finishRowDrag(y);
+      return;
+    }
+
     if (!isDragging || dragStartX === null) {
       setIsDragging(false);
       return;
@@ -615,22 +875,45 @@ export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCa
     setIsDragging(false);
     setDragStartX(null);
     setDragCurrentX(null);
-  }, [isDragging, dragStartX, xToTime, waveAreaStart, width, setViewRange]);
+  }, [isDragging, dragStartX, xToTime, waveAreaStart, width, setViewRange, finishRowDrag]);
 
   // Handle click - snap to nearest edge of hovered signal and select it
   const handleClick = useCallback((e: React.MouseEvent) => {
+    stopStoryPlayback();
     const rect = canvasRef.current?.getBoundingClientRect();
     if (!rect) return;
     
+    if (suppressClickRef.current) {
+      suppressClickRef.current = false;
+      return;
+    }
+
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
+    const bubbleHit = noteBubbles(drawnNotes, waveRows, signals, timeToX, waveAreaStart, width)
+      .find((bubble) => x >= bubble.x && x <= bubble.x + bubble.w && y >= bubble.y && y <= bubble.y + bubble.h);
+    if (bubbleHit) {
+      setSelectedNote(bubbleHit.id);
+      return;
+    }
+
+    const markerHit = hitMarker(drawnMarkers, timeToX, x, y, waveAreaStart, width);
+    if (markerHit) {
+      setSelectedStory(markerHit.id);
+      return;
+    }
+
     const element = getElementAtY(y);
     if (!element) return;
     
     if (element.type === 'group') {
-      // Toggle group collapse
-      toggleGroupCollapsed(element.group.id);
+      toggleGroupCollapsed(element.id);
+      return;
+    }
+
+    if (element.type === 'divider') {
+      setSelectedDivider(element.id);
       return;
     }
     
@@ -649,7 +932,55 @@ export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCa
         setCursorTime(nearestEdge);
       }
     }
-  }, [xToTime, waveAreaStart, waveforms, findNearestEdge, getElementAtY, setCursorTime, setSelectedSignal, toggleGroupCollapsed]);
+  }, [xToTime, waveAreaStart, waveforms, findNearestEdge, getElementAtY, setCursorTime, setSelectedSignal, toggleGroupCollapsed, setSelectedDivider, drawnNotes, drawnMarkers, waveRows, signals, timeToX, width, setSelectedNote, setSelectedStory, stopStoryPlayback]);
+
+  const handleContextMenu = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    stopStoryPlayback();
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (!rect || !onContextMenuTarget) return;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const bubbleHit = noteBubbles(drawnNotes, waveRows, signals, timeToX, waveAreaStart, width)
+      .find((bubble) => x >= bubble.x && x <= bubble.x + bubble.w && y >= bubble.y && y <= bubble.y + bubble.h);
+    if (bubbleHit) {
+      const note = notes.find((item) => item.id === bubbleHit.id);
+      setSelectedNote(bubbleHit.id);
+      onContextMenuTarget(e.clientX, e.clientY, { kind: 'note', id: bubbleHit.id, text: note?.text ?? '' });
+      return;
+    }
+
+    const markerHit = hitMarker(drawnMarkers, timeToX, x, y, waveAreaStart, width);
+    if (markerHit) {
+      setSelectedStory(markerHit.id);
+      onContextMenuTarget(e.clientX, e.clientY, { kind: 'marker', id: markerHit.id, text: markerHit.name });
+      return;
+    }
+
+    const element = getElementAtY(y);
+    if (!element) return;
+    if (element.type === 'group') {
+      const row = waveRows.find((item) => item.id === element.id && item.type === 'group');
+      onContextMenuTarget(e.clientX, e.clientY, {
+        kind: 'group',
+        id: element.id,
+        text: row && row.type === 'group' ? row.name : '',
+      });
+      return;
+    }
+    if (element.type === 'divider') {
+      setSelectedDivider(element.id);
+      onContextMenuTarget(e.clientX, e.clientY, { kind: 'divider', id: element.id, text: element.name });
+      return;
+    }
+    setSelectedSignal(element.signal.path);
+    onContextMenuTarget(e.clientX, e.clientY, {
+      kind: 'signal',
+      id: element.signal.path,
+      text: element.signal.name,
+    });
+  }, [onContextMenuTarget, notes, drawnNotes, drawnMarkers, waveRows, signals, timeToX, waveAreaStart, width, getElementAtY, setSelectedNote, setSelectedStory, setSelectedDivider, setSelectedSignal, stopStoryPlayback]);
 
   const handleWheel = useCallback((e: React.WheelEvent) => {
     e.preventDefault();
@@ -676,6 +1007,7 @@ export function WaveformCanvas({ signals, waveforms, width, height }: WaveformCa
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
       onClick={handleClick}
+      onContextMenu={handleContextMenu}
       onWheel={handleWheel}
       className="block cursor-crosshair"
     />

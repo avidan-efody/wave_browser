@@ -58,11 +58,16 @@ module tb_counter;
         $finish;
     end
 
-    // Dump waveforms to FSDB
+    // Dump waveforms. Verilator writes VCD; other simulators write FSDB.
     initial begin
+`ifdef VERILATOR
+        $dumpfile("waves.vcd");
+        $dumpvars(0, tb_counter);
+`else
         $fsdbDumpfile("waves.fsdb");
         $fsdbDumpvars(0, tb_counter);
         $fsdbDumpMDA();  // Dump multi-dimensional arrays
+`endif
     end
 
 endmodule

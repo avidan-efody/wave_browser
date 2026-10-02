@@ -714,7 +714,10 @@ class VerdiAdapter(BaseAdapter):
 # Factory function to get the right adapter
 def get_adapter(vendor: str = "verdi") -> BaseAdapter:
     """Factory function to create a vendor-specific adapter."""
-    if vendor.lower() == "verdi":
+    name = vendor.lower()
+    if name == "verdi":
         return VerdiAdapter()
-    else:
-        raise ValueError(f"Unsupported vendor: {vendor}")
+    if name == "verilator":
+        from .verilator_adapter import VerilatorAdapter
+        return VerilatorAdapter()
+    raise ValueError(f"Unsupported vendor: {vendor}")

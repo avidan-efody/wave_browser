@@ -2,7 +2,10 @@
 Session management API endpoints.
 """
 
+from pathlib import Path
+
 from fastapi import APIRouter, HTTPException, status
+from pydantic import BaseModel
 
 from ..models import (
     SessionCreate, SessionInfo, SessionResponse, SessionListResponse
@@ -90,6 +93,49 @@ async def get_session(session_id: str):
             created_at=session.created_at
         )
     )
+
+
+class SignalRcSaveRequest(BaseModel):
+    """RC text to write beside the session waveform."""
+    content: str
+
+
+class SignalRcSaveResponse(BaseModel):
+    """Path of the RC file written next to the waveform."""
+    path: str
+
+
+@router.post("/{session_id}/signal-rc", response_model=SignalRcSaveResponse)
+async def save_signal_rc(session_id: str, body: SignalRcSaveRequest):
+    """Write signal.rc next to the session's FSDB or VCD file."""
+    session = session_manager.get_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+    if not session.wave_db:
+        raise HTTPException(status_code=400, detail="Session has no waveform file")
+
+    encoded = body.content.encode("utf-8")
+    if len(encoded) > 2 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="RC file too large")
+
+    try:
+        wave = Path(session.wave_db).expanduser().resolve()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid waveform path")
+
+    if not wave.parent.is_dir():
+        raise HTTPException(status_code=400, detail=f"Directory does not exist: {wave.parent}")
+
+    target = wave.with_suffix(".rc")
+    try:
+        target.write_text(body.content, encoding="utf-8")
+    except PermissionError:
+        raise HTTPException(status_code=403, detail=f"Permission denied: {target}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to write RC file: {e}")
+
+    logger.info(f"Saved signal RC for session {session_id} to {target}")
+    return SignalRcSaveResponse(path=str(target))
 
 
 @router.delete("/{session_id}", status_code=status.HTTP_204_NO_CONTENT)

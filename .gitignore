@@ -44,8 +44,16 @@ test-results/
 .env.local
 .env.*.local
 
+# Local tool builds (Verilator, CPython). Not part of the app.
+.tools/
+
 # Simulation outputs (example folder)
 example/sim/work/
+example/sim/obj_dir/
+example/sim/*.vcd
+example/sim/*.fst
+example/sim/hierarchy.tree.json
+example/sim/hierarchy.meta.json
 example/sim/work.lib++/
 example/sim/vericomLog/
 example/sim/*.fsdb
@@ -54,6 +62,11 @@ example/sim/simv*
 example/sim/csrc/
 example/sim/AN.DB/
 example/sim/ucli.key
+example/fifo_story/sim/obj_dir/
+example/fifo_story/sim/*.vcd
+example/fifo_story/sim/*.fst
+example/fifo_story/sim/hierarchy.tree.json
+example/fifo_story/sim/hierarchy.meta.json
 
 # Backend runtime
 backend/logs/

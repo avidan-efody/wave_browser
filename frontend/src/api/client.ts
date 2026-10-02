@@ -115,6 +115,12 @@ export const sessionsApi = {
   
   close: (sessionId: string) => 
     request<void>(`/sessions/${sessionId}`, { method: 'DELETE' }),
+
+  saveSignalRc: (sessionId: string, content: string) =>
+    request<{ path: string }>(`/sessions/${sessionId}/signal-rc`, {
+      method: 'POST',
+      body: JSON.stringify({ content }),
+    }),
 };
 
 // Hierarchy API
@@ -161,6 +167,25 @@ export const waveformApi = {
 };
 
 // Files API (for browsing files on the backend machine)
+export interface WaveExample {
+  id: string;
+  name: string;
+  description: string;
+  wave: string;
+  design: string;
+  rc: string;
+  story?: string | null;
+}
+
+export interface WaveExampleList {
+  default: string;
+  examples: WaveExample[];
+}
+
+export const examplesApi = {
+  list: () => request<WaveExampleList>('/examples'),
+};
+
 export const filesApi = {
   list: (path?: string) =>
     request<FileListResponse>(`/files${path ? `?path=${encodeURIComponent(path)}` : ''}`),
@@ -170,6 +195,12 @@ export const filesApi = {
   
   getContent: (path: string) =>
     request<FileContentResponse>(`/files/content?path=${encodeURIComponent(path)}`),
+
+  writeContent: (path: string, content: string) =>
+    request<FileContentResponse>('/files/content', {
+      method: 'PUT',
+      body: JSON.stringify({ path, content }),
+    }),
 };
 
 export { ApiError };

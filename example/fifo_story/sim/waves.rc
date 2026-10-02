@@ -1,0 +1,31 @@
+Magic 271485
+Revision WaveBrowser
+
+; FIFO story. Cause links live in story.json, not in this file.
+openDirFile -d /
+windowTimeUnit 1ps
+cursor 315000.000000
+
+#--addNote 120000.000000 /tb_fifo_story/wdata "A5C319E7 enters"
+#--addNote 195000.000000 /tb_fifo_story/full "FIFO full, word still inside"
+#--addNote 275000.000000 /tb_fifo_story/rdata "A5C319E7 exits intact"
+#--addNote 295000.000000 /tb_fifo_story/bit_out "1/5 = 1"
+#--addNote 305000.000000 /tb_fifo_story/bit_expected "2/5 = 1"
+#--addNote 315000.000000 /tb_fifo_story/shift_reg "low byte 79 to 86"
+#--addNote 325000.000000 /tb_fifo_story/bit_out "3/5 = 0, wanted 1"
+#--addNote 335000.000000 /tb_fifo_story/bit_expected "4/5 = 1, wanted 0"
+#--addNote 345000.000000 /tb_fifo_story/shift_reg "5/5 = 1, wanted 0"
+
+addGroup "Into the FIFO"
+addSignal -h 15 /tb_fifo_story/push
+addSignal -h 15 /tb_fifo_story/wdata
+addSignal -h 15 /tb_fifo_story/count
+addSignal -h 15 /tb_fifo_story/full
+addGroup "Out of the FIFO"
+addSignal -h 15 /tb_fifo_story/pop
+addSignal -h 15 /tb_fifo_story/rdata
+addGroup "Shift, one bit per cycle"
+addSignal -h 15 /tb_fifo_story/shift_reg
+addSignal -h 15 /tb_fifo_story/bit_out
+addSignal -h 15 /tb_fifo_story/bit_expected
+addSignal -h 15 /tb_fifo_story/corrupt

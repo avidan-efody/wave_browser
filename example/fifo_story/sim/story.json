@@ -1,0 +1,12 @@
+{
+  "links": [
+    { "child": "FIFO full, word still inside", "parent": "A5C319E7 enters" },
+    { "child": "A5C319E7 exits intact", "parent": "A5C319E7 enters" },
+    { "child": "1/5 = 1", "parent": "A5C319E7 exits intact" },
+    { "child": "2/5 = 1", "parent": "A5C319E7 exits intact" },
+    { "child": "low byte 79 to 86", "parent": "A5C319E7 exits intact" },
+    { "child": "3/5 = 0, wanted 1", "parent": "low byte 79 to 86" },
+    { "child": "4/5 = 1, wanted 0", "parent": "low byte 79 to 86" },
+    { "child": "5/5 = 1, wanted 0", "parent": "low byte 79 to 86" }
+  ]
+}

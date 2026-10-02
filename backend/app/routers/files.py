@@ -145,6 +145,7 @@ def detect_language(path: str) -> str:
         '.sdc': 'tcl',
         '.txt': 'text',
         '.log': 'text',
+        '.rc': 'text',
     }
     return lang_map.get(ext, 'text')
 
@@ -187,4 +188,47 @@ async def get_file_content(path: str = Query(..., description="File path to read
         content=content,
         language=detect_language(str(target)),
         line_count=content.count('\n') + 1,
+    )
+
+
+class FileWriteRequest(BaseModel):
+    """Write a signal.rc file on the backend machine."""
+    path: str
+    content: str
+
+
+@router.put("/content", response_model=FileContentResponse)
+async def write_file_content(body: FileWriteRequest):
+    """
+    Write an nWave signal.rc file.
+    Only paths ending in .rc are accepted.
+    """
+    if not body.path.lower().endswith(".rc"):
+        raise HTTPException(status_code=400, detail="Only .rc files can be written")
+
+    max_size = 2 * 1024 * 1024
+    encoded = body.content.encode("utf-8")
+    if len(encoded) > max_size:
+        raise HTTPException(status_code=400, detail=f"RC file too large (max {max_size} bytes)")
+
+    try:
+        target = Path(body.path).expanduser().resolve()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid path")
+
+    if not target.parent.is_dir():
+        raise HTTPException(status_code=400, detail=f"Directory does not exist: {target.parent}")
+
+    try:
+        target.write_text(body.content, encoding="utf-8")
+    except PermissionError:
+        raise HTTPException(status_code=403, detail=f"Permission denied: {body.path}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to write file: {str(e)}")
+
+    return FileContentResponse(
+        path=str(target),
+        content=body.content,
+        language=detect_language(str(target)),
+        line_count=body.content.count("\n") + 1,
     )
