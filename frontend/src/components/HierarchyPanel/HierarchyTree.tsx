@@ -26,7 +26,10 @@ function ScopeNode({ scope, sessionId, level, isDemoMode, onDoubleClick, onViewC
   const isSelected = selectedScope === scope.path;
 
   // Use demo data when in demo mode
-  const demoChildScopes = isDemoMode ? (DEMO_CHILD_SCOPES[scope.path] || []) : [];
+  const demoTree = useWaveformStore((state) => state.demoTree);
+  const demoChildScopes = isDemoMode
+    ? (demoTree?.children[scope.path] ?? DEMO_CHILD_SCOPES[scope.path] ?? [])
+    : [];
   
   const { data: childScopes, isLoading: loadingChildren } = useQuery({
     queryKey: ['childScopes', sessionId, scope.path],
@@ -125,7 +128,7 @@ interface HierarchyTreeProps {
 }
 
 export function HierarchyTree({ sessionId, onViewCode }: HierarchyTreeProps) {
-  const { isDemoMode, addSignals } = useWaveformStore();
+  const { isDemoMode, addSignals, demoTree } = useWaveformStore();
   
   const { data: topScopes, isLoading, error } = useQuery({
     queryKey: ['topScopes', sessionId],
@@ -134,15 +137,20 @@ export function HierarchyTree({ sessionId, onViewCode }: HierarchyTreeProps) {
   });
 
   // Use demo hierarchy when in demo mode
-  const actualTopScopes = isDemoMode ? DEMO_HIERARCHY : (topScopes?.scopes || []);
+  const actualTopScopes = isDemoMode ? (demoTree?.roots ?? DEMO_HIERARCHY) : (topScopes?.scopes || []);
 
   // Handle double-click on scope: add all signals from that scope to waveform
   const handleScopeDoubleClick = useCallback((scopePath: string) => {
     if (isDemoMode) {
-      const scopeSignals = DEMO_SCOPE_SIGNALS[scopePath];
+      const scopeSignals = demoTree?.signals[scopePath] ?? DEMO_SCOPE_SIGNALS[scopePath];
       if (scopeSignals) {
         // Strip the signalType property to convert DemoSignalInfo to SignalInfo
-        const signals: SignalInfo[] = scopeSignals.map(({ signalType, ...rest }) => rest);
+        const signals: SignalInfo[] = scopeSignals.map((signal) => {
+          if (!('signalType' in signal)) return signal;
+          const { signalType, ...rest } = signal;
+          void signalType;
+          return rest;
+        });
         addSignals(signals);
       }
       return;
@@ -150,7 +158,7 @@ export function HierarchyTree({ sessionId, onViewCode }: HierarchyTreeProps) {
     hierarchyApi.getSignals(sessionId, scopePath).then((result) => {
       addSignals(result.signals);
     });
-  }, [isDemoMode, addSignals, sessionId]);
+  }, [isDemoMode, addSignals, sessionId, demoTree]);
 
   if (!isDemoMode && isLoading) {
     return (

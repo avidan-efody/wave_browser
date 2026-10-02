@@ -100,7 +100,7 @@ interface SignalListProps {
 }
 
 export function SignalList({ sessionId, onViewCode }: SignalListProps) {
-  const { selectedScope, displayedSignals, addSignals, isDemoMode } = useWaveformStore();
+  const { selectedScope, displayedSignals, addSignals, isDemoMode, demoTree } = useWaveformStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
   const [selectedSignals, setSelectedSignals] = useState<Set<string>>(new Set());
@@ -116,10 +116,10 @@ export function SignalList({ sessionId, onViewCode }: SignalListProps) {
   // Get signals based on mode
   const allSignals: (DemoSignalInfo | SignalInfo)[] = useMemo(() => {
     if (isDemoMode && selectedScope) {
-      return DEMO_SCOPE_SIGNALS[selectedScope] || [];
+      return demoTree?.signals[selectedScope] ?? DEMO_SCOPE_SIGNALS[selectedScope] ?? [];
     }
     return apiSignals?.signals || [];
-  }, [isDemoMode, selectedScope, apiSignals?.signals]);
+  }, [isDemoMode, selectedScope, apiSignals?.signals, demoTree]);
 
   // Filter and search signals
   const filteredSignals = useMemo(() => {

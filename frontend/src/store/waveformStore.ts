@@ -3,7 +3,7 @@
  */
 
 import { create } from 'zustand';
-import type { SessionInfo, SignalInfo, WaveformData } from '../api/types';
+import type { ScopeInfo, SessionInfo, SignalInfo, WaveformData } from '../api/types';
 import { DEMO_SESSION, DEMO_SIGNALS, DEMO_WAVEFORM_DATA } from '../demo/demoData';
 
 export function canParentStory(
@@ -95,6 +95,12 @@ export interface CodeLocation {
   label?: string;
 }
 
+export interface DemoTree {
+  roots: ScopeInfo[];
+  children: Record<string, ScopeInfo[]>;
+  signals: Record<string, SignalInfo[]>;
+}
+
 interface WaveformState {
   // Session
   currentSession: SessionInfo | null;
@@ -103,6 +109,8 @@ interface WaveformState {
   // Demo mode
   isDemoMode: boolean;
   loadDemoMode: () => void;
+  /** Hierarchy for a bundled example. The synthetic demo is used when this is null. */
+  demoTree: DemoTree | null;
   
   // Waveform viewer
   displayedSignals: SignalInfo[];
@@ -220,10 +228,12 @@ export const useWaveformStore = create<WaveformState>((set) => ({
     storyPlayToken: 0,
     signalGroups: [],
     isDemoMode: false,
+    demoTree: null,
   }),
   
   // Demo mode
   isDemoMode: false,
+  demoTree: null,
   loadDemoMode: () => set({
     isDemoMode: true,
     currentSession: DEMO_SESSION,
@@ -260,6 +270,7 @@ export const useWaveformStore = create<WaveformState>((set) => ({
       { id: 'demo-s6', type: 'signal', path: 'tb.done' },
     ],
     selectedDividerId: null,
+    demoTree: null,
   }),
   
   // Displayed signals

@@ -7,6 +7,9 @@ export default defineConfig({
   // Change 'wave_browser' to your actual repo name if different
   base: process.env.GITHUB_PAGES ? '/wave_browser/' : '/',
   server: {
+    fs: {
+      allow: ['..', '../example'],
+    },
     port: 5173,
     proxy: {
       '/api': {

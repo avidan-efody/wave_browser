@@ -19,6 +19,7 @@ import { CodePanel } from './components/CodePanel';
 import { useWaveformStore } from './store';
 import { setBackendUrl, sessionsApi, filesApi, examplesApi, type WaveExample } from './api';
 import { applySignalRc } from './rc/applySignalRc';
+import { loadBundledStory } from './demo/loadBundledStory';
 import { applyStoryLinks } from './rc/applyStory';
 import { useUrlParams, buildConnectionUrl, clearConnectionUrl, useCodePanel } from './hooks';
 
@@ -41,7 +42,7 @@ interface ServerConnection {
 }
 
 function AppContent() {
-  const { currentSession, isDemoMode, loadDemoMode, setCurrentSession } = useWaveformStore();
+  const { currentSession, isDemoMode, demoTree, loadDemoMode, setCurrentSession } = useWaveformStore();
   const urlParams = useUrlParams();
   const codePanel = useCodePanel();
   
@@ -179,14 +180,27 @@ function AppContent() {
     await openDatabase(example.wave, example.rc, example.design, example.story ?? null);
   }, [openDatabase]);
 
+  const openBundledStory = useCallback(() => {
+    connectionRef.current = null;
+    setConnection(null);
+    setConnectionError(null);
+    loadBundledStory();
+    addLog('info', 'Opened the bundled FIFO story');
+  }, [addLog]);
+
   // Handle URL params on mount. With no wave file, open the FIFO story.
   useEffect(() => {
     const initFromUrl = async () => {
+      // GitHub Pages is a static site. Do not probe localhost or show the old demo.
+      if (!urlParams.host && window.location.hostname.endsWith('github.io')) {
+        openBundledStory();
+        return;
+      }
       const host = urlParams.host || '127.0.0.1';
       const port = urlParams.port || 8000;
       const connected = await connectToServer(host, port);
       if (!connected) {
-        if (!urlParams.host) loadDemoMode();
+        if (!urlParams.host) openBundledStory();
         return;
       }
 
@@ -216,7 +230,7 @@ function AppContent() {
     };
 
     initFromUrl();
-  }, []); // Only run on mount
+  }, []); // Only run on mount. openBundledStory is stable enough for this one-shot start.
 
   // Handle disconnect
   const handleDisconnect = () => {
@@ -225,7 +239,7 @@ function AppContent() {
     setCurrentSession(null);
     setConnectionError(null);
     clearConnectionUrl();
-    loadDemoMode();
+    openBundledStory();
     addLog('info', 'Disconnected from server');
   };
 
@@ -256,8 +270,12 @@ function AppContent() {
           
           {/* Connection status */}
           {!connection && isDemoMode && (
-            <span className="text-xs text-yellow-400 px-2 py-1 bg-yellow-400/20 rounded border border-yellow-400/30">
-              DEMO MODE
+            <span className={`text-xs px-2 py-1 rounded border ${
+              demoTree
+                ? 'text-wave-accent bg-wave-accent/15 border-wave-accent/30'
+                : 'text-yellow-400 bg-yellow-400/20 border-yellow-400/30'
+            }`}>
+              {demoTree ? 'FIFO story' : 'DEMO MODE'}
             </span>
           )}
           {connection && !connectionError && (
