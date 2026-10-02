@@ -64,6 +64,7 @@ example/sim/AN.DB/
 example/sim/ucli.key
 example/fifo_story/sim/obj_dir/
 example/fifo_story/sim/*.vcd
+!example/fifo_story/sim/waves.vcd
 example/fifo_story/sim/*.fst
 example/fifo_story/sim/hierarchy.tree.json
 example/fifo_story/sim/hierarchy.meta.json
