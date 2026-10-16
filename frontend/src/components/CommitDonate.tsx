@@ -211,7 +211,7 @@ export function CommitDonate() {
       ? 'Could not load issues'
       : issues.length === 0
         ? 'No open bugs or enhancements'
-        : 'bug or enhancement';
+        : 'got spare token? DIY enhancment!';
 
   return (
     <>
@@ -221,7 +221,7 @@ export function CommitDonate() {
           value={selectedNumber}
           disabled={status !== 'ready' || issues.length === 0}
           onChange={(event) => setSelectedNumber(event.target.value)}
-          className="max-w-[16rem] min-w-[12rem] bg-wave-bg border border-wave-border rounded px-2 py-1.5 text-xs text-wave-text disabled:opacity-60"
+          className="max-w-[22rem] min-w-[16rem] bg-wave-bg border border-wave-border rounded px-2 py-1.5 text-xs text-wave-text disabled:opacity-60"
           title={status === 'error' ? errorMessage : 'Open bugs and enhancements'}
         >
           <option value="">{placeholder}</option>
