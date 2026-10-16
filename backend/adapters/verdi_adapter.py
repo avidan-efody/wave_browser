@@ -45,6 +45,10 @@ def _map_scope_type(npi_type: int) -> ScopeType:
         wave.ScopeVhBlock: ScopeType.BLOCK,
         wave.ScopeScModule: ScopeType.MODULE,
     }
+    # Present on Verdi builds that expose SV packages as their own scope type.
+    package_type = getattr(wave, "ScopeSvPackage", None)
+    if package_type is not None:
+        scope_map[package_type] = ScopeType.PACKAGE
     return scope_map.get(npi_type, ScopeType.UNKNOWN)
 
 

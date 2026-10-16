@@ -23,6 +23,7 @@ class ScopeType(str, Enum):
     BLOCK = "block"
     GENERATE = "generate"
     INTERFACE = "interface"
+    PACKAGE = "package"
     PROCESS = "process"
     ARCHITECTURE = "architecture"
     UNKNOWN = "unknown"

@@ -38,6 +38,15 @@ _SPECS = [
         "story": "example/fifo_story/sim/story.json",
     },
     {
+        "id": "bus",
+        "name": "Bus",
+        "description": "A module hierarchy with an interface instance and a package. Interfaces and packages stay hidden until those kinds are checked.",
+        "wave": "example/bus/sim/waves.vcd",
+        "design": "example/bus/sim/hierarchy.tree.json",
+        "rc": "example/bus/sim/waves.rc",
+        "story": None,
+    },
+    {
         "id": "counter",
         "name": "Counter",
         "description": "Small counter with clock, reset, and a note.",

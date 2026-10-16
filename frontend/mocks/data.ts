@@ -40,6 +40,14 @@ export const topScopes: ScopeInfo[] = [
     has_children: true,
     has_signals: true,
   },
+  {
+    name: 'bus_pkg',
+    path: 'bus_pkg',
+    def_name: 'bus_pkg',
+    scope_type: 'package',
+    has_children: false,
+    has_signals: false,
+  },
 ];
 
 export const tbCounterChildren: ScopeInfo[] = [
@@ -49,6 +57,14 @@ export const tbCounterChildren: ScopeInfo[] = [
     def_name: 'counter_top',
     scope_type: 'module',
     has_children: true,
+    has_signals: true,
+  },
+  {
+    name: 'bus',
+    path: 'tb_counter.bus',
+    def_name: 'bus_if',
+    scope_type: 'interface',
+    has_children: false,
     has_signals: true,
   },
 ];

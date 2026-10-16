@@ -9,6 +9,7 @@ import { hierarchyApi } from '../../api';
 import type { ScopeInfo, SignalInfo } from '../../api/types';
 import { useWaveformStore } from '../../store';
 import { DEMO_HIERARCHY, DEMO_CHILD_SCOPES, DEMO_SCOPE_SIGNALS } from '../../demo/demoData';
+import { scopeMatchesKinds, type HierarchyKinds } from './hierarchyKinds';
 import clsx from 'clsx';
 
 interface ScopeNodeProps {
@@ -16,11 +17,12 @@ interface ScopeNodeProps {
   sessionId: string;
   level: number;
   isDemoMode: boolean;
+  kinds: HierarchyKinds;
   onDoubleClick: (scopePath: string) => void;
   onViewCode?: (scopePath: string) => void;
 }
 
-function ScopeNode({ scope, sessionId, level, isDemoMode, onDoubleClick, onViewCode }: ScopeNodeProps) {
+function ScopeNode({ scope, sessionId, level, isDemoMode, kinds, onDoubleClick, onViewCode }: ScopeNodeProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { selectedScope, setSelectedScope } = useWaveformStore();
   const isSelected = selectedScope === scope.path;
@@ -37,7 +39,8 @@ function ScopeNode({ scope, sessionId, level, isDemoMode, onDoubleClick, onViewC
     enabled: !isDemoMode && isExpanded && scope.has_children,
   });
 
-  const actualChildScopes = isDemoMode ? demoChildScopes : (childScopes?.scopes || []);
+  const actualChildScopes = (isDemoMode ? demoChildScopes : (childScopes?.scopes || []))
+    .filter((child) => scopeMatchesKinds(child, kinds));
 
   const handleToggle = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -111,6 +114,7 @@ function ScopeNode({ scope, sessionId, level, isDemoMode, onDoubleClick, onViewC
                 sessionId={sessionId}
                 level={level + 1}
                 isDemoMode={isDemoMode}
+                kinds={kinds}
                 onDoubleClick={onDoubleClick}
                 onViewCode={onViewCode}
               />
@@ -124,10 +128,11 @@ function ScopeNode({ scope, sessionId, level, isDemoMode, onDoubleClick, onViewC
 
 interface HierarchyTreeProps {
   sessionId: string;
+  kinds: HierarchyKinds;
   onViewCode?: (path: string) => void;
 }
 
-export function HierarchyTree({ sessionId, onViewCode }: HierarchyTreeProps) {
+export function HierarchyTree({ sessionId, kinds, onViewCode }: HierarchyTreeProps) {
   const { isDemoMode, addSignals, demoTree } = useWaveformStore();
   
   const { data: topScopes, isLoading, error } = useQuery({
@@ -137,7 +142,8 @@ export function HierarchyTree({ sessionId, onViewCode }: HierarchyTreeProps) {
   });
 
   // Use demo hierarchy when in demo mode
-  const actualTopScopes = isDemoMode ? (demoTree?.roots ?? DEMO_HIERARCHY) : (topScopes?.scopes || []);
+  const actualTopScopes = (isDemoMode ? (demoTree?.roots ?? DEMO_HIERARCHY) : (topScopes?.scopes || []))
+    .filter((scope) => scopeMatchesKinds(scope, kinds));
 
   // Handle double-click on scope: add all signals from that scope to waveform
   const handleScopeDoubleClick = useCallback((scopePath: string) => {
@@ -185,6 +191,7 @@ export function HierarchyTree({ sessionId, onViewCode }: HierarchyTreeProps) {
           sessionId={sessionId}
           level={0}
           isDemoMode={isDemoMode}
+          kinds={kinds}
           onDoubleClick={handleScopeDoubleClick}
           onViewCode={onViewCode}
         />

@@ -1,0 +1,10 @@
+Magic 271485
+Revision WaveBrowser
+
+openDirFile -d /
+windowTimeUnit 1ps
+
+addGroup "Bus example"
+addSignal -h 15 /tb_bus/clk
+addSignal -h 15 /tb_bus/u_src/next_data
+addSignal -h 15 /tb_bus/u_snk/seen

@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FolderOpen, Database, Play, Wifi, WifiOff, AlertCircle, RefreshCw } from 'lucide-react';
 import { HierarchyPanel } from './components/HierarchyPanel';
 import { WaveformViewer } from './components/WaveformViewer';
+import { CommitDonate } from './components/CommitDonate';
 import { SessionDialog } from './components/SessionDialog';
 import { OpenDialog } from './components/OpenDialog';
 import { LogPanel, LogEntry } from './components/LogPanel';
@@ -355,6 +356,7 @@ function AppContent() {
               Open Database
             </button>
           )}
+          <CommitDonate />
         </div>
       </header>
 

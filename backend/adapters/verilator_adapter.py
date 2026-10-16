@@ -302,7 +302,8 @@ def _parse_vcd(
                     scope_name = parts[2]
                     parent = stack[-1].path if stack else ""
                     scope_path = f"{parent}.{scope_name}" if parent else scope_name
-                    scope = _Scope(scope_path, scope_name, ScopeType.MODULE, None)
+                    scope_type = _VCD_SCOPE_TYPES.get(parts[1].lower(), ScopeType.MODULE)
+                    scope = _Scope(scope_path, scope_name, scope_type, None)
                     scopes[scope_path] = scope
                     if stack:
                         stack[-1].children[scope_name] = scope
@@ -436,7 +437,7 @@ def _hierarchy_from_json(
     modules = [
         mod
         for mod in tree.get("modulesp", [])
-        if isinstance(mod, dict) and _is_user_module(mod)
+        if isinstance(mod, dict) and _is_hierarchy_def(mod)
     ]
     referenced = set()
     for mod in modules:
@@ -458,15 +459,42 @@ def _hierarchy_from_json(
     return tops, scopes, signals
 
 
-def _is_user_module(mod: dict) -> bool:
-    if mod.get("type") != "MODULE":
+# Verilator's JSON uses these node types for elaboratable scopes.
+# Interface and package definitions are flagged inLibrary even when the
+# user wrote them, so that flag only excludes library modules.
+_DEF_SCOPE_TYPES = {
+    "MODULE": ScopeType.MODULE,
+    "IFACE": ScopeType.INTERFACE,
+    "PACKAGE": ScopeType.PACKAGE,
+}
+
+_VCD_SCOPE_TYPES = {
+    "module": ScopeType.MODULE,
+    "task": ScopeType.TASK,
+    "function": ScopeType.FUNCTION,
+    "begin": ScopeType.BLOCK,
+    "fork": ScopeType.BLOCK,
+    "interface": ScopeType.INTERFACE,
+    "package": ScopeType.PACKAGE,
+}
+
+
+def _is_hierarchy_def(mod: dict) -> bool:
+    kind = mod.get("type")
+    if kind not in _DEF_SCOPE_TYPES:
         return False
     name = str(mod.get("name") or "")
-    if not name or name.startswith("@") or name.startswith("$"):
+    if not name or name.startswith("@") or name.startswith("$") or name == "std":
         return False
-    if mod.get("dead") or mod.get("inLibrary"):
+    if mod.get("dead"):
+        return False
+    if kind == "MODULE" and mod.get("inLibrary"):
         return False
     return True
+
+
+def _scope_type_of(mod: dict) -> ScopeType:
+    return _DEF_SCOPE_TYPES.get(str(mod.get("type") or ""), ScopeType.MODULE)
 
 
 def _add_module_scope(
@@ -481,7 +509,7 @@ def _add_module_scope(
     name = instance_name or str(mod.get("origName") or mod.get("name"))
     path = f"{parent_path}.{name}" if parent_path else name
     def_name = str(mod.get("origName") or mod.get("name") or name)
-    scope = _Scope(path, name, ScopeType.MODULE, def_name)
+    scope = _Scope(path, name, _scope_type_of(mod), def_name)
     scopes[path] = scope
     _walk_stmts(mod, scope, scopes, signals, by_addr)
     return scope

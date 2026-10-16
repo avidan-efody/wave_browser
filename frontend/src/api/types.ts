@@ -4,7 +4,7 @@
 
 // Enums
 export type SignalDirection = 'input' | 'output' | 'inout' | 'none';
-export type ScopeType = 'module' | 'task' | 'function' | 'block' | 'generate' | 'interface' | 'process' | 'architecture' | 'unknown';
+export type ScopeType = 'module' | 'task' | 'function' | 'block' | 'generate' | 'interface' | 'package' | 'process' | 'architecture' | 'unknown';
 export type ValueFormat = 'bin' | 'oct' | 'dec' | 'hex';
 
 // Session
