@@ -6,8 +6,8 @@ openDirFile -d /
 windowTimeUnit 1ps
 cursor 315000.000000
 
-#--addNote 120000.000000 /tb_fifo_story/wdata "A5C319E7 enters"
-#--addNote 195000.000000 /tb_fifo_story/full "FIFO full, word still inside"
+#--addNote 116800.000000 "cpu_instr.log/opcode=ADD rd" "A5C319E7 enters"
+#--addNote 170000.000000 pcie_tlp.log/CplD "FIFO full, word still inside"
 #--addNote 275000.000000 /tb_fifo_story/rdata "A5C319E7 exits intact"
 #--addNote 295000.000000 /tb_fifo_story/bit_out "1/5 = 1"
 #--addNote 305000.000000 /tb_fifo_story/bit_expected "2/5 = 1"
@@ -15,6 +15,11 @@ cursor 315000.000000
 #--addNote 325000.000000 /tb_fifo_story/bit_out "3/5 = 0, wanted 1"
 #--addNote 335000.000000 /tb_fifo_story/bit_expected "4/5 = 1, wanted 0"
 #--addNote 345000.000000 /tb_fifo_story/shift_reg "5/5 = 1, wanted 0"
+
+; Log traces. #--addLog file regex
+#--addLog cpu_instr.log "opcode=ADD rd"
+#--addLog pcie_tlp.log CplD
+#--addLog amba_axi.log "AXI AW"
 
 addGroup "Into the FIFO"
 addSignal -h 15 /tb_fifo_story/push

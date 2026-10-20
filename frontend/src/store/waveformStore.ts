@@ -48,6 +48,22 @@ export interface NamedMarker {
   parentId?: string | null;
 }
 
+/** One timed log message chosen on the wave or in the log list. */
+export interface SelectedLogEvent {
+  signalPath: string;
+  time: number;
+  text: string;
+}
+
+/** A log regex installed as a wave of event arrows. */
+export interface LogTrace {
+  signalPath: string;
+  logName: string;
+  /** Absolute path on the server, or the bundled file name. */
+  logPath: string;
+  pattern: string;
+}
+
 /** A comment pinned to one signal at one time. */
 export interface WaveNote {
   id: string;
@@ -143,6 +159,12 @@ interface WaveformState {
   updateMarker: (id: string, updates: Partial<Omit<NamedMarker, 'id'>>) => void;
 
   notes: WaveNote[];
+  logTraces: LogTrace[];
+  logsExpanded: boolean;
+  setLogsExpanded: (expanded: boolean) => void;
+  selectedLogEvent: SelectedLogEvent | null;
+  selectLogEvent: (event: SelectedLogEvent) => void;
+  addLogSignal: (trace: LogTrace, signal: SignalInfo, data: WaveformData, atStart?: boolean) => void;
   addNote: (text: string, time: number, signalPath: string) => void;
   removeNote: (id: string) => void;
   updateNote: (id: string, text: string) => void;
@@ -222,6 +244,9 @@ export const useWaveformStore = create<WaveformState>((set) => ({
     selectedDividerId: null,
     markers: [],
     notes: [],
+    logTraces: [],
+    logsExpanded: false,
+    selectedLogEvent: null,
     selectedNoteId: null,
     selectedStoryId: null,
     storyPlayback: null,
@@ -251,6 +276,9 @@ export const useWaveformStore = create<WaveformState>((set) => ({
     notes: [
       { id: 'demo-n1', time: 100, signalPath: 'tb.clk', text: 'counting starts' },
     ],
+    logTraces: [],
+    logsExpanded: false,
+    selectedLogEvent: null,
     selectedNoteId: null,
     selectedStoryId: null,
     storyPlayback: null,
@@ -300,6 +328,7 @@ export const useWaveformStore = create<WaveformState>((set) => ({
     displayedSignals: state.displayedSignals.filter(s => s.path !== signalPath),
     waveRows: state.waveRows.filter(row => row.type !== 'signal' || row.path !== signalPath),
     selectedSignal: state.selectedSignal === signalPath ? null : state.selectedSignal,
+    logTraces: state.logTraces.filter((trace) => trace.signalPath !== signalPath),
     waveformData: Object.fromEntries(
       Object.entries(state.waveformData).filter(([k]) => k !== signalPath)
     ),
@@ -342,6 +371,41 @@ export const useWaveformStore = create<WaveformState>((set) => ({
   })),
 
   notes: [],
+  logTraces: [],
+  logsExpanded: false,
+  selectedLogEvent: null,
+  setLogsExpanded: (expanded) => set({ logsExpanded: expanded }),
+  selectLogEvent: (event) => set({
+    selectedLogEvent: event,
+    selectedSignal: event.signalPath,
+    selectedDividerId: null,
+    selectedNoteId: null,
+    selectedStoryId: null,
+    cursorTime: event.time,
+  }),
+  addLogSignal: (trace, signal, data, atStart = false) => set((state) => {
+    if (state.displayedSignals.some((item) => item.path === signal.path)) return state;
+    const row = { id: crypto.randomUUID(), type: 'signal' as const, path: signal.path };
+    if (!atStart) {
+      return {
+        displayedSignals: [...state.displayedSignals, signal],
+        waveRows: [...state.waveRows, row],
+        waveformData: { ...state.waveformData, [signal.path]: data },
+        logTraces: [...state.logTraces, trace],
+      };
+    }
+    const insertAt = state.logTraces.length;
+    const displayedSignals = [...state.displayedSignals];
+    const waveRows = [...state.waveRows];
+    displayedSignals.splice(insertAt, 0, signal);
+    waveRows.splice(insertAt, 0, row);
+    return {
+      displayedSignals,
+      waveRows,
+      waveformData: { ...state.waveformData, [signal.path]: data },
+      logTraces: [...state.logTraces, trace],
+    };
+  }),
   selectedNoteId: null,
   addNote: (text, time, signalPath) => set((state) => ({
     notes: [...state.notes, { id: crypto.randomUUID(), text, time, signalPath }],
@@ -385,6 +449,7 @@ export const useWaveformStore = create<WaveformState>((set) => ({
     selectedDividerId: null,
     selectedNoteId: null,
     selectedStoryId: null,
+    selectedLogEvent: null,
   }),
 
   waveRows: [],
@@ -397,6 +462,8 @@ export const useWaveformStore = create<WaveformState>((set) => ({
     waveRows: rows,
     markers,
     notes,
+    logTraces: [],
+    selectedLogEvent: null,
     cursorTime,
     waveformData: {},
     signalGroups: [],

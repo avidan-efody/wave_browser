@@ -22,6 +22,7 @@ import { setBackendUrl, sessionsApi, filesApi, examplesApi, type WaveExample } f
 import { applySignalRc } from './rc/applySignalRc';
 import { loadBundledStory } from './demo/loadBundledStory';
 import { applyStoryLinks } from './rc/applyStory';
+import { waveDirectory } from './logs/bundled';
 import { useUrlParams, buildConnectionUrl, clearConnectionUrl, useCodePanel } from './hooks';
 
 // Version for debugging - update when making changes
@@ -43,7 +44,7 @@ interface ServerConnection {
 }
 
 function AppContent() {
-  const { currentSession, isDemoMode, demoTree, loadDemoMode, setCurrentSession } = useWaveformStore();
+  const { currentSession, isDemoMode, demoTree, loadDemoMode, setCurrentSession, logsExpanded } = useWaveformStore();
   const urlParams = useUrlParams();
   const codePanel = useCodePanel();
   
@@ -134,15 +135,34 @@ function AppContent() {
       
       setCurrentSession(response.session);
 
-      if (rcPath) {
-        addLog('info', `Loading RC file: ${rcPath}`);
+      let resolvedRc = rcPath;
+      if (!resolvedRc) {
+        const directory = waveDirectory(fsdbPath);
+        if (directory) {
+          try {
+            const listing = await filesApi.list(directory);
+            const rcFiles = listing.entries
+              .filter((entry) => !entry.is_dir && entry.name.toLowerCase().endsWith('.rc'))
+              .sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+            if (rcFiles.length > 0) resolvedRc = rcFiles[0].path;
+          } catch {
+            resolvedRc = null;
+          }
+        }
+      }
+
+      if (resolvedRc) {
+        addLog('info', `Loading RC file: ${resolvedRc}`);
         try {
-          const file = await filesApi.getContent(rcPath);
+          const file = await filesApi.getContent(resolvedRc);
           const applied = await applySignalRc(response.session.id, response.session.time_unit, file.content);
           addLog(
             'success',
-            `RC applied: ${applied.signalCount} signals, ${applied.groupCount} groups, ${applied.dividerCount} dividers, ${applied.markerCount} markers, ${applied.noteCount} notes`,
+            `RC applied: ${applied.signalCount} signals, ${applied.groupCount} groups, ${applied.dividerCount} dividers, ${applied.markerCount} markers, ${applied.noteCount} notes, ${applied.logCount} logs`,
           );
+          for (const warning of applied.logWarnings) {
+            addLog('warn', warning);
+          }
           if (applied.missing.length > 0) {
             addLog('warn', `RC signals not in the design: ${applied.missing.join(', ')}`);
           }
@@ -164,7 +184,7 @@ function AppContent() {
         }
       }
       
-      const newUrl = buildConnectionUrl(active.host, active.port, fsdbPath, design, rcPath, story);
+      const newUrl = buildConnectionUrl(active.host, active.port, fsdbPath, design, resolvedRc, story);
       window.history.replaceState({}, '', newUrl);
       
     } catch (error) {
@@ -192,8 +212,9 @@ function AppContent() {
   // Handle URL params on mount. With no wave file, open the FIFO story.
   useEffect(() => {
     const initFromUrl = async () => {
-      // GitHub Pages is a static site. Do not probe localhost or show the old demo.
-      if (!urlParams.host && window.location.hostname.endsWith('github.io')) {
+      // The GitHub Pages build has no backend. Open the FIFO story, including its log traces.
+      const pagesBuild = import.meta.env.BASE_URL !== '/';
+      if (!urlParams.host && (pagesBuild || window.location.hostname.endsWith('github.io'))) {
         openBundledStory();
         return;
       }
@@ -382,9 +403,11 @@ function AppContent() {
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="flex-1 flex overflow-hidden">
           {/* Left panel - Hierarchy */}
-          <div className="w-80 border-r border-wave-border flex-shrink-0 overflow-hidden">
-            <HierarchyPanel onViewCode={codePanel.viewCode} />
-          </div>
+          {!logsExpanded && (
+            <div className="w-80 border-r border-wave-border flex-shrink-0 overflow-hidden">
+              <HierarchyPanel onViewCode={codePanel.viewCode} />
+            </div>
+          )}
 
           {/* Right panel - Waveform Viewer + Code Panel */}
           <div className="flex-1 overflow-hidden flex flex-col">
@@ -392,18 +415,20 @@ function AppContent() {
               <WaveformViewer />
             </div>
             {/* Code Panel (collapsible) */}
-            <CodePanel
-              location={codePanel.location}
-              content={codePanel.content}
-              isLoading={codePanel.isLoading}
-              error={codePanel.error}
-              onClose={codePanel.close}
-            />
+            {!logsExpanded && (
+              <CodePanel
+                location={codePanel.location}
+                content={codePanel.content}
+                isLoading={codePanel.isLoading}
+                error={codePanel.error}
+                onClose={codePanel.close}
+              />
+            )}
           </div>
         </div>
 
-        {/* Log panel */}
-        <LogPanel logs={logs} onClear={clearLogs} isLoading={isLoading} />
+        {/* Application message log. Hidden while the transaction logs fill the window. */}
+        {!logsExpanded && <LogPanel logs={logs} onClear={clearLogs} isLoading={isLoading} />}
       </div>
 
       {/* Status bar */}

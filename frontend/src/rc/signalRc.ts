@@ -10,10 +10,17 @@
 import type { SignalInfo } from '../api/types';
 import type { NamedMarker, WaveNote, WaveRow } from '../store/waveformStore';
 
+/** A log file plus the regex that should become a wave of event arrows. */
+export interface LogCommand {
+  file: string;
+  pattern: string;
+}
+
 export interface ParsedSignalRc {
   rows: WaveRow[];
   markers: NamedMarker[];
   notes: WaveNote[];
+  logs: LogCommand[];
   cursorTime: number | null;
   /** Time unit declared by windowTimeUnit, if any. */
   timeUnit: string | null;
@@ -118,25 +125,35 @@ function quote(value: string): string {
   return value;
 }
 
+function parseAddLog(line: string): LogCommand | null {
+  const tokens = tokenize(line);
+  if (tokens[0] !== '#--addLog' || tokens.length < 3) return null;
+  const file = tokens[1];
+  const pattern = tokens.slice(2).join(' ');
+  if (!file || !pattern) return null;
+  return { file, pattern };
+}
+
 function parseAddNote(
   line: string,
   delimiter: string,
   scale: (value: number) => number,
 ): WaveNote | null {
-  const body = line.replace(/^#--addNote\s+/, '');
-  const match = body.match(/^(\S+)\s+(\S+)\s+([\s\S]+)$/);
-  if (!match) return null;
-  const time = scale(Number(match[1]));
+  const tokens = tokenize(line);
+  if (tokens[0] !== '#--addNote' || tokens.length < 4) return null;
+  const time = scale(Number(tokens[1]));
   if (!Number.isFinite(time)) return null;
-  let signal = match[2];
-  let text = match[3].trim();
-  if ((text.startsWith('"') && text.endsWith('"')) || (text.startsWith("'") && text.endsWith("'"))) {
-    text = text.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
-  }
-  if (signal.includes(delimiter) || signal.startsWith(delimiter)) {
-    signal = rcPathToBrowser(signal, delimiter);
-  }
+  let signal = tokens[2];
+  const text = tokens.slice(3).join(' ');
+  if (!signal || !text) return null;
+  // Hierarchy paths start with the RC delimiter. A log path is file/regex and stays literal.
+  if (signal.startsWith(delimiter)) signal = rcPathToBrowser(signal, delimiter);
   return { id: newId(), time, signalPath: signal, text };
+}
+
+function noteRcPath(signalPath: string): string {
+  if (signalPath.includes('/')) return quote(signalPath);
+  return '/' + signalPath.split('.').join('/');
 }
 
 function readDelimiter(lines: string[]): string {
@@ -222,6 +239,7 @@ export function parseSignalRc(content: string, dbTimeUnit: string): ParsedSignal
   const rows: WaveRow[] = [];
   const markers: NamedMarker[] = [];
   const notes: WaveNote[] = [];
+  const logs: LogCommand[] = [];
   let cursorTime: number | null = null;
   let timeUnit: string | null = null;
   let lastParent = '';
@@ -244,6 +262,11 @@ export function parseSignalRc(content: string, dbTimeUnit: string): ParsedSignal
     if (line.startsWith('#--addNote')) {
       const note = parseAddNote(line, delimiter, scale);
       if (note) notes.push(note);
+      continue;
+    }
+    if (line.startsWith('#--addLog')) {
+      const log = parseAddLog(line);
+      if (log) logs.push(log);
       continue;
     }
     if (line.startsWith('#')) continue;
@@ -296,7 +319,7 @@ export function parseSignalRc(content: string, dbTimeUnit: string): ParsedSignal
     }
   }
 
-  return { rows, markers, notes, cursorTime, timeUnit };
+  return { rows, markers, notes, logs, cursorTime, timeUnit };
 }
 
 export interface FormatSignalRcInput {
@@ -304,6 +327,7 @@ export interface FormatSignalRcInput {
   signals: SignalInfo[];
   markers: NamedMarker[];
   notes: WaveNote[];
+  logs: LogCommand[];
   cursorTime: number | null;
   timeUnit: string;
 }
@@ -331,8 +355,13 @@ export function formatSignalRc(input: FormatSignalRcInput): string {
   }
   const notes = [...input.notes].sort((a, b) => a.time - b.time);
   for (const note of notes) {
-    const rcPath = '/' + note.signalPath.split('.').join('/');
-    lines.push(`#--addNote ${note.time.toFixed(6)} ${rcPath} ${quote(note.text)}`);
+    lines.push(`#--addNote ${note.time.toFixed(6)} ${noteRcPath(note.signalPath)} ${quote(note.text)}`);
+  }
+  if (input.logs.length > 0) {
+    lines.push('', '; Log traces. #--addLog file regex');
+    for (const log of input.logs) {
+      lines.push(`#--addLog ${quote(log.file)} ${quote(log.pattern)}`);
+    }
   }
   lines.push('');
 

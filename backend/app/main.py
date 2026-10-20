@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from .routers import sessions, hierarchy, waveform, files, examples
+from .routers import sessions, hierarchy, waveform, files, examples, logs
 from .config import settings
 from .logging_config import setup_logging, get_logger
 from .middleware import RequestLoggingMiddleware
@@ -65,6 +65,7 @@ app.include_router(hierarchy.router, prefix="/api/hierarchy", tags=["Hierarchy"]
 app.include_router(waveform.router, prefix="/api/waveform", tags=["Waveform"])
 app.include_router(files.router, prefix="/api/files", tags=["Files"])
 app.include_router(examples.router, prefix="/api/examples", tags=["Examples"])
+app.include_router(logs.router, prefix="/api/logs", tags=["Logs"])
 
 
 @app.get("/health")

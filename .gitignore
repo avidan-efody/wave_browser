@@ -29,7 +29,10 @@ Thumbs.db
 
 # Logs
 logs/
+!frontend/src/logs/
+!frontend/src/logs/**
 *.log
+!example/**/*.log
 npiLog/
 
 # Test outputs

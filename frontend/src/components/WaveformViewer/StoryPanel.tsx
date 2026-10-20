@@ -37,7 +37,9 @@ function storyItems(markers: NamedMarker[], notes: WaveNote[]): StoryItem[] {
       kind: 'note' as const,
       time: note.time,
       label: note.text,
-      detail: note.signalPath.split('.').pop() ?? note.signalPath,
+      detail: note.signalPath.includes('/')
+        ? note.signalPath
+        : (note.signalPath.split('.').pop() ?? note.signalPath),
       parentId: note.parentId ?? null,
     })),
   ];
@@ -497,7 +499,7 @@ export function StoryPanel({ onContextMenu }: StoryPanelProps) {
   };
 
   return (
-    <div className="h-64 shrink-0 border-t border-wave-border bg-wave-panel flex flex-col" data-panel="story">
+    <div className="h-full min-h-0 bg-wave-panel flex flex-col" data-panel="story">
       <div className="px-3 py-1 text-[11px] uppercase tracking-wide text-wave-text/50 border-b border-wave-border flex items-center justify-between">
         <span>Story</span>
         <span className="normal-case tracking-normal">Drag a later event onto an earlier one</span>

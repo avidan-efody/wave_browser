@@ -1,0 +1,30 @@
+# amba axi4 write and read bursts
+INFO amba axi monitor armed
+@20000ps AXI AW addr=00001000 id=03 len=00 size=2 burst=INCR cache=0 prot=0
+@25000ps AXI W data=a5c319e7 strb=f last=1 id=03
+@30000ps AXI B resp=OKAY id=03
+[60000 ps] AXI AR addr=00001000 id=01 len=00 size=2 burst=INCR
+@65000ps AXI R data=a5c319e7 resp=OKAY last=1 id=01
+AXI handshake timeout ignored id=ff
+@100000ps AXI AW addr=00002000 id=04 len=03 size=2 burst=INCR
+@105000ps AXI W data=11111111 strb=f last=0 id=04
+@110000ps AXI W data=22222222 strb=f last=0 id=04
+time=115000ps AXI W data=33333333 strb=f last=0 id=04
+@120000ps AXI W data=00000079 strb=f last=1 id=04
+@125000ps AXI B resp=OKAY id=04
+140000ps AXI AR addr=00002000 id=05 len=03 size=2 burst=INCR
+@145000ps AXI R data=11111111 resp=OKAY last=0 id=05
+@150000ps AXI R data=22222222 resp=OKAY last=0 id=05
+@155000ps AXI R data=33333333 resp=OKAY last=0 id=05
+@160000ps AXI R data=00000079 resp=OKAY last=1 id=05
+@200000ps AXI AW addr=00003000 id=06 len=00 size=3 burst=INCR
+@205000ps AXI W data=c0ffee00 strb=ff last=1 id=06
+@210000ps AXI B resp=SLVERR id=06
+[250000 ps] AXI AR addr=00004000 id=07 len=01 size=2 burst=WRAP
+@255000ps AXI R data=00000001 resp=OKAY last=0 id=07
+@260000ps AXI R data=00000000 resp=DECERR last=1 id=07
+time=300000ps AXI AW addr=80001000 id=08 len=07 size=2 burst=INCR
+@305000ps AXI W data=a5c319e7 strb=f last=0 id=08
+@340000ps AXI W data=00000086 strb=f last=1 id=08
+@345000ps AXI B resp=OKAY id=08
+INFO amba axi monitor stopped

@@ -1,0 +1,21 @@
+# pcie transaction layer packets
+INFO pcie link up gen3 x8
+@40000ps PCIE MemWr fmt=3DW type=MWr reqid=0100 tag=1a addr=80001000 len=4 first_be=f last_be=0 data=a5c319e7
+@55000ps PCIE CplD fmt=3DW type=CplD reqid=0200 tag=1a status=SC addr=80001000 len=4 bc=010
+@70000ps PCIE MemRd fmt=3DW type=MRd reqid=0100 tag=07 addr=80002000 len=1 first_be=f
+[90000 ps] PCIE CplD fmt=3DW type=CplD reqid=0200 tag=07 status=SC addr=80002000 len=1 bc=004 data=00000001
+@110000ps PCIE MemWr fmt=4DW type=MWr reqid=0100 tag=1b addr=80003000 len=8 first_be=f last_be=f
+@130000ps PCIE Cpl fmt=3DW type=Cpl reqid=0200 tag=1b status=SC bc=000
+time=150000ps PCIE MemRd fmt=3DW type=MRd reqid=0100 tag=0c addr=80004000 len=2
+@170000ps PCIE CplD fmt=3DW type=CplD reqid=0200 tag=0c status=SC addr=80004000 len=2 bc=008
+PCIE Malformed TLP dropped tag=ff
+@190000ps PCIE MemWr fmt=3DW type=MWr reqid=0100 tag=11 addr=80001004 len=1 data=00000079
+@210000ps PCIE Msg code=ERR_COR reqid=0100
+[230000 ps] PCIE MemRd fmt=3DW type=MRd reqid=0300 tag=22 addr=90000000 len=16
+@250000ps PCIE CplD fmt=3DW type=CplD reqid=0400 tag=22 status=UR addr=90000000 len=16
+time=270000ps PCIE MemWr fmt=3DW type=MWr reqid=0100 tag=19 addr=80005000 len=4 data=deadbeef
+@290000ps PCIE Cpl fmt=3DW type=Cpl reqid=0200 tag=19 status=SC
+@310000ps PCIE MemRd fmt=4DW type=MRd reqid=0100 tag=2a addr=100000000 len=1
+@330000ps PCIE CplD fmt=3DW type=CplD reqid=0200 tag=2a status=SC len=1 data=00000086
+@350000ps PCIE Msg code=PME_TO_Ack reqid=0100
+INFO pcie trace closed

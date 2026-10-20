@@ -7,9 +7,12 @@ import storyText from '../../../example/fifo_story/sim/story.json?raw';
 import rcText from '../../../example/fifo_story/sim/waves.rc?raw';
 import vcdText from '../../../example/fifo_story/sim/waves.vcd?raw';
 import type { SignalInfo, WaveformData } from '../api/types';
+import { bundledLogText } from '../logs/bundled';
+import { buildLogSignal } from '../logs/query';
+import { scanText } from '../logs/scan';
 import { applyStoryLinks } from '../rc/applyStory';
 import { parseSignalRc } from '../rc/signalRc';
-import { useWaveformStore } from '../store';
+import { useWaveformStore, type LogTrace, type WaveRow } from '../store';
 import { parseVcd } from './parseVcd';
 
 function stubSignal(path: string): SignalInfo {
@@ -71,13 +74,44 @@ export function loadBundledStory(): void {
     notes: rc.notes,
     cursorTime: rc.cursorTime,
   });
+  const logSignals: SignalInfo[] = [];
+  const logRows: WaveRow[] = [];
+  const logTraces: LogTrace[] = [];
+  for (const spec of rc.logs) {
+    const logName = spec.file.split(/[/\\]/).pop() || spec.file;
+    const text = bundledLogText(logName);
+    if (text == null) continue;
+    let scanned;
+    try {
+      scanned = scanText(text, spec.pattern, 'ps');
+    } catch {
+      continue;
+    }
+    if (scanned.done.too_wide) continue;
+    const built = buildLogSignal(
+      logName,
+      logName,
+      spec.pattern,
+      scanned.done.events,
+      'ps',
+      parsed.minTime,
+      parsed.maxTime,
+    );
+    waveformData[built.signal.path] = built.data;
+    logSignals.push(built.signal);
+    logRows.push({ id: crypto.randomUUID(), type: 'signal' as const, path: built.signal.path });
+    logTraces.push(built.trace);
+  }
   const story = JSON.parse(storyText) as { links?: { child: string; parent: string }[] };
   applyStoryLinks(story.links ?? []);
-  useWaveformStore.setState({
+  useWaveformStore.setState((state) => ({
     isDemoMode: true,
     demoTree: parsed.tree,
     waveformData,
+    displayedSignals: [...logSignals, ...state.displayedSignals],
+    waveRows: [...logRows, ...state.waveRows],
+    logTraces,
     viewStart: parsed.minTime,
     viewEnd: parsed.maxTime,
-  });
+  }));
 }

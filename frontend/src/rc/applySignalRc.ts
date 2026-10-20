@@ -4,6 +4,7 @@
 
 import type { SignalInfo } from '../api/types';
 import { hierarchyApi } from '../api';
+import { buildLogSignal, queryLogEvents } from '../logs/query';
 import { useWaveformStore } from '../store';
 import { parseSignalRc } from './signalRc';
 
@@ -13,6 +14,8 @@ export interface ApplySignalRcResult {
   dividerCount: number;
   markerCount: number;
   noteCount: number;
+  logCount: number;
+  logWarnings: string[];
   missing: string[];
 }
 
@@ -51,7 +54,8 @@ export async function applySignalRc(
     }
   }));
 
-  useWaveformStore.getState().applyRcLayout({
+  const store = useWaveformStore.getState();
+  store.applyRcLayout({
     signals: resolved,
     rows: parsed.rows,
     markers: parsed.markers,
@@ -59,12 +63,47 @@ export async function applySignalRc(
     cursorTime: parsed.cursorTime,
   });
 
+  const logWarnings: string[] = [];
+  let logCount = 0;
+  const session = useWaveformStore.getState().currentSession;
+  for (const spec of parsed.logs) {
+    try {
+      const found = await queryLogEvents(
+        spec.file,
+        spec.pattern,
+        session?.wave_db,
+        timeUnit,
+        useWaveformStore.getState().isDemoMode,
+      );
+      if (found.done.too_wide) {
+        logWarnings.push(`${spec.file}: match is too wide`);
+        continue;
+      }
+      const built = buildLogSignal(
+        found.logName,
+        found.logPath,
+        spec.pattern,
+        found.done.events,
+        timeUnit,
+        session?.min_time ?? 0,
+        session?.max_time ?? 0,
+      );
+      useWaveformStore.getState().addLogSignal(built.trace, built.signal, built.data, true);
+      logCount += 1;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Log search failed';
+      logWarnings.push(`${spec.file}: ${message}`);
+    }
+  }
+
   return {
     signalCount: resolved.length,
     groupCount: parsed.rows.filter((row) => row.type === 'group').length,
     dividerCount: parsed.rows.filter((row) => row.type === 'divider').length,
     markerCount: parsed.markers.length,
     noteCount: parsed.notes.length,
+    logCount,
+    logWarnings,
     missing,
   };
 }

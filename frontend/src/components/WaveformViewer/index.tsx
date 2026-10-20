@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { X, ZoomIn, ZoomOut, Maximize2, ChevronLeft, ChevronRight, Bookmark, Search, Save, Minus, FolderPlus, Download, MessageSquare } from 'lucide-react';
 import { WaveformCanvas } from './WaveformCanvas';
 import { StoryPanel } from './StoryPanel';
+import { LogsPanel } from './LogsPanel';
 import { WaveContextMenu, type WaveMenuTarget } from './WaveContextMenu';
 import { sessionsApi, waveformApi } from '../../api';
 import { useWaveformStore } from '../../store';
@@ -29,6 +30,9 @@ export function WaveformViewer() {
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
   const [showSaveMenu, setShowSaveMenu] = useState(false);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; target: WaveMenuTarget } | null>(null);
+  const [logsWidth, setLogsWidth] = useState<number | null>(null);
+  const logsDrag = useRef<{ startX: number; startWidth: number; parent: number } | null>(null);
+  const bandRef = useRef<HTMLDivElement>(null);
   
   const {
     currentSession,
@@ -45,6 +49,8 @@ export function WaveformViewer() {
     markers,
     addMarker,
     notes,
+    logTraces,
+    logsExpanded,
     addNote,
     removeNote,
     removeMarker,
@@ -110,7 +116,8 @@ export function WaveformViewer() {
   }, [selectedSignal, selectedDividerId, selectedNoteId, selectedStoryId, markers, removeSignal, removeWaveRow, removeNote, removeMarker]);
 
   // Fetch waveform data for displayed signals (skip in demo mode)
-  const signalsToFetch = displayedSignals.filter(s => !waveformData[s.path]);
+  const logPaths = new Set(logTraces.map((trace) => trace.signalPath));
+  const signalsToFetch = displayedSignals.filter(s => !waveformData[s.path] && !logPaths.has(s.path));
   
   useQuery({
     queryKey: ['waveformBatch', currentSession?.id, signalsToFetch.map(s => s.path), viewStart, viewEnd],
@@ -250,6 +257,7 @@ export function WaveformViewer() {
     signals: displayedSignals,
     markers,
     notes,
+    logs: logTraces.map((trace) => ({ file: trace.logName, pattern: trace.pattern })),
     cursorTime,
     timeUnit: currentSession?.time_unit || 'ps',
   });
@@ -299,10 +307,20 @@ export function WaveformViewer() {
     );
   }
 
+  const selectedLog = logTraces.find((trace) => trace.signalPath === selectedSignal);
+  let logMessage = '';
+  if (selectedLog && cursorTime != null) {
+    const data = waveformData[selectedLog.signalPath];
+    for (const change of data?.changes ?? []) {
+      if (change.time > cursorTime) break;
+      logMessage = change.value;
+    }
+  }
+
   return (
     <div ref={containerRef} data-capture="wave-display" className="h-full flex flex-col bg-wave-bg">
       {/* Toolbar */}
-      <div className="flex items-center gap-2 px-4 py-2 border-b border-wave-border bg-wave-panel">
+      {!logsExpanded && <div className="flex items-center gap-2 px-4 py-2 border-b border-wave-border bg-wave-panel">
         {/* Zoom controls */}
         <button
           onClick={handleZoomIn}
@@ -575,10 +593,10 @@ export function WaveformViewer() {
             Cursor: {cursorTime} {currentSession.time_unit}
           </div>
         )}
-      </div>
+      </div>}
 
       {/* Waveform display */}
-      <div className="flex-1 overflow-auto">
+      {!logsExpanded && <div className="flex-1 overflow-auto">
         {displayedSignals.length === 0 && waveRows.length === 0 ? (
           <div className="h-full flex items-center justify-center text-wave-text/50">
             Add signals from the hierarchy panel
@@ -592,9 +610,61 @@ export function WaveformViewer() {
             onContextMenuTarget={(x, y, target) => setContextMenu({ x, y, target })}
           />
         )}
-      </div>
+      </div>}
 
-      <StoryPanel onContextMenu={(x, y, target) => setContextMenu({ x, y, target })} />
+      <div
+        ref={bandRef}
+        className={logsExpanded ? 'flex-1 min-h-0 flex flex-col' : 'h-72 shrink-0 border-t border-wave-border flex min-h-0'}
+      >
+        {!logsExpanded && (
+          <div className="flex-1 min-w-0 overflow-hidden">
+            <StoryPanel onContextMenu={(x, y, target) => setContextMenu({ x, y, target })} />
+          </div>
+        )}
+        {!logsExpanded && (
+          <button
+            type="button"
+            aria-orientation="vertical"
+            aria-label="Resize logs"
+            className="w-1.5 shrink-0 cursor-col-resize bg-wave-border hover:bg-wave-accent/80 p-0 border-0"
+            onPointerDown={(event) => {
+              event.preventDefault();
+              const logsPane = event.currentTarget.nextElementSibling as HTMLElement | null;
+              logsDrag.current = {
+                startX: event.clientX,
+                startWidth: logsWidth ?? logsPane?.clientWidth ?? 460,
+                parent: bandRef.current?.clientWidth ?? 900,
+              };
+              try {
+                event.currentTarget.setPointerCapture(event.pointerId);
+              } catch {
+                // Capture is unavailable for this pointer. Moves still update while the pointer stays on the bar.
+              }
+            }}
+            onPointerMove={(event) => {
+              const drag = logsDrag.current;
+              if (!drag) return;
+              const next = drag.startWidth - (event.clientX - drag.startX);
+              setLogsWidth(Math.min(Math.max(260, next), Math.max(260, drag.parent - 180)));
+            }}
+            onPointerUp={() => {
+              logsDrag.current = null;
+            }}
+          />
+        )}
+        <div
+          className={
+            logsExpanded
+              ? 'flex-1 min-h-0 overflow-hidden'
+              : logsWidth == null
+                ? 'flex-1 min-w-0 border-l border-wave-border overflow-hidden'
+                : 'shrink-0 border-l border-wave-border overflow-hidden'
+          }
+          style={logsExpanded || logsWidth == null ? undefined : { width: logsWidth }}
+        >
+          <LogsPanel />
+        </div>
+      </div>
 
       {contextMenu && (
         <WaveContextMenu
@@ -606,7 +676,7 @@ export function WaveformViewer() {
       )}
 
       {/* Status bar - shows selected signal full path */}
-      <div className="border-t border-wave-border bg-wave-panel px-4 py-1.5 flex items-center justify-between">
+      {!logsExpanded && <div className="border-t border-wave-border bg-wave-panel px-4 py-1.5 flex items-center justify-between">
         <div className="text-xs text-wave-text/70">
           {selectedDivider ? (
             <span className="flex items-center gap-2">
@@ -621,9 +691,12 @@ export function WaveformViewer() {
               </button>
             </span>
           ) : selectedSignal ? (
-            <span>
-              <span className="text-wave-accent">Selected:</span>{' '}
-              <span className="font-mono">{selectedSignal}</span>
+            <span className="flex items-center gap-2 min-w-0">
+              <span className="text-wave-accent shrink-0">Selected:</span>
+              <span className="font-mono truncate">{selectedSignal}</span>
+              {logMessage && (
+                <span className="font-mono text-sky-300/90 truncate" title={logMessage}>{logMessage}</span>
+              )}
             </span>
           ) : (
             <span>Drag a name to reorder. Right-click a row to delete or rename.</span>
@@ -652,7 +725,7 @@ export function WaveformViewer() {
             ))}
           </div>
         )}
-      </div>
+      </div>}
     </div>
   );
 }

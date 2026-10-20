@@ -1,0 +1,2103 @@
+# cpu instruction retirement trace
+INFO cpu trace opened core=0 hart=0
+@8000ps CPU pc=00001000 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@8160ps CPU pc=00001004 opcode=LW rd=x2 rs1=x5 imm=1
+@8320ps CPU pc=00001008 opcode=SW rd=x3 rs1=x6 imm=2
+@8480ps CPU pc=0000100c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@8640ps CPU pc=00001010 opcode=AND rd=x5 rs1=x8 rs2=x12
+@8800ps CPU pc=00001014 opcode=OR rd=x6 rs1=x9 rs2=x13
+@8960ps CPU pc=00001018 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@9120ps CPU pc=0000101c opcode=ADDI rd=x8 rs1=x11 imm=7
+@9280ps CPU pc=00001020 opcode=JAL rd=x9 imm=8
+@9440ps CPU pc=00001024 opcode=NOP rd=x10 imm=9
+@9600ps CPU pc=00001028 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@9760ps CPU pc=0000102c opcode=LW rd=x12 rs1=x15 imm=b
+@9920ps CPU pc=00001030 opcode=SW rd=x13 rs1=x1 imm=c
+@10080ps CPU pc=00001034 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@10240ps CPU pc=00001038 opcode=AND rd=x15 rs1=x3 rs2=x7
+@10400ps CPU pc=0000103c opcode=OR rd=x1 rs1=x4 rs2=x8
+@10560ps CPU pc=00001040 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@10720ps CPU pc=00001044 opcode=ADDI rd=x3 rs1=x6 imm=11
+@10880ps CPU pc=00001048 opcode=JAL rd=x4 imm=12
+@11040ps CPU pc=0000104c opcode=NOP rd=x5 imm=13
+@11200ps CPU pc=00001050 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@11360ps CPU pc=00001054 opcode=LW rd=x7 rs1=x10 imm=15
+@11520ps CPU pc=00001058 opcode=SW rd=x8 rs1=x11 imm=16
+@11680ps CPU pc=0000105c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@11840ps CPU pc=00001060 opcode=AND rd=x10 rs1=x13 rs2=x2
+@12000ps CPU pc=00001064 opcode=OR rd=x11 rs1=x14 rs2=x3
+@12160ps CPU pc=00001068 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@12320ps CPU pc=0000106c opcode=ADDI rd=x13 rs1=x1 imm=1b
+@12480ps CPU pc=00001070 opcode=JAL rd=x14 imm=1c
+@12640ps CPU pc=00001074 opcode=NOP rd=x15 imm=1d
+@12800ps CPU pc=00001078 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@12960ps CPU pc=0000107c opcode=LW rd=x2 rs1=x5 imm=1f
+@13120ps CPU pc=00001080 opcode=SW rd=x3 rs1=x6 imm=20
+@13280ps CPU pc=00001084 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@13440ps CPU pc=00001088 opcode=AND rd=x5 rs1=x8 rs2=x12
+@13600ps CPU pc=0000108c opcode=OR rd=x6 rs1=x9 rs2=x13
+@13760ps CPU pc=00001090 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@13920ps CPU pc=00001094 opcode=ADDI rd=x8 rs1=x11 imm=25
+@14080ps CPU pc=00001098 opcode=JAL rd=x9 imm=6
+@14240ps CPU pc=0000109c opcode=NOP rd=x10 imm=7
+@14400ps CPU pc=000010a0 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@14560ps CPU pc=000010a4 opcode=LW rd=x12 rs1=x15 imm=29
+@14720ps CPU pc=000010a8 opcode=SW rd=x13 rs1=x1 imm=2a
+@14880ps CPU pc=000010ac opcode=BEQ rs1=x2 rs2=x6 imm=8
+@15040ps CPU pc=000010b0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@15200ps CPU pc=000010b4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@15360ps CPU pc=000010b8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@15520ps CPU pc=000010bc opcode=ADDI rd=x3 rs1=x6 imm=2f
+@15680ps CPU pc=000010c0 opcode=JAL rd=x4 imm=10
+@15840ps CPU pc=000010c4 opcode=NOP rd=x5 imm=11
+@16000ps CPU pc=000010c8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@16160ps CPU pc=000010cc opcode=LW rd=x7 rs1=x10 imm=33
+@16320ps CPU pc=000010d0 opcode=SW rd=x8 rs1=x11 imm=34
+@16480ps CPU pc=000010d4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@16640ps CPU pc=000010d8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@16800ps CPU pc=000010dc opcode=OR rd=x11 rs1=x14 rs2=x3
+@16960ps CPU pc=000010e0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@17120ps CPU pc=000010e4 opcode=ADDI rd=x13 rs1=x1 imm=39
+@17280ps CPU pc=000010e8 opcode=JAL rd=x14 imm=1a
+@17440ps CPU pc=000010ec opcode=NOP rd=x15 imm=1b
+@17600ps CPU pc=000010f0 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@17760ps CPU pc=000010f4 opcode=LW rd=x2 rs1=x5 imm=3d
+@17920ps CPU pc=000010f8 opcode=SW rd=x3 rs1=x6 imm=3e
+@18080ps CPU pc=000010fc opcode=BEQ rs1=x7 rs2=x11 imm=8
+@18240ps CPU pc=00001100 opcode=AND rd=x5 rs1=x8 rs2=x12
+@18400ps CPU pc=00001104 opcode=OR rd=x6 rs1=x9 rs2=x13
+@18560ps CPU pc=00001108 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@18720ps CPU pc=0000110c opcode=ADDI rd=x8 rs1=x11 imm=43
+@18880ps CPU pc=00001110 opcode=JAL rd=x9 imm=4
+@19040ps CPU pc=00001114 opcode=NOP rd=x10 imm=5
+@19200ps CPU pc=00001118 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@19360ps CPU pc=0000111c opcode=LW rd=x12 rs1=x15 imm=47
+@19520ps CPU pc=00001120 opcode=SW rd=x13 rs1=x1 imm=48
+@19680ps CPU pc=00001124 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@19840ps CPU pc=00001128 opcode=AND rd=x15 rs1=x3 rs2=x7
+@20000ps CPU pc=0000112c opcode=OR rd=x1 rs1=x4 rs2=x8
+@20160ps CPU pc=00001130 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@20320ps CPU pc=00001134 opcode=ADDI rd=x3 rs1=x6 imm=4d
+@20480ps CPU pc=00001138 opcode=JAL rd=x4 imm=e
+@20640ps CPU pc=0000113c opcode=NOP rd=x5 imm=f
+@20800ps CPU pc=00001140 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@20960ps CPU pc=00001144 opcode=LW rd=x7 rs1=x10 imm=51
+@21120ps CPU pc=00001148 opcode=SW rd=x8 rs1=x11 imm=52
+@21280ps CPU pc=0000114c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@21440ps CPU pc=00001150 opcode=AND rd=x10 rs1=x13 rs2=x2
+@21600ps CPU pc=00001154 opcode=OR rd=x11 rs1=x14 rs2=x3
+@21760ps CPU pc=00001158 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@21920ps CPU pc=0000115c opcode=ADDI rd=x13 rs1=x1 imm=57
+@22080ps CPU pc=00001160 opcode=JAL rd=x14 imm=18
+@22240ps CPU pc=00001164 opcode=NOP rd=x15 imm=19
+@22400ps CPU pc=00001168 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@22560ps CPU pc=0000116c opcode=LW rd=x2 rs1=x5 imm=5b
+@22720ps CPU pc=00001170 opcode=SW rd=x3 rs1=x6 imm=5c
+@22880ps CPU pc=00001174 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@23040ps CPU pc=00001178 opcode=AND rd=x5 rs1=x8 rs2=x12
+@23200ps CPU pc=0000117c opcode=OR rd=x6 rs1=x9 rs2=x13
+@23360ps CPU pc=00001180 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@23520ps CPU pc=00001184 opcode=ADDI rd=x8 rs1=x11 imm=61
+@23680ps CPU pc=00001188 opcode=JAL rd=x9 imm=2
+@23840ps CPU pc=0000118c opcode=NOP rd=x10 imm=3
+@24000ps CPU pc=00001190 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@24160ps CPU pc=00001194 opcode=LW rd=x12 rs1=x15 imm=65
+@24320ps CPU pc=00001198 opcode=SW rd=x13 rs1=x1 imm=66
+@24480ps CPU pc=0000119c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@24640ps CPU pc=000011a0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@24800ps CPU pc=000011a4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@24960ps CPU pc=000011a8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@25120ps CPU pc=000011ac opcode=ADDI rd=x3 rs1=x6 imm=6b
+@25280ps CPU pc=000011b0 opcode=JAL rd=x4 imm=c
+@25440ps CPU pc=000011b4 opcode=NOP rd=x5 imm=d
+@25600ps CPU pc=000011b8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@25760ps CPU pc=000011bc opcode=LW rd=x7 rs1=x10 imm=6f
+@25920ps CPU pc=000011c0 opcode=SW rd=x8 rs1=x11 imm=70
+@26080ps CPU pc=000011c4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@26240ps CPU pc=000011c8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@26400ps CPU pc=000011cc opcode=OR rd=x11 rs1=x14 rs2=x3
+@26560ps CPU pc=000011d0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@26720ps CPU pc=000011d4 opcode=ADDI rd=x13 rs1=x1 imm=75
+@26880ps CPU pc=000011d8 opcode=JAL rd=x14 imm=16
+@27040ps CPU pc=000011dc opcode=NOP rd=x15 imm=17
+@27200ps CPU pc=000011e0 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@27360ps CPU pc=000011e4 opcode=LW rd=x2 rs1=x5 imm=79
+@27520ps CPU pc=000011e8 opcode=SW rd=x3 rs1=x6 imm=7a
+@27680ps CPU pc=000011ec opcode=BEQ rs1=x7 rs2=x11 imm=8
+@27840ps CPU pc=000011f0 opcode=AND rd=x5 rs1=x8 rs2=x12
+@28000ps CPU pc=000011f4 opcode=OR rd=x6 rs1=x9 rs2=x13
+@28160ps CPU pc=000011f8 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@28320ps CPU pc=000011fc opcode=ADDI rd=x8 rs1=x11 imm=7f
+@28480ps CPU pc=00001200 opcode=JAL rd=x9 imm=0
+@28640ps CPU pc=00001204 opcode=NOP rd=x10 imm=1
+@28800ps CPU pc=00001208 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@28960ps CPU pc=0000120c opcode=LW rd=x12 rs1=x15 imm=83
+@29120ps CPU pc=00001210 opcode=SW rd=x13 rs1=x1 imm=84
+@29280ps CPU pc=00001214 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@29440ps CPU pc=00001218 opcode=AND rd=x15 rs1=x3 rs2=x7
+@29600ps CPU pc=0000121c opcode=OR rd=x1 rs1=x4 rs2=x8
+@29760ps CPU pc=00001220 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@29920ps CPU pc=00001224 opcode=ADDI rd=x3 rs1=x6 imm=89
+@30080ps CPU pc=00001228 opcode=JAL rd=x4 imm=a
+@30240ps CPU pc=0000122c opcode=NOP rd=x5 imm=b
+@30400ps CPU pc=00001230 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@30560ps CPU pc=00001234 opcode=LW rd=x7 rs1=x10 imm=8d
+@30720ps CPU pc=00001238 opcode=SW rd=x8 rs1=x11 imm=8e
+@30880ps CPU pc=0000123c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@31040ps CPU pc=00001240 opcode=AND rd=x10 rs1=x13 rs2=x2
+@31200ps CPU pc=00001244 opcode=OR rd=x11 rs1=x14 rs2=x3
+@31360ps CPU pc=00001248 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@31520ps CPU pc=0000124c opcode=ADDI rd=x13 rs1=x1 imm=93
+@31680ps CPU pc=00001250 opcode=JAL rd=x14 imm=14
+@31840ps CPU pc=00001254 opcode=NOP rd=x15 imm=15
+@32000ps CPU pc=00001258 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@32160ps CPU pc=0000125c opcode=LW rd=x2 rs1=x5 imm=97
+@32320ps CPU pc=00001260 opcode=SW rd=x3 rs1=x6 imm=98
+@32480ps CPU pc=00001264 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@32640ps CPU pc=00001268 opcode=AND rd=x5 rs1=x8 rs2=x12
+@32800ps CPU pc=0000126c opcode=OR rd=x6 rs1=x9 rs2=x13
+@32960ps CPU pc=00001270 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@33120ps CPU pc=00001274 opcode=ADDI rd=x8 rs1=x11 imm=9d
+@33280ps CPU pc=00001278 opcode=JAL rd=x9 imm=1e
+@33440ps CPU pc=0000127c opcode=NOP rd=x10 imm=1f
+@33600ps CPU pc=00001280 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@33760ps CPU pc=00001284 opcode=LW rd=x12 rs1=x15 imm=a1
+@33920ps CPU pc=00001288 opcode=SW rd=x13 rs1=x1 imm=a2
+@34080ps CPU pc=0000128c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@34240ps CPU pc=00001290 opcode=AND rd=x15 rs1=x3 rs2=x7
+@34400ps CPU pc=00001294 opcode=OR rd=x1 rs1=x4 rs2=x8
+@34560ps CPU pc=00001298 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@34720ps CPU pc=0000129c opcode=ADDI rd=x3 rs1=x6 imm=a7
+@34880ps CPU pc=000012a0 opcode=JAL rd=x4 imm=8
+@35040ps CPU pc=000012a4 opcode=NOP rd=x5 imm=9
+@35200ps CPU pc=000012a8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@35360ps CPU pc=000012ac opcode=LW rd=x7 rs1=x10 imm=ab
+@35520ps CPU pc=000012b0 opcode=SW rd=x8 rs1=x11 imm=ac
+@35680ps CPU pc=000012b4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@35840ps CPU pc=000012b8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@36000ps CPU pc=000012bc opcode=OR rd=x11 rs1=x14 rs2=x3
+@36160ps CPU pc=000012c0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@36320ps CPU pc=000012c4 opcode=ADDI rd=x13 rs1=x1 imm=b1
+@36480ps CPU pc=000012c8 opcode=JAL rd=x14 imm=12
+@36640ps CPU pc=000012cc opcode=NOP rd=x15 imm=13
+@36800ps CPU pc=000012d0 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@36960ps CPU pc=000012d4 opcode=LW rd=x2 rs1=x5 imm=b5
+@37120ps CPU pc=000012d8 opcode=SW rd=x3 rs1=x6 imm=b6
+@37280ps CPU pc=000012dc opcode=BEQ rs1=x7 rs2=x11 imm=8
+@37440ps CPU pc=000012e0 opcode=AND rd=x5 rs1=x8 rs2=x12
+@37600ps CPU pc=000012e4 opcode=OR rd=x6 rs1=x9 rs2=x13
+@37760ps CPU pc=000012e8 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@37920ps CPU pc=000012ec opcode=ADDI rd=x8 rs1=x11 imm=bb
+@38080ps CPU pc=000012f0 opcode=JAL rd=x9 imm=1c
+@38240ps CPU pc=000012f4 opcode=NOP rd=x10 imm=1d
+@38400ps CPU pc=000012f8 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@38560ps CPU pc=000012fc opcode=LW rd=x12 rs1=x15 imm=bf
+@38720ps CPU pc=00001300 opcode=SW rd=x13 rs1=x1 imm=c0
+@38880ps CPU pc=00001304 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@39040ps CPU pc=00001308 opcode=AND rd=x15 rs1=x3 rs2=x7
+@39200ps CPU pc=0000130c opcode=OR rd=x1 rs1=x4 rs2=x8
+@39360ps CPU pc=00001310 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@39520ps CPU pc=00001314 opcode=ADDI rd=x3 rs1=x6 imm=c5
+@39680ps CPU pc=00001318 opcode=JAL rd=x4 imm=6
+@39840ps CPU pc=0000131c opcode=NOP rd=x5 imm=7
+@40000ps CPU pc=00001320 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@40160ps CPU pc=00001324 opcode=LW rd=x7 rs1=x10 imm=c9
+@40320ps CPU pc=00001328 opcode=SW rd=x8 rs1=x11 imm=ca
+@40480ps CPU pc=0000132c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@40640ps CPU pc=00001330 opcode=AND rd=x10 rs1=x13 rs2=x2
+@40800ps CPU pc=00001334 opcode=OR rd=x11 rs1=x14 rs2=x3
+@40960ps CPU pc=00001338 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@41120ps CPU pc=0000133c opcode=ADDI rd=x13 rs1=x1 imm=cf
+@41280ps CPU pc=00001340 opcode=JAL rd=x14 imm=10
+@41440ps CPU pc=00001344 opcode=NOP rd=x15 imm=11
+@41600ps CPU pc=00001348 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@41760ps CPU pc=0000134c opcode=LW rd=x2 rs1=x5 imm=d3
+@41920ps CPU pc=00001350 opcode=SW rd=x3 rs1=x6 imm=d4
+@42080ps CPU pc=00001354 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@42240ps CPU pc=00001358 opcode=AND rd=x5 rs1=x8 rs2=x12
+@42400ps CPU pc=0000135c opcode=OR rd=x6 rs1=x9 rs2=x13
+@42560ps CPU pc=00001360 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@42720ps CPU pc=00001364 opcode=ADDI rd=x8 rs1=x11 imm=d9
+@42880ps CPU pc=00001368 opcode=JAL rd=x9 imm=1a
+@43040ps CPU pc=0000136c opcode=NOP rd=x10 imm=1b
+@43200ps CPU pc=00001370 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@43360ps CPU pc=00001374 opcode=LW rd=x12 rs1=x15 imm=dd
+@43520ps CPU pc=00001378 opcode=SW rd=x13 rs1=x1 imm=de
+@43680ps CPU pc=0000137c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@43840ps CPU pc=00001380 opcode=AND rd=x15 rs1=x3 rs2=x7
+@44000ps CPU pc=00001384 opcode=OR rd=x1 rs1=x4 rs2=x8
+@44160ps CPU pc=00001388 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@44320ps CPU pc=0000138c opcode=ADDI rd=x3 rs1=x6 imm=e3
+@44480ps CPU pc=00001390 opcode=JAL rd=x4 imm=4
+@44640ps CPU pc=00001394 opcode=NOP rd=x5 imm=5
+@44800ps CPU pc=00001398 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@44960ps CPU pc=0000139c opcode=LW rd=x7 rs1=x10 imm=e7
+@45120ps CPU pc=000013a0 opcode=SW rd=x8 rs1=x11 imm=e8
+@45280ps CPU pc=000013a4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@45440ps CPU pc=000013a8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@45600ps CPU pc=000013ac opcode=OR rd=x11 rs1=x14 rs2=x3
+@45760ps CPU pc=000013b0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@45920ps CPU pc=000013b4 opcode=ADDI rd=x13 rs1=x1 imm=ed
+@46080ps CPU pc=000013b8 opcode=JAL rd=x14 imm=e
+@46240ps CPU pc=000013bc opcode=NOP rd=x15 imm=f
+@46400ps CPU pc=000013c0 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@46560ps CPU pc=000013c4 opcode=LW rd=x2 rs1=x5 imm=f1
+@46720ps CPU pc=000013c8 opcode=SW rd=x3 rs1=x6 imm=f2
+@46880ps CPU pc=000013cc opcode=BEQ rs1=x7 rs2=x11 imm=8
+@47040ps CPU pc=000013d0 opcode=AND rd=x5 rs1=x8 rs2=x12
+@47200ps CPU pc=000013d4 opcode=OR rd=x6 rs1=x9 rs2=x13
+@47360ps CPU pc=000013d8 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@47520ps CPU pc=000013dc opcode=ADDI rd=x8 rs1=x11 imm=f7
+@47680ps CPU pc=000013e0 opcode=JAL rd=x9 imm=18
+@47840ps CPU pc=000013e4 opcode=NOP rd=x10 imm=19
+@48000ps CPU pc=000013e8 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@48160ps CPU pc=000013ec opcode=LW rd=x12 rs1=x15 imm=fb
+@48320ps CPU pc=000013f0 opcode=SW rd=x13 rs1=x1 imm=fc
+@48480ps CPU pc=000013f4 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@48640ps CPU pc=000013f8 opcode=AND rd=x15 rs1=x3 rs2=x7
+@48800ps CPU pc=000013fc opcode=OR rd=x1 rs1=x4 rs2=x8
+@48960ps CPU pc=00001400 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@49120ps CPU pc=00001404 opcode=ADDI rd=x3 rs1=x6 imm=1
+@49280ps CPU pc=00001408 opcode=JAL rd=x4 imm=2
+@49440ps CPU pc=0000140c opcode=NOP rd=x5 imm=3
+@49600ps CPU pc=00001410 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@49760ps CPU pc=00001414 opcode=LW rd=x7 rs1=x10 imm=5
+@49920ps CPU pc=00001418 opcode=SW rd=x8 rs1=x11 imm=6
+@50080ps CPU pc=0000141c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@50240ps CPU pc=00001420 opcode=AND rd=x10 rs1=x13 rs2=x2
+@50400ps CPU pc=00001424 opcode=OR rd=x11 rs1=x14 rs2=x3
+@50560ps CPU pc=00001428 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@50720ps CPU pc=0000142c opcode=ADDI rd=x13 rs1=x1 imm=b
+@50880ps CPU pc=00001430 opcode=JAL rd=x14 imm=c
+@51040ps CPU pc=00001434 opcode=NOP rd=x15 imm=d
+@51200ps CPU pc=00001438 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@51360ps CPU pc=0000143c opcode=LW rd=x2 rs1=x5 imm=f
+@51520ps CPU pc=00001440 opcode=SW rd=x3 rs1=x6 imm=10
+@51680ps CPU pc=00001444 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@51840ps CPU pc=00001448 opcode=AND rd=x5 rs1=x8 rs2=x12
+@52000ps CPU pc=0000144c opcode=OR rd=x6 rs1=x9 rs2=x13
+@52160ps CPU pc=00001450 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@52320ps CPU pc=00001454 opcode=ADDI rd=x8 rs1=x11 imm=15
+@52480ps CPU pc=00001458 opcode=JAL rd=x9 imm=16
+@52640ps CPU pc=0000145c opcode=NOP rd=x10 imm=17
+@52800ps CPU pc=00001460 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@52960ps CPU pc=00001464 opcode=LW rd=x12 rs1=x15 imm=19
+@53120ps CPU pc=00001468 opcode=SW rd=x13 rs1=x1 imm=1a
+@53280ps CPU pc=0000146c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@53440ps CPU pc=00001470 opcode=AND rd=x15 rs1=x3 rs2=x7
+@53600ps CPU pc=00001474 opcode=OR rd=x1 rs1=x4 rs2=x8
+@53760ps CPU pc=00001478 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@53920ps CPU pc=0000147c opcode=ADDI rd=x3 rs1=x6 imm=1f
+@54080ps CPU pc=00001480 opcode=JAL rd=x4 imm=0
+@54240ps CPU pc=00001484 opcode=NOP rd=x5 imm=1
+@54400ps CPU pc=00001488 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@54560ps CPU pc=0000148c opcode=LW rd=x7 rs1=x10 imm=23
+@54720ps CPU pc=00001490 opcode=SW rd=x8 rs1=x11 imm=24
+@54880ps CPU pc=00001494 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@55040ps CPU pc=00001498 opcode=AND rd=x10 rs1=x13 rs2=x2
+@55200ps CPU pc=0000149c opcode=OR rd=x11 rs1=x14 rs2=x3
+@55360ps CPU pc=000014a0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@55520ps CPU pc=000014a4 opcode=ADDI rd=x13 rs1=x1 imm=29
+@55680ps CPU pc=000014a8 opcode=JAL rd=x14 imm=a
+@55840ps CPU pc=000014ac opcode=NOP rd=x15 imm=b
+@56000ps CPU pc=000014b0 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@56160ps CPU pc=000014b4 opcode=LW rd=x2 rs1=x5 imm=2d
+@56320ps CPU pc=000014b8 opcode=SW rd=x3 rs1=x6 imm=2e
+@56480ps CPU pc=000014bc opcode=BEQ rs1=x7 rs2=x11 imm=8
+@56640ps CPU pc=000014c0 opcode=AND rd=x5 rs1=x8 rs2=x12
+@56800ps CPU pc=000014c4 opcode=OR rd=x6 rs1=x9 rs2=x13
+@56960ps CPU pc=000014c8 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@57120ps CPU pc=000014cc opcode=ADDI rd=x8 rs1=x11 imm=33
+@57280ps CPU pc=000014d0 opcode=JAL rd=x9 imm=14
+@57440ps CPU pc=000014d4 opcode=NOP rd=x10 imm=15
+@57600ps CPU pc=000014d8 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@57760ps CPU pc=000014dc opcode=LW rd=x12 rs1=x15 imm=37
+@57920ps CPU pc=000014e0 opcode=SW rd=x13 rs1=x1 imm=38
+@58080ps CPU pc=000014e4 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@58240ps CPU pc=000014e8 opcode=AND rd=x15 rs1=x3 rs2=x7
+@58400ps CPU pc=000014ec opcode=OR rd=x1 rs1=x4 rs2=x8
+@58560ps CPU pc=000014f0 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@58720ps CPU pc=000014f4 opcode=ADDI rd=x3 rs1=x6 imm=3d
+@58880ps CPU pc=000014f8 opcode=JAL rd=x4 imm=1e
+@59040ps CPU pc=000014fc opcode=NOP rd=x5 imm=1f
+@59200ps CPU pc=00001500 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@59360ps CPU pc=00001504 opcode=LW rd=x7 rs1=x10 imm=41
+@59520ps CPU pc=00001508 opcode=SW rd=x8 rs1=x11 imm=42
+@59680ps CPU pc=0000150c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@59840ps CPU pc=00001510 opcode=AND rd=x10 rs1=x13 rs2=x2
+@60000ps CPU pc=00001514 opcode=OR rd=x11 rs1=x14 rs2=x3
+@60160ps CPU pc=00001518 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@60320ps CPU pc=0000151c opcode=ADDI rd=x13 rs1=x1 imm=47
+@60480ps CPU pc=00001520 opcode=JAL rd=x14 imm=8
+@60640ps CPU pc=00001524 opcode=NOP rd=x15 imm=9
+@60800ps CPU pc=00001528 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@60960ps CPU pc=0000152c opcode=LW rd=x2 rs1=x5 imm=4b
+@61120ps CPU pc=00001530 opcode=SW rd=x3 rs1=x6 imm=4c
+@61280ps CPU pc=00001534 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@61440ps CPU pc=00001538 opcode=AND rd=x5 rs1=x8 rs2=x12
+@61600ps CPU pc=0000153c opcode=OR rd=x6 rs1=x9 rs2=x13
+@61760ps CPU pc=00001540 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@61920ps CPU pc=00001544 opcode=ADDI rd=x8 rs1=x11 imm=51
+@62080ps CPU pc=00001548 opcode=JAL rd=x9 imm=12
+@62240ps CPU pc=0000154c opcode=NOP rd=x10 imm=13
+@62400ps CPU pc=00001550 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@62560ps CPU pc=00001554 opcode=LW rd=x12 rs1=x15 imm=55
+@62720ps CPU pc=00001558 opcode=SW rd=x13 rs1=x1 imm=56
+@62880ps CPU pc=0000155c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@63040ps CPU pc=00001560 opcode=AND rd=x15 rs1=x3 rs2=x7
+@63200ps CPU pc=00001564 opcode=OR rd=x1 rs1=x4 rs2=x8
+@63360ps CPU pc=00001568 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@63520ps CPU pc=0000156c opcode=ADDI rd=x3 rs1=x6 imm=5b
+@63680ps CPU pc=00001570 opcode=JAL rd=x4 imm=1c
+@63840ps CPU pc=00001574 opcode=NOP rd=x5 imm=1d
+@64000ps CPU pc=00001578 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@64160ps CPU pc=0000157c opcode=LW rd=x7 rs1=x10 imm=5f
+@64320ps CPU pc=00001580 opcode=SW rd=x8 rs1=x11 imm=60
+@64480ps CPU pc=00001584 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@64640ps CPU pc=00001588 opcode=AND rd=x10 rs1=x13 rs2=x2
+@64800ps CPU pc=0000158c opcode=OR rd=x11 rs1=x14 rs2=x3
+@64960ps CPU pc=00001590 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@65120ps CPU pc=00001594 opcode=ADDI rd=x13 rs1=x1 imm=65
+@65280ps CPU pc=00001598 opcode=JAL rd=x14 imm=6
+@65440ps CPU pc=0000159c opcode=NOP rd=x15 imm=7
+@65600ps CPU pc=000015a0 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@65760ps CPU pc=000015a4 opcode=LW rd=x2 rs1=x5 imm=69
+@65920ps CPU pc=000015a8 opcode=SW rd=x3 rs1=x6 imm=6a
+@66080ps CPU pc=000015ac opcode=BEQ rs1=x7 rs2=x11 imm=8
+@66240ps CPU pc=000015b0 opcode=AND rd=x5 rs1=x8 rs2=x12
+@66400ps CPU pc=000015b4 opcode=OR rd=x6 rs1=x9 rs2=x13
+@66560ps CPU pc=000015b8 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@66720ps CPU pc=000015bc opcode=ADDI rd=x8 rs1=x11 imm=6f
+@66880ps CPU pc=000015c0 opcode=JAL rd=x9 imm=10
+@67040ps CPU pc=000015c4 opcode=NOP rd=x10 imm=11
+@67200ps CPU pc=000015c8 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@67360ps CPU pc=000015cc opcode=LW rd=x12 rs1=x15 imm=73
+@67520ps CPU pc=000015d0 opcode=SW rd=x13 rs1=x1 imm=74
+@67680ps CPU pc=000015d4 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@67840ps CPU pc=000015d8 opcode=AND rd=x15 rs1=x3 rs2=x7
+@68000ps CPU pc=000015dc opcode=OR rd=x1 rs1=x4 rs2=x8
+@68160ps CPU pc=000015e0 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@68320ps CPU pc=000015e4 opcode=ADDI rd=x3 rs1=x6 imm=79
+@68480ps CPU pc=000015e8 opcode=JAL rd=x4 imm=1a
+@68640ps CPU pc=000015ec opcode=NOP rd=x5 imm=1b
+@68800ps CPU pc=000015f0 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@68960ps CPU pc=000015f4 opcode=LW rd=x7 rs1=x10 imm=7d
+@69120ps CPU pc=000015f8 opcode=SW rd=x8 rs1=x11 imm=7e
+@69280ps CPU pc=000015fc opcode=BEQ rs1=x12 rs2=x1 imm=8
+@69440ps CPU pc=00001600 opcode=AND rd=x10 rs1=x13 rs2=x2
+@69600ps CPU pc=00001604 opcode=OR rd=x11 rs1=x14 rs2=x3
+@69760ps CPU pc=00001608 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@69920ps CPU pc=0000160c opcode=ADDI rd=x13 rs1=x1 imm=83
+@70080ps CPU pc=00001610 opcode=JAL rd=x14 imm=4
+@70240ps CPU pc=00001614 opcode=NOP rd=x15 imm=5
+@70400ps CPU pc=00001618 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@70560ps CPU pc=0000161c opcode=LW rd=x2 rs1=x5 imm=87
+@70720ps CPU pc=00001620 opcode=SW rd=x3 rs1=x6 imm=88
+@70880ps CPU pc=00001624 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@71040ps CPU pc=00001628 opcode=AND rd=x5 rs1=x8 rs2=x12
+@71200ps CPU pc=0000162c opcode=OR rd=x6 rs1=x9 rs2=x13
+@71360ps CPU pc=00001630 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@71520ps CPU pc=00001634 opcode=ADDI rd=x8 rs1=x11 imm=8d
+@71680ps CPU pc=00001638 opcode=JAL rd=x9 imm=e
+@71840ps CPU pc=0000163c opcode=NOP rd=x10 imm=f
+@72000ps CPU pc=00001640 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@72160ps CPU pc=00001644 opcode=LW rd=x12 rs1=x15 imm=91
+@72320ps CPU pc=00001648 opcode=SW rd=x13 rs1=x1 imm=92
+@72480ps CPU pc=0000164c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@72640ps CPU pc=00001650 opcode=AND rd=x15 rs1=x3 rs2=x7
+@72800ps CPU pc=00001654 opcode=OR rd=x1 rs1=x4 rs2=x8
+@72960ps CPU pc=00001658 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@73120ps CPU pc=0000165c opcode=ADDI rd=x3 rs1=x6 imm=97
+@73280ps CPU pc=00001660 opcode=JAL rd=x4 imm=18
+@73440ps CPU pc=00001664 opcode=NOP rd=x5 imm=19
+@73600ps CPU pc=00001668 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@73760ps CPU pc=0000166c opcode=LW rd=x7 rs1=x10 imm=9b
+@73920ps CPU pc=00001670 opcode=SW rd=x8 rs1=x11 imm=9c
+@74080ps CPU pc=00001674 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@74240ps CPU pc=00001678 opcode=AND rd=x10 rs1=x13 rs2=x2
+@74400ps CPU pc=0000167c opcode=OR rd=x11 rs1=x14 rs2=x3
+@74560ps CPU pc=00001680 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@74720ps CPU pc=00001684 opcode=ADDI rd=x13 rs1=x1 imm=a1
+@74880ps CPU pc=00001688 opcode=JAL rd=x14 imm=2
+@75040ps CPU pc=0000168c opcode=NOP rd=x15 imm=3
+@75200ps CPU pc=00001690 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@75360ps CPU pc=00001694 opcode=LW rd=x2 rs1=x5 imm=a5
+@75520ps CPU pc=00001698 opcode=SW rd=x3 rs1=x6 imm=a6
+@75680ps CPU pc=0000169c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@75840ps CPU pc=000016a0 opcode=AND rd=x5 rs1=x8 rs2=x12
+@76000ps CPU pc=000016a4 opcode=OR rd=x6 rs1=x9 rs2=x13
+@76160ps CPU pc=000016a8 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@76320ps CPU pc=000016ac opcode=ADDI rd=x8 rs1=x11 imm=ab
+@76480ps CPU pc=000016b0 opcode=JAL rd=x9 imm=c
+@76640ps CPU pc=000016b4 opcode=NOP rd=x10 imm=d
+@76800ps CPU pc=000016b8 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@76960ps CPU pc=000016bc opcode=LW rd=x12 rs1=x15 imm=af
+@77120ps CPU pc=000016c0 opcode=SW rd=x13 rs1=x1 imm=b0
+@77280ps CPU pc=000016c4 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@77440ps CPU pc=000016c8 opcode=AND rd=x15 rs1=x3 rs2=x7
+@77600ps CPU pc=000016cc opcode=OR rd=x1 rs1=x4 rs2=x8
+@77760ps CPU pc=000016d0 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@77920ps CPU pc=000016d4 opcode=ADDI rd=x3 rs1=x6 imm=b5
+@78080ps CPU pc=000016d8 opcode=JAL rd=x4 imm=16
+@78240ps CPU pc=000016dc opcode=NOP rd=x5 imm=17
+@78400ps CPU pc=000016e0 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@78560ps CPU pc=000016e4 opcode=LW rd=x7 rs1=x10 imm=b9
+@78720ps CPU pc=000016e8 opcode=SW rd=x8 rs1=x11 imm=ba
+@78880ps CPU pc=000016ec opcode=BEQ rs1=x12 rs2=x1 imm=8
+@79040ps CPU pc=000016f0 opcode=AND rd=x10 rs1=x13 rs2=x2
+@79200ps CPU pc=000016f4 opcode=OR rd=x11 rs1=x14 rs2=x3
+@79360ps CPU pc=000016f8 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@79520ps CPU pc=000016fc opcode=ADDI rd=x13 rs1=x1 imm=bf
+@79680ps CPU pc=00001700 opcode=JAL rd=x14 imm=0
+@79840ps CPU pc=00001704 opcode=NOP rd=x15 imm=1
+@80000ps CPU pc=00001708 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@80160ps CPU pc=0000170c opcode=LW rd=x2 rs1=x5 imm=c3
+@80320ps CPU pc=00001710 opcode=SW rd=x3 rs1=x6 imm=c4
+@80480ps CPU pc=00001714 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@80640ps CPU pc=00001718 opcode=AND rd=x5 rs1=x8 rs2=x12
+@80800ps CPU pc=0000171c opcode=OR rd=x6 rs1=x9 rs2=x13
+@80960ps CPU pc=00001720 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@81120ps CPU pc=00001724 opcode=ADDI rd=x8 rs1=x11 imm=c9
+@81280ps CPU pc=00001728 opcode=JAL rd=x9 imm=a
+@81440ps CPU pc=0000172c opcode=NOP rd=x10 imm=b
+@81600ps CPU pc=00001730 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@81760ps CPU pc=00001734 opcode=LW rd=x12 rs1=x15 imm=cd
+@81920ps CPU pc=00001738 opcode=SW rd=x13 rs1=x1 imm=ce
+@82080ps CPU pc=0000173c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@82240ps CPU pc=00001740 opcode=AND rd=x15 rs1=x3 rs2=x7
+@82400ps CPU pc=00001744 opcode=OR rd=x1 rs1=x4 rs2=x8
+@82560ps CPU pc=00001748 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@82720ps CPU pc=0000174c opcode=ADDI rd=x3 rs1=x6 imm=d3
+@82880ps CPU pc=00001750 opcode=JAL rd=x4 imm=14
+@83040ps CPU pc=00001754 opcode=NOP rd=x5 imm=15
+@83200ps CPU pc=00001758 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@83360ps CPU pc=0000175c opcode=LW rd=x7 rs1=x10 imm=d7
+@83520ps CPU pc=00001760 opcode=SW rd=x8 rs1=x11 imm=d8
+@83680ps CPU pc=00001764 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@83840ps CPU pc=00001768 opcode=AND rd=x10 rs1=x13 rs2=x2
+@84000ps CPU pc=0000176c opcode=OR rd=x11 rs1=x14 rs2=x3
+@84160ps CPU pc=00001770 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@84320ps CPU pc=00001774 opcode=ADDI rd=x13 rs1=x1 imm=dd
+@84480ps CPU pc=00001778 opcode=JAL rd=x14 imm=1e
+@84640ps CPU pc=0000177c opcode=NOP rd=x15 imm=1f
+@84800ps CPU pc=00001780 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@84960ps CPU pc=00001784 opcode=LW rd=x2 rs1=x5 imm=e1
+@85120ps CPU pc=00001788 opcode=SW rd=x3 rs1=x6 imm=e2
+@85280ps CPU pc=0000178c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@85440ps CPU pc=00001790 opcode=AND rd=x5 rs1=x8 rs2=x12
+@85600ps CPU pc=00001794 opcode=OR rd=x6 rs1=x9 rs2=x13
+@85760ps CPU pc=00001798 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@85920ps CPU pc=0000179c opcode=ADDI rd=x8 rs1=x11 imm=e7
+@86080ps CPU pc=000017a0 opcode=JAL rd=x9 imm=8
+@86240ps CPU pc=000017a4 opcode=NOP rd=x10 imm=9
+@86400ps CPU pc=000017a8 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@86560ps CPU pc=000017ac opcode=LW rd=x12 rs1=x15 imm=eb
+@86720ps CPU pc=000017b0 opcode=SW rd=x13 rs1=x1 imm=ec
+@86880ps CPU pc=000017b4 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@87040ps CPU pc=000017b8 opcode=AND rd=x15 rs1=x3 rs2=x7
+@87200ps CPU pc=000017bc opcode=OR rd=x1 rs1=x4 rs2=x8
+@87360ps CPU pc=000017c0 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@87520ps CPU pc=000017c4 opcode=ADDI rd=x3 rs1=x6 imm=f1
+@87680ps CPU pc=000017c8 opcode=JAL rd=x4 imm=12
+@87840ps CPU pc=000017cc opcode=NOP rd=x5 imm=13
+@88000ps CPU pc=000017d0 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@88160ps CPU pc=000017d4 opcode=LW rd=x7 rs1=x10 imm=f5
+@88320ps CPU pc=000017d8 opcode=SW rd=x8 rs1=x11 imm=f6
+@88480ps CPU pc=000017dc opcode=BEQ rs1=x12 rs2=x1 imm=8
+@88640ps CPU pc=000017e0 opcode=AND rd=x10 rs1=x13 rs2=x2
+@88800ps CPU pc=000017e4 opcode=OR rd=x11 rs1=x14 rs2=x3
+@88960ps CPU pc=000017e8 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@89120ps CPU pc=000017ec opcode=ADDI rd=x13 rs1=x1 imm=fb
+@89280ps CPU pc=000017f0 opcode=JAL rd=x14 imm=1c
+@89440ps CPU pc=000017f4 opcode=NOP rd=x15 imm=1d
+@89600ps CPU pc=000017f8 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@89760ps CPU pc=000017fc opcode=LW rd=x2 rs1=x5 imm=ff
+@89920ps CPU pc=00001800 opcode=SW rd=x3 rs1=x6 imm=0
+@90080ps CPU pc=00001804 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@90240ps CPU pc=00001808 opcode=AND rd=x5 rs1=x8 rs2=x12
+@90400ps CPU pc=0000180c opcode=OR rd=x6 rs1=x9 rs2=x13
+@90560ps CPU pc=00001810 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@90720ps CPU pc=00001814 opcode=ADDI rd=x8 rs1=x11 imm=5
+@90880ps CPU pc=00001818 opcode=JAL rd=x9 imm=6
+@91040ps CPU pc=0000181c opcode=NOP rd=x10 imm=7
+@91200ps CPU pc=00001820 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@91360ps CPU pc=00001824 opcode=LW rd=x12 rs1=x15 imm=9
+@91520ps CPU pc=00001828 opcode=SW rd=x13 rs1=x1 imm=a
+@91680ps CPU pc=0000182c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@91840ps CPU pc=00001830 opcode=AND rd=x15 rs1=x3 rs2=x7
+@92000ps CPU pc=00001834 opcode=OR rd=x1 rs1=x4 rs2=x8
+@92160ps CPU pc=00001838 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@92320ps CPU pc=0000183c opcode=ADDI rd=x3 rs1=x6 imm=f
+@92480ps CPU pc=00001840 opcode=JAL rd=x4 imm=10
+@92640ps CPU pc=00001844 opcode=NOP rd=x5 imm=11
+@92800ps CPU pc=00001848 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@92960ps CPU pc=0000184c opcode=LW rd=x7 rs1=x10 imm=13
+@93120ps CPU pc=00001850 opcode=SW rd=x8 rs1=x11 imm=14
+@93280ps CPU pc=00001854 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@93440ps CPU pc=00001858 opcode=AND rd=x10 rs1=x13 rs2=x2
+@93600ps CPU pc=0000185c opcode=OR rd=x11 rs1=x14 rs2=x3
+@93760ps CPU pc=00001860 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@93920ps CPU pc=00001864 opcode=ADDI rd=x13 rs1=x1 imm=19
+@94080ps CPU pc=00001868 opcode=JAL rd=x14 imm=1a
+@94240ps CPU pc=0000186c opcode=NOP rd=x15 imm=1b
+@94400ps CPU pc=00001870 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@94560ps CPU pc=00001874 opcode=LW rd=x2 rs1=x5 imm=1d
+@94720ps CPU pc=00001878 opcode=SW rd=x3 rs1=x6 imm=1e
+@94880ps CPU pc=0000187c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@95040ps CPU pc=00001880 opcode=AND rd=x5 rs1=x8 rs2=x12
+@95200ps CPU pc=00001884 opcode=OR rd=x6 rs1=x9 rs2=x13
+@95360ps CPU pc=00001888 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@95520ps CPU pc=0000188c opcode=ADDI rd=x8 rs1=x11 imm=23
+@95680ps CPU pc=00001890 opcode=JAL rd=x9 imm=4
+@95840ps CPU pc=00001894 opcode=NOP rd=x10 imm=5
+@96000ps CPU pc=00001898 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@96160ps CPU pc=0000189c opcode=LW rd=x12 rs1=x15 imm=27
+@96320ps CPU pc=000018a0 opcode=SW rd=x13 rs1=x1 imm=28
+@96480ps CPU pc=000018a4 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@96640ps CPU pc=000018a8 opcode=AND rd=x15 rs1=x3 rs2=x7
+@96800ps CPU pc=000018ac opcode=OR rd=x1 rs1=x4 rs2=x8
+@96960ps CPU pc=000018b0 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@97120ps CPU pc=000018b4 opcode=ADDI rd=x3 rs1=x6 imm=2d
+@97280ps CPU pc=000018b8 opcode=JAL rd=x4 imm=e
+@97440ps CPU pc=000018bc opcode=NOP rd=x5 imm=f
+@97600ps CPU pc=000018c0 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@97760ps CPU pc=000018c4 opcode=LW rd=x7 rs1=x10 imm=31
+@97920ps CPU pc=000018c8 opcode=SW rd=x8 rs1=x11 imm=32
+@98080ps CPU pc=000018cc opcode=BEQ rs1=x12 rs2=x1 imm=8
+@98240ps CPU pc=000018d0 opcode=AND rd=x10 rs1=x13 rs2=x2
+@98400ps CPU pc=000018d4 opcode=OR rd=x11 rs1=x14 rs2=x3
+@98560ps CPU pc=000018d8 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@98720ps CPU pc=000018dc opcode=ADDI rd=x13 rs1=x1 imm=37
+@98880ps CPU pc=000018e0 opcode=JAL rd=x14 imm=18
+@99040ps CPU pc=000018e4 opcode=NOP rd=x15 imm=19
+@99200ps CPU pc=000018e8 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@99360ps CPU pc=000018ec opcode=LW rd=x2 rs1=x5 imm=3b
+@99520ps CPU pc=000018f0 opcode=SW rd=x3 rs1=x6 imm=3c
+@99680ps CPU pc=000018f4 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@99840ps CPU pc=000018f8 opcode=AND rd=x5 rs1=x8 rs2=x12
+@100000ps CPU pc=000018fc opcode=OR rd=x6 rs1=x9 rs2=x13
+@100160ps CPU pc=00001900 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@100320ps CPU pc=00001904 opcode=ADDI rd=x8 rs1=x11 imm=41
+@100480ps CPU pc=00001908 opcode=JAL rd=x9 imm=2
+@100640ps CPU pc=0000190c opcode=NOP rd=x10 imm=3
+@100800ps CPU pc=00001910 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@100960ps CPU pc=00001914 opcode=LW rd=x12 rs1=x15 imm=45
+@101120ps CPU pc=00001918 opcode=SW rd=x13 rs1=x1 imm=46
+@101280ps CPU pc=0000191c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@101440ps CPU pc=00001920 opcode=AND rd=x15 rs1=x3 rs2=x7
+@101600ps CPU pc=00001924 opcode=OR rd=x1 rs1=x4 rs2=x8
+@101760ps CPU pc=00001928 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@101920ps CPU pc=0000192c opcode=ADDI rd=x3 rs1=x6 imm=4b
+@102080ps CPU pc=00001930 opcode=JAL rd=x4 imm=c
+@102240ps CPU pc=00001934 opcode=NOP rd=x5 imm=d
+@102400ps CPU pc=00001938 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@102560ps CPU pc=0000193c opcode=LW rd=x7 rs1=x10 imm=4f
+@102720ps CPU pc=00001940 opcode=SW rd=x8 rs1=x11 imm=50
+@102880ps CPU pc=00001944 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@103040ps CPU pc=00001948 opcode=AND rd=x10 rs1=x13 rs2=x2
+@103200ps CPU pc=0000194c opcode=OR rd=x11 rs1=x14 rs2=x3
+@103360ps CPU pc=00001950 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@103520ps CPU pc=00001954 opcode=ADDI rd=x13 rs1=x1 imm=55
+@103680ps CPU pc=00001958 opcode=JAL rd=x14 imm=16
+@103840ps CPU pc=0000195c opcode=NOP rd=x15 imm=17
+@104000ps CPU pc=00001960 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@104160ps CPU pc=00001964 opcode=LW rd=x2 rs1=x5 imm=59
+@104320ps CPU pc=00001968 opcode=SW rd=x3 rs1=x6 imm=5a
+@104480ps CPU pc=0000196c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@104640ps CPU pc=00001970 opcode=AND rd=x5 rs1=x8 rs2=x12
+@104800ps CPU pc=00001974 opcode=OR rd=x6 rs1=x9 rs2=x13
+@104960ps CPU pc=00001978 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@105120ps CPU pc=0000197c opcode=ADDI rd=x8 rs1=x11 imm=5f
+@105280ps CPU pc=00001980 opcode=JAL rd=x9 imm=0
+@105440ps CPU pc=00001984 opcode=NOP rd=x10 imm=1
+@105600ps CPU pc=00001988 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@105760ps CPU pc=0000198c opcode=LW rd=x12 rs1=x15 imm=63
+@105920ps CPU pc=00001990 opcode=SW rd=x13 rs1=x1 imm=64
+@106080ps CPU pc=00001994 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@106240ps CPU pc=00001998 opcode=AND rd=x15 rs1=x3 rs2=x7
+@106400ps CPU pc=0000199c opcode=OR rd=x1 rs1=x4 rs2=x8
+@106560ps CPU pc=000019a0 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@106720ps CPU pc=000019a4 opcode=ADDI rd=x3 rs1=x6 imm=69
+@106880ps CPU pc=000019a8 opcode=JAL rd=x4 imm=a
+@107040ps CPU pc=000019ac opcode=NOP rd=x5 imm=b
+@107200ps CPU pc=000019b0 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@107360ps CPU pc=000019b4 opcode=LW rd=x7 rs1=x10 imm=6d
+@107520ps CPU pc=000019b8 opcode=SW rd=x8 rs1=x11 imm=6e
+@107680ps CPU pc=000019bc opcode=BEQ rs1=x12 rs2=x1 imm=8
+@107840ps CPU pc=000019c0 opcode=AND rd=x10 rs1=x13 rs2=x2
+@108000ps CPU pc=000019c4 opcode=OR rd=x11 rs1=x14 rs2=x3
+@108160ps CPU pc=000019c8 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@108320ps CPU pc=000019cc opcode=ADDI rd=x13 rs1=x1 imm=73
+@108480ps CPU pc=000019d0 opcode=JAL rd=x14 imm=14
+@108640ps CPU pc=000019d4 opcode=NOP rd=x15 imm=15
+@108800ps CPU pc=000019d8 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@108960ps CPU pc=000019dc opcode=LW rd=x2 rs1=x5 imm=77
+@109120ps CPU pc=000019e0 opcode=SW rd=x3 rs1=x6 imm=78
+@109280ps CPU pc=000019e4 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@109440ps CPU pc=000019e8 opcode=AND rd=x5 rs1=x8 rs2=x12
+@109600ps CPU pc=000019ec opcode=OR rd=x6 rs1=x9 rs2=x13
+@109760ps CPU pc=000019f0 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@109920ps CPU pc=000019f4 opcode=ADDI rd=x8 rs1=x11 imm=7d
+@110080ps CPU pc=000019f8 opcode=JAL rd=x9 imm=1e
+@110240ps CPU pc=000019fc opcode=NOP rd=x10 imm=1f
+@110400ps CPU pc=00001a00 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@110560ps CPU pc=00001a04 opcode=LW rd=x12 rs1=x15 imm=81
+@110720ps CPU pc=00001a08 opcode=SW rd=x13 rs1=x1 imm=82
+@110880ps CPU pc=00001a0c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@111040ps CPU pc=00001a10 opcode=AND rd=x15 rs1=x3 rs2=x7
+@111200ps CPU pc=00001a14 opcode=OR rd=x1 rs1=x4 rs2=x8
+@111360ps CPU pc=00001a18 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@111520ps CPU pc=00001a1c opcode=ADDI rd=x3 rs1=x6 imm=87
+@111680ps CPU pc=00001a20 opcode=JAL rd=x4 imm=8
+@111840ps CPU pc=00001a24 opcode=NOP rd=x5 imm=9
+@112000ps CPU pc=00001a28 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@112160ps CPU pc=00001a2c opcode=LW rd=x7 rs1=x10 imm=8b
+@112320ps CPU pc=00001a30 opcode=SW rd=x8 rs1=x11 imm=8c
+@112480ps CPU pc=00001a34 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@112640ps CPU pc=00001a38 opcode=AND rd=x10 rs1=x13 rs2=x2
+@112800ps CPU pc=00001a3c opcode=OR rd=x11 rs1=x14 rs2=x3
+@112960ps CPU pc=00001a40 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@113120ps CPU pc=00001a44 opcode=ADDI rd=x13 rs1=x1 imm=91
+@113280ps CPU pc=00001a48 opcode=JAL rd=x14 imm=12
+@113440ps CPU pc=00001a4c opcode=NOP rd=x15 imm=13
+@113600ps CPU pc=00001a50 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@113760ps CPU pc=00001a54 opcode=LW rd=x2 rs1=x5 imm=95
+@113920ps CPU pc=00001a58 opcode=SW rd=x3 rs1=x6 imm=96
+@114080ps CPU pc=00001a5c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@114240ps CPU pc=00001a60 opcode=AND rd=x5 rs1=x8 rs2=x12
+@114400ps CPU pc=00001a64 opcode=OR rd=x6 rs1=x9 rs2=x13
+@114560ps CPU pc=00001a68 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@114720ps CPU pc=00001a6c opcode=ADDI rd=x8 rs1=x11 imm=9b
+@114880ps CPU pc=00001a70 opcode=JAL rd=x9 imm=1c
+@115040ps CPU pc=00001a74 opcode=NOP rd=x10 imm=1d
+@115200ps CPU pc=00001a78 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@115360ps CPU pc=00001a7c opcode=LW rd=x12 rs1=x15 imm=9f
+@115520ps CPU pc=00001a80 opcode=SW rd=x13 rs1=x1 imm=a0
+@115680ps CPU pc=00001a84 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@115840ps CPU pc=00001a88 opcode=AND rd=x15 rs1=x3 rs2=x7
+@116000ps CPU pc=00001a8c opcode=OR rd=x1 rs1=x4 rs2=x8
+@116160ps CPU pc=00001a90 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@116320ps CPU pc=00001a94 opcode=ADDI rd=x3 rs1=x6 imm=a5
+@116480ps CPU pc=00001a98 opcode=JAL rd=x4 imm=6
+@116640ps CPU pc=00001a9c opcode=NOP rd=x5 imm=7
+@116800ps CPU pc=00001aa0 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@116960ps CPU pc=00001aa4 opcode=LW rd=x7 rs1=x10 imm=a9
+@117120ps CPU pc=00001aa8 opcode=SW rd=x8 rs1=x11 imm=aa
+@117280ps CPU pc=00001aac opcode=BEQ rs1=x12 rs2=x1 imm=8
+@117440ps CPU pc=00001ab0 opcode=AND rd=x10 rs1=x13 rs2=x2
+@117600ps CPU pc=00001ab4 opcode=OR rd=x11 rs1=x14 rs2=x3
+@117760ps CPU pc=00001ab8 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@117920ps CPU pc=00001abc opcode=ADDI rd=x13 rs1=x1 imm=af
+@118080ps CPU pc=00001ac0 opcode=JAL rd=x14 imm=10
+@118240ps CPU pc=00001ac4 opcode=NOP rd=x15 imm=11
+@118400ps CPU pc=00001ac8 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@118560ps CPU pc=00001acc opcode=LW rd=x2 rs1=x5 imm=b3
+@118720ps CPU pc=00001ad0 opcode=SW rd=x3 rs1=x6 imm=b4
+@118880ps CPU pc=00001ad4 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@119040ps CPU pc=00001ad8 opcode=AND rd=x5 rs1=x8 rs2=x12
+@119200ps CPU pc=00001adc opcode=OR rd=x6 rs1=x9 rs2=x13
+@119360ps CPU pc=00001ae0 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@119520ps CPU pc=00001ae4 opcode=ADDI rd=x8 rs1=x11 imm=b9
+@119680ps CPU pc=00001ae8 opcode=JAL rd=x9 imm=1a
+@119840ps CPU pc=00001aec opcode=NOP rd=x10 imm=1b
+@120000ps CPU pc=00001af0 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@120160ps CPU pc=00001af4 opcode=LW rd=x12 rs1=x15 imm=bd
+@120320ps CPU pc=00001af8 opcode=SW rd=x13 rs1=x1 imm=be
+@120480ps CPU pc=00001afc opcode=BEQ rs1=x2 rs2=x6 imm=8
+@120640ps CPU pc=00001b00 opcode=AND rd=x15 rs1=x3 rs2=x7
+@120800ps CPU pc=00001b04 opcode=OR rd=x1 rs1=x4 rs2=x8
+@120960ps CPU pc=00001b08 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@121120ps CPU pc=00001b0c opcode=ADDI rd=x3 rs1=x6 imm=c3
+@121280ps CPU pc=00001b10 opcode=JAL rd=x4 imm=4
+@121440ps CPU pc=00001b14 opcode=NOP rd=x5 imm=5
+@121600ps CPU pc=00001b18 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@121760ps CPU pc=00001b1c opcode=LW rd=x7 rs1=x10 imm=c7
+@121920ps CPU pc=00001b20 opcode=SW rd=x8 rs1=x11 imm=c8
+@122080ps CPU pc=00001b24 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@122240ps CPU pc=00001b28 opcode=AND rd=x10 rs1=x13 rs2=x2
+@122400ps CPU pc=00001b2c opcode=OR rd=x11 rs1=x14 rs2=x3
+@122560ps CPU pc=00001b30 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@122720ps CPU pc=00001b34 opcode=ADDI rd=x13 rs1=x1 imm=cd
+@122880ps CPU pc=00001b38 opcode=JAL rd=x14 imm=e
+@123040ps CPU pc=00001b3c opcode=NOP rd=x15 imm=f
+@123200ps CPU pc=00001b40 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@123360ps CPU pc=00001b44 opcode=LW rd=x2 rs1=x5 imm=d1
+@123520ps CPU pc=00001b48 opcode=SW rd=x3 rs1=x6 imm=d2
+@123680ps CPU pc=00001b4c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@123840ps CPU pc=00001b50 opcode=AND rd=x5 rs1=x8 rs2=x12
+@124000ps CPU pc=00001b54 opcode=OR rd=x6 rs1=x9 rs2=x13
+@124160ps CPU pc=00001b58 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@124320ps CPU pc=00001b5c opcode=ADDI rd=x8 rs1=x11 imm=d7
+@124480ps CPU pc=00001b60 opcode=JAL rd=x9 imm=18
+@124640ps CPU pc=00001b64 opcode=NOP rd=x10 imm=19
+@124800ps CPU pc=00001b68 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@124960ps CPU pc=00001b6c opcode=LW rd=x12 rs1=x15 imm=db
+@125120ps CPU pc=00001b70 opcode=SW rd=x13 rs1=x1 imm=dc
+@125280ps CPU pc=00001b74 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@125440ps CPU pc=00001b78 opcode=AND rd=x15 rs1=x3 rs2=x7
+@125600ps CPU pc=00001b7c opcode=OR rd=x1 rs1=x4 rs2=x8
+@125760ps CPU pc=00001b80 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@125920ps CPU pc=00001b84 opcode=ADDI rd=x3 rs1=x6 imm=e1
+@126080ps CPU pc=00001b88 opcode=JAL rd=x4 imm=2
+@126240ps CPU pc=00001b8c opcode=NOP rd=x5 imm=3
+@126400ps CPU pc=00001b90 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@126560ps CPU pc=00001b94 opcode=LW rd=x7 rs1=x10 imm=e5
+@126720ps CPU pc=00001b98 opcode=SW rd=x8 rs1=x11 imm=e6
+@126880ps CPU pc=00001b9c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@127040ps CPU pc=00001ba0 opcode=AND rd=x10 rs1=x13 rs2=x2
+@127200ps CPU pc=00001ba4 opcode=OR rd=x11 rs1=x14 rs2=x3
+@127360ps CPU pc=00001ba8 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@127520ps CPU pc=00001bac opcode=ADDI rd=x13 rs1=x1 imm=eb
+@127680ps CPU pc=00001bb0 opcode=JAL rd=x14 imm=c
+@127840ps CPU pc=00001bb4 opcode=NOP rd=x15 imm=d
+@128000ps CPU pc=00001bb8 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@128160ps CPU pc=00001bbc opcode=LW rd=x2 rs1=x5 imm=ef
+@128320ps CPU pc=00001bc0 opcode=SW rd=x3 rs1=x6 imm=f0
+@128480ps CPU pc=00001bc4 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@128640ps CPU pc=00001bc8 opcode=AND rd=x5 rs1=x8 rs2=x12
+@128800ps CPU pc=00001bcc opcode=OR rd=x6 rs1=x9 rs2=x13
+@128960ps CPU pc=00001bd0 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@129120ps CPU pc=00001bd4 opcode=ADDI rd=x8 rs1=x11 imm=f5
+@129280ps CPU pc=00001bd8 opcode=JAL rd=x9 imm=16
+@129440ps CPU pc=00001bdc opcode=NOP rd=x10 imm=17
+@129600ps CPU pc=00001be0 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@129760ps CPU pc=00001be4 opcode=LW rd=x12 rs1=x15 imm=f9
+@129920ps CPU pc=00001be8 opcode=SW rd=x13 rs1=x1 imm=fa
+@130080ps CPU pc=00001bec opcode=BEQ rs1=x2 rs2=x6 imm=8
+@130240ps CPU pc=00001bf0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@130400ps CPU pc=00001bf4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@130560ps CPU pc=00001bf8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@130720ps CPU pc=00001bfc opcode=ADDI rd=x3 rs1=x6 imm=ff
+@130880ps CPU pc=00001c00 opcode=JAL rd=x4 imm=0
+@131040ps CPU pc=00001c04 opcode=NOP rd=x5 imm=1
+@131200ps CPU pc=00001c08 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@131360ps CPU pc=00001c0c opcode=LW rd=x7 rs1=x10 imm=3
+@131520ps CPU pc=00001c10 opcode=SW rd=x8 rs1=x11 imm=4
+@131680ps CPU pc=00001c14 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@131840ps CPU pc=00001c18 opcode=AND rd=x10 rs1=x13 rs2=x2
+@132000ps CPU pc=00001c1c opcode=OR rd=x11 rs1=x14 rs2=x3
+@132160ps CPU pc=00001c20 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@132320ps CPU pc=00001c24 opcode=ADDI rd=x13 rs1=x1 imm=9
+@132480ps CPU pc=00001c28 opcode=JAL rd=x14 imm=a
+@132640ps CPU pc=00001c2c opcode=NOP rd=x15 imm=b
+@132800ps CPU pc=00001c30 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@132960ps CPU pc=00001c34 opcode=LW rd=x2 rs1=x5 imm=d
+@133120ps CPU pc=00001c38 opcode=SW rd=x3 rs1=x6 imm=e
+@133280ps CPU pc=00001c3c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@133440ps CPU pc=00001c40 opcode=AND rd=x5 rs1=x8 rs2=x12
+@133600ps CPU pc=00001c44 opcode=OR rd=x6 rs1=x9 rs2=x13
+@133760ps CPU pc=00001c48 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@133920ps CPU pc=00001c4c opcode=ADDI rd=x8 rs1=x11 imm=13
+@134080ps CPU pc=00001c50 opcode=JAL rd=x9 imm=14
+@134240ps CPU pc=00001c54 opcode=NOP rd=x10 imm=15
+@134400ps CPU pc=00001c58 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@134560ps CPU pc=00001c5c opcode=LW rd=x12 rs1=x15 imm=17
+@134720ps CPU pc=00001c60 opcode=SW rd=x13 rs1=x1 imm=18
+@134880ps CPU pc=00001c64 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@135040ps CPU pc=00001c68 opcode=AND rd=x15 rs1=x3 rs2=x7
+@135200ps CPU pc=00001c6c opcode=OR rd=x1 rs1=x4 rs2=x8
+@135360ps CPU pc=00001c70 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@135520ps CPU pc=00001c74 opcode=ADDI rd=x3 rs1=x6 imm=1d
+@135680ps CPU pc=00001c78 opcode=JAL rd=x4 imm=1e
+@135840ps CPU pc=00001c7c opcode=NOP rd=x5 imm=1f
+@136000ps CPU pc=00001c80 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@136160ps CPU pc=00001c84 opcode=LW rd=x7 rs1=x10 imm=21
+@136320ps CPU pc=00001c88 opcode=SW rd=x8 rs1=x11 imm=22
+@136480ps CPU pc=00001c8c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@136640ps CPU pc=00001c90 opcode=AND rd=x10 rs1=x13 rs2=x2
+@136800ps CPU pc=00001c94 opcode=OR rd=x11 rs1=x14 rs2=x3
+@136960ps CPU pc=00001c98 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@137120ps CPU pc=00001c9c opcode=ADDI rd=x13 rs1=x1 imm=27
+@137280ps CPU pc=00001ca0 opcode=JAL rd=x14 imm=8
+@137440ps CPU pc=00001ca4 opcode=NOP rd=x15 imm=9
+@137600ps CPU pc=00001ca8 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@137760ps CPU pc=00001cac opcode=LW rd=x2 rs1=x5 imm=2b
+@137920ps CPU pc=00001cb0 opcode=SW rd=x3 rs1=x6 imm=2c
+@138080ps CPU pc=00001cb4 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@138240ps CPU pc=00001cb8 opcode=AND rd=x5 rs1=x8 rs2=x12
+@138400ps CPU pc=00001cbc opcode=OR rd=x6 rs1=x9 rs2=x13
+@138560ps CPU pc=00001cc0 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@138720ps CPU pc=00001cc4 opcode=ADDI rd=x8 rs1=x11 imm=31
+@138880ps CPU pc=00001cc8 opcode=JAL rd=x9 imm=12
+@139040ps CPU pc=00001ccc opcode=NOP rd=x10 imm=13
+@139200ps CPU pc=00001cd0 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@139360ps CPU pc=00001cd4 opcode=LW rd=x12 rs1=x15 imm=35
+@139520ps CPU pc=00001cd8 opcode=SW rd=x13 rs1=x1 imm=36
+@139680ps CPU pc=00001cdc opcode=BEQ rs1=x2 rs2=x6 imm=8
+@139840ps CPU pc=00001ce0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@140000ps CPU pc=00001ce4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@140160ps CPU pc=00001ce8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@140320ps CPU pc=00001cec opcode=ADDI rd=x3 rs1=x6 imm=3b
+@140480ps CPU pc=00001cf0 opcode=JAL rd=x4 imm=1c
+@140640ps CPU pc=00001cf4 opcode=NOP rd=x5 imm=1d
+@140800ps CPU pc=00001cf8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@140960ps CPU pc=00001cfc opcode=LW rd=x7 rs1=x10 imm=3f
+@141120ps CPU pc=00001d00 opcode=SW rd=x8 rs1=x11 imm=40
+@141280ps CPU pc=00001d04 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@141440ps CPU pc=00001d08 opcode=AND rd=x10 rs1=x13 rs2=x2
+@141600ps CPU pc=00001d0c opcode=OR rd=x11 rs1=x14 rs2=x3
+@141760ps CPU pc=00001d10 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@141920ps CPU pc=00001d14 opcode=ADDI rd=x13 rs1=x1 imm=45
+@142080ps CPU pc=00001d18 opcode=JAL rd=x14 imm=6
+@142240ps CPU pc=00001d1c opcode=NOP rd=x15 imm=7
+@142400ps CPU pc=00001d20 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@142560ps CPU pc=00001d24 opcode=LW rd=x2 rs1=x5 imm=49
+@142720ps CPU pc=00001d28 opcode=SW rd=x3 rs1=x6 imm=4a
+@142880ps CPU pc=00001d2c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@143040ps CPU pc=00001d30 opcode=AND rd=x5 rs1=x8 rs2=x12
+@143200ps CPU pc=00001d34 opcode=OR rd=x6 rs1=x9 rs2=x13
+@143360ps CPU pc=00001d38 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@143520ps CPU pc=00001d3c opcode=ADDI rd=x8 rs1=x11 imm=4f
+@143680ps CPU pc=00001d40 opcode=JAL rd=x9 imm=10
+@143840ps CPU pc=00001d44 opcode=NOP rd=x10 imm=11
+@144000ps CPU pc=00001d48 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@144160ps CPU pc=00001d4c opcode=LW rd=x12 rs1=x15 imm=53
+@144320ps CPU pc=00001d50 opcode=SW rd=x13 rs1=x1 imm=54
+@144480ps CPU pc=00001d54 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@144640ps CPU pc=00001d58 opcode=AND rd=x15 rs1=x3 rs2=x7
+@144800ps CPU pc=00001d5c opcode=OR rd=x1 rs1=x4 rs2=x8
+@144960ps CPU pc=00001d60 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@145120ps CPU pc=00001d64 opcode=ADDI rd=x3 rs1=x6 imm=59
+@145280ps CPU pc=00001d68 opcode=JAL rd=x4 imm=1a
+@145440ps CPU pc=00001d6c opcode=NOP rd=x5 imm=1b
+@145600ps CPU pc=00001d70 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@145760ps CPU pc=00001d74 opcode=LW rd=x7 rs1=x10 imm=5d
+@145920ps CPU pc=00001d78 opcode=SW rd=x8 rs1=x11 imm=5e
+@146080ps CPU pc=00001d7c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@146240ps CPU pc=00001d80 opcode=AND rd=x10 rs1=x13 rs2=x2
+@146400ps CPU pc=00001d84 opcode=OR rd=x11 rs1=x14 rs2=x3
+@146560ps CPU pc=00001d88 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@146720ps CPU pc=00001d8c opcode=ADDI rd=x13 rs1=x1 imm=63
+@146880ps CPU pc=00001d90 opcode=JAL rd=x14 imm=4
+@147040ps CPU pc=00001d94 opcode=NOP rd=x15 imm=5
+@147200ps CPU pc=00001d98 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@147360ps CPU pc=00001d9c opcode=LW rd=x2 rs1=x5 imm=67
+@147520ps CPU pc=00001da0 opcode=SW rd=x3 rs1=x6 imm=68
+@147680ps CPU pc=00001da4 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@147840ps CPU pc=00001da8 opcode=AND rd=x5 rs1=x8 rs2=x12
+@148000ps CPU pc=00001dac opcode=OR rd=x6 rs1=x9 rs2=x13
+@148160ps CPU pc=00001db0 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@148320ps CPU pc=00001db4 opcode=ADDI rd=x8 rs1=x11 imm=6d
+@148480ps CPU pc=00001db8 opcode=JAL rd=x9 imm=e
+@148640ps CPU pc=00001dbc opcode=NOP rd=x10 imm=f
+@148800ps CPU pc=00001dc0 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@148960ps CPU pc=00001dc4 opcode=LW rd=x12 rs1=x15 imm=71
+@149120ps CPU pc=00001dc8 opcode=SW rd=x13 rs1=x1 imm=72
+@149280ps CPU pc=00001dcc opcode=BEQ rs1=x2 rs2=x6 imm=8
+@149440ps CPU pc=00001dd0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@149600ps CPU pc=00001dd4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@149760ps CPU pc=00001dd8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@149920ps CPU pc=00001ddc opcode=ADDI rd=x3 rs1=x6 imm=77
+@150080ps CPU pc=00001de0 opcode=JAL rd=x4 imm=18
+@150240ps CPU pc=00001de4 opcode=NOP rd=x5 imm=19
+@150400ps CPU pc=00001de8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@150560ps CPU pc=00001dec opcode=LW rd=x7 rs1=x10 imm=7b
+@150720ps CPU pc=00001df0 opcode=SW rd=x8 rs1=x11 imm=7c
+@150880ps CPU pc=00001df4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@151040ps CPU pc=00001df8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@151200ps CPU pc=00001dfc opcode=OR rd=x11 rs1=x14 rs2=x3
+@151360ps CPU pc=00001e00 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@151520ps CPU pc=00001e04 opcode=ADDI rd=x13 rs1=x1 imm=81
+@151680ps CPU pc=00001e08 opcode=JAL rd=x14 imm=2
+@151840ps CPU pc=00001e0c opcode=NOP rd=x15 imm=3
+@152000ps CPU pc=00001e10 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@152160ps CPU pc=00001e14 opcode=LW rd=x2 rs1=x5 imm=85
+@152320ps CPU pc=00001e18 opcode=SW rd=x3 rs1=x6 imm=86
+@152480ps CPU pc=00001e1c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@152640ps CPU pc=00001e20 opcode=AND rd=x5 rs1=x8 rs2=x12
+@152800ps CPU pc=00001e24 opcode=OR rd=x6 rs1=x9 rs2=x13
+@152960ps CPU pc=00001e28 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@153120ps CPU pc=00001e2c opcode=ADDI rd=x8 rs1=x11 imm=8b
+@153280ps CPU pc=00001e30 opcode=JAL rd=x9 imm=c
+@153440ps CPU pc=00001e34 opcode=NOP rd=x10 imm=d
+@153600ps CPU pc=00001e38 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@153760ps CPU pc=00001e3c opcode=LW rd=x12 rs1=x15 imm=8f
+@153920ps CPU pc=00001e40 opcode=SW rd=x13 rs1=x1 imm=90
+@154080ps CPU pc=00001e44 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@154240ps CPU pc=00001e48 opcode=AND rd=x15 rs1=x3 rs2=x7
+@154400ps CPU pc=00001e4c opcode=OR rd=x1 rs1=x4 rs2=x8
+@154560ps CPU pc=00001e50 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@154720ps CPU pc=00001e54 opcode=ADDI rd=x3 rs1=x6 imm=95
+@154880ps CPU pc=00001e58 opcode=JAL rd=x4 imm=16
+@155040ps CPU pc=00001e5c opcode=NOP rd=x5 imm=17
+@155200ps CPU pc=00001e60 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@155360ps CPU pc=00001e64 opcode=LW rd=x7 rs1=x10 imm=99
+@155520ps CPU pc=00001e68 opcode=SW rd=x8 rs1=x11 imm=9a
+@155680ps CPU pc=00001e6c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@155840ps CPU pc=00001e70 opcode=AND rd=x10 rs1=x13 rs2=x2
+@156000ps CPU pc=00001e74 opcode=OR rd=x11 rs1=x14 rs2=x3
+@156160ps CPU pc=00001e78 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@156320ps CPU pc=00001e7c opcode=ADDI rd=x13 rs1=x1 imm=9f
+@156480ps CPU pc=00001e80 opcode=JAL rd=x14 imm=0
+@156640ps CPU pc=00001e84 opcode=NOP rd=x15 imm=1
+@156800ps CPU pc=00001e88 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@156960ps CPU pc=00001e8c opcode=LW rd=x2 rs1=x5 imm=a3
+@157120ps CPU pc=00001e90 opcode=SW rd=x3 rs1=x6 imm=a4
+@157280ps CPU pc=00001e94 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@157440ps CPU pc=00001e98 opcode=AND rd=x5 rs1=x8 rs2=x12
+@157600ps CPU pc=00001e9c opcode=OR rd=x6 rs1=x9 rs2=x13
+@157760ps CPU pc=00001ea0 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@157920ps CPU pc=00001ea4 opcode=ADDI rd=x8 rs1=x11 imm=a9
+@158080ps CPU pc=00001ea8 opcode=JAL rd=x9 imm=a
+@158240ps CPU pc=00001eac opcode=NOP rd=x10 imm=b
+@158400ps CPU pc=00001eb0 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@158560ps CPU pc=00001eb4 opcode=LW rd=x12 rs1=x15 imm=ad
+@158720ps CPU pc=00001eb8 opcode=SW rd=x13 rs1=x1 imm=ae
+@158880ps CPU pc=00001ebc opcode=BEQ rs1=x2 rs2=x6 imm=8
+@159040ps CPU pc=00001ec0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@159200ps CPU pc=00001ec4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@159360ps CPU pc=00001ec8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@159520ps CPU pc=00001ecc opcode=ADDI rd=x3 rs1=x6 imm=b3
+@159680ps CPU pc=00001ed0 opcode=JAL rd=x4 imm=14
+@159840ps CPU pc=00001ed4 opcode=NOP rd=x5 imm=15
+@160000ps CPU pc=00001ed8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@160160ps CPU pc=00001edc opcode=LW rd=x7 rs1=x10 imm=b7
+@160320ps CPU pc=00001ee0 opcode=SW rd=x8 rs1=x11 imm=b8
+@160480ps CPU pc=00001ee4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@160640ps CPU pc=00001ee8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@160800ps CPU pc=00001eec opcode=OR rd=x11 rs1=x14 rs2=x3
+@160960ps CPU pc=00001ef0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@161120ps CPU pc=00001ef4 opcode=ADDI rd=x13 rs1=x1 imm=bd
+@161280ps CPU pc=00001ef8 opcode=JAL rd=x14 imm=1e
+@161440ps CPU pc=00001efc opcode=NOP rd=x15 imm=1f
+@161600ps CPU pc=00001f00 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@161760ps CPU pc=00001f04 opcode=LW rd=x2 rs1=x5 imm=c1
+@161920ps CPU pc=00001f08 opcode=SW rd=x3 rs1=x6 imm=c2
+@162080ps CPU pc=00001f0c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@162240ps CPU pc=00001f10 opcode=AND rd=x5 rs1=x8 rs2=x12
+@162400ps CPU pc=00001f14 opcode=OR rd=x6 rs1=x9 rs2=x13
+@162560ps CPU pc=00001f18 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@162720ps CPU pc=00001f1c opcode=ADDI rd=x8 rs1=x11 imm=c7
+@162880ps CPU pc=00001f20 opcode=JAL rd=x9 imm=8
+@163040ps CPU pc=00001f24 opcode=NOP rd=x10 imm=9
+@163200ps CPU pc=00001f28 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@163360ps CPU pc=00001f2c opcode=LW rd=x12 rs1=x15 imm=cb
+@163520ps CPU pc=00001f30 opcode=SW rd=x13 rs1=x1 imm=cc
+@163680ps CPU pc=00001f34 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@163840ps CPU pc=00001f38 opcode=AND rd=x15 rs1=x3 rs2=x7
+@164000ps CPU pc=00001f3c opcode=OR rd=x1 rs1=x4 rs2=x8
+@164160ps CPU pc=00001f40 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@164320ps CPU pc=00001f44 opcode=ADDI rd=x3 rs1=x6 imm=d1
+@164480ps CPU pc=00001f48 opcode=JAL rd=x4 imm=12
+@164640ps CPU pc=00001f4c opcode=NOP rd=x5 imm=13
+@164800ps CPU pc=00001f50 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@164960ps CPU pc=00001f54 opcode=LW rd=x7 rs1=x10 imm=d5
+@165120ps CPU pc=00001f58 opcode=SW rd=x8 rs1=x11 imm=d6
+@165280ps CPU pc=00001f5c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@165440ps CPU pc=00001f60 opcode=AND rd=x10 rs1=x13 rs2=x2
+@165600ps CPU pc=00001f64 opcode=OR rd=x11 rs1=x14 rs2=x3
+@165760ps CPU pc=00001f68 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@165920ps CPU pc=00001f6c opcode=ADDI rd=x13 rs1=x1 imm=db
+@166080ps CPU pc=00001f70 opcode=JAL rd=x14 imm=1c
+@166240ps CPU pc=00001f74 opcode=NOP rd=x15 imm=1d
+@166400ps CPU pc=00001f78 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@166560ps CPU pc=00001f7c opcode=LW rd=x2 rs1=x5 imm=df
+@166720ps CPU pc=00001f80 opcode=SW rd=x3 rs1=x6 imm=e0
+@166880ps CPU pc=00001f84 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@167040ps CPU pc=00001f88 opcode=AND rd=x5 rs1=x8 rs2=x12
+@167200ps CPU pc=00001f8c opcode=OR rd=x6 rs1=x9 rs2=x13
+@167360ps CPU pc=00001f90 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@167520ps CPU pc=00001f94 opcode=ADDI rd=x8 rs1=x11 imm=e5
+@167680ps CPU pc=00001f98 opcode=JAL rd=x9 imm=6
+@167840ps CPU pc=00001f9c opcode=NOP rd=x10 imm=7
+@168000ps CPU pc=00001fa0 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@168160ps CPU pc=00001fa4 opcode=LW rd=x12 rs1=x15 imm=e9
+@168320ps CPU pc=00001fa8 opcode=SW rd=x13 rs1=x1 imm=ea
+@168480ps CPU pc=00001fac opcode=BEQ rs1=x2 rs2=x6 imm=8
+@168640ps CPU pc=00001fb0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@168800ps CPU pc=00001fb4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@168960ps CPU pc=00001fb8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@169120ps CPU pc=00001fbc opcode=ADDI rd=x3 rs1=x6 imm=ef
+@169280ps CPU pc=00001fc0 opcode=JAL rd=x4 imm=10
+@169440ps CPU pc=00001fc4 opcode=NOP rd=x5 imm=11
+@169600ps CPU pc=00001fc8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@169760ps CPU pc=00001fcc opcode=LW rd=x7 rs1=x10 imm=f3
+@169920ps CPU pc=00001fd0 opcode=SW rd=x8 rs1=x11 imm=f4
+@170080ps CPU pc=00001fd4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@170240ps CPU pc=00001fd8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@170400ps CPU pc=00001fdc opcode=OR rd=x11 rs1=x14 rs2=x3
+@170560ps CPU pc=00001fe0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@170720ps CPU pc=00001fe4 opcode=ADDI rd=x13 rs1=x1 imm=f9
+@170880ps CPU pc=00001fe8 opcode=JAL rd=x14 imm=1a
+@171040ps CPU pc=00001fec opcode=NOP rd=x15 imm=1b
+@171200ps CPU pc=00001ff0 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@171360ps CPU pc=00001ff4 opcode=LW rd=x2 rs1=x5 imm=fd
+@171520ps CPU pc=00001ff8 opcode=SW rd=x3 rs1=x6 imm=fe
+@171680ps CPU pc=00001ffc opcode=BEQ rs1=x7 rs2=x11 imm=8
+@171840ps CPU pc=00002000 opcode=AND rd=x5 rs1=x8 rs2=x12
+@172000ps CPU pc=00002004 opcode=OR rd=x6 rs1=x9 rs2=x13
+@172160ps CPU pc=00002008 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@172320ps CPU pc=0000200c opcode=ADDI rd=x8 rs1=x11 imm=3
+@172480ps CPU pc=00002010 opcode=JAL rd=x9 imm=4
+@172640ps CPU pc=00002014 opcode=NOP rd=x10 imm=5
+@172800ps CPU pc=00002018 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@172960ps CPU pc=0000201c opcode=LW rd=x12 rs1=x15 imm=7
+@173120ps CPU pc=00002020 opcode=SW rd=x13 rs1=x1 imm=8
+@173280ps CPU pc=00002024 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@173440ps CPU pc=00002028 opcode=AND rd=x15 rs1=x3 rs2=x7
+@173600ps CPU pc=0000202c opcode=OR rd=x1 rs1=x4 rs2=x8
+@173760ps CPU pc=00002030 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@173920ps CPU pc=00002034 opcode=ADDI rd=x3 rs1=x6 imm=d
+@174080ps CPU pc=00002038 opcode=JAL rd=x4 imm=e
+@174240ps CPU pc=0000203c opcode=NOP rd=x5 imm=f
+@174400ps CPU pc=00002040 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@174560ps CPU pc=00002044 opcode=LW rd=x7 rs1=x10 imm=11
+@174720ps CPU pc=00002048 opcode=SW rd=x8 rs1=x11 imm=12
+@174880ps CPU pc=0000204c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@175040ps CPU pc=00002050 opcode=AND rd=x10 rs1=x13 rs2=x2
+@175200ps CPU pc=00002054 opcode=OR rd=x11 rs1=x14 rs2=x3
+@175360ps CPU pc=00002058 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@175520ps CPU pc=0000205c opcode=ADDI rd=x13 rs1=x1 imm=17
+@175680ps CPU pc=00002060 opcode=JAL rd=x14 imm=18
+@175840ps CPU pc=00002064 opcode=NOP rd=x15 imm=19
+@176000ps CPU pc=00002068 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@176160ps CPU pc=0000206c opcode=LW rd=x2 rs1=x5 imm=1b
+@176320ps CPU pc=00002070 opcode=SW rd=x3 rs1=x6 imm=1c
+@176480ps CPU pc=00002074 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@176640ps CPU pc=00002078 opcode=AND rd=x5 rs1=x8 rs2=x12
+@176800ps CPU pc=0000207c opcode=OR rd=x6 rs1=x9 rs2=x13
+@176960ps CPU pc=00002080 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@177120ps CPU pc=00002084 opcode=ADDI rd=x8 rs1=x11 imm=21
+@177280ps CPU pc=00002088 opcode=JAL rd=x9 imm=2
+@177440ps CPU pc=0000208c opcode=NOP rd=x10 imm=3
+@177600ps CPU pc=00002090 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@177760ps CPU pc=00002094 opcode=LW rd=x12 rs1=x15 imm=25
+@177920ps CPU pc=00002098 opcode=SW rd=x13 rs1=x1 imm=26
+@178080ps CPU pc=0000209c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@178240ps CPU pc=000020a0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@178400ps CPU pc=000020a4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@178560ps CPU pc=000020a8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@178720ps CPU pc=000020ac opcode=ADDI rd=x3 rs1=x6 imm=2b
+@178880ps CPU pc=000020b0 opcode=JAL rd=x4 imm=c
+@179040ps CPU pc=000020b4 opcode=NOP rd=x5 imm=d
+@179200ps CPU pc=000020b8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@179360ps CPU pc=000020bc opcode=LW rd=x7 rs1=x10 imm=2f
+@179520ps CPU pc=000020c0 opcode=SW rd=x8 rs1=x11 imm=30
+@179680ps CPU pc=000020c4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@179840ps CPU pc=000020c8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@180000ps CPU pc=000020cc opcode=OR rd=x11 rs1=x14 rs2=x3
+@180160ps CPU pc=000020d0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@180320ps CPU pc=000020d4 opcode=ADDI rd=x13 rs1=x1 imm=35
+@180480ps CPU pc=000020d8 opcode=JAL rd=x14 imm=16
+@180640ps CPU pc=000020dc opcode=NOP rd=x15 imm=17
+@180800ps CPU pc=000020e0 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@180960ps CPU pc=000020e4 opcode=LW rd=x2 rs1=x5 imm=39
+@181120ps CPU pc=000020e8 opcode=SW rd=x3 rs1=x6 imm=3a
+@181280ps CPU pc=000020ec opcode=BEQ rs1=x7 rs2=x11 imm=8
+@181440ps CPU pc=000020f0 opcode=AND rd=x5 rs1=x8 rs2=x12
+@181600ps CPU pc=000020f4 opcode=OR rd=x6 rs1=x9 rs2=x13
+@181760ps CPU pc=000020f8 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@181920ps CPU pc=000020fc opcode=ADDI rd=x8 rs1=x11 imm=3f
+@182080ps CPU pc=00002100 opcode=JAL rd=x9 imm=0
+@182240ps CPU pc=00002104 opcode=NOP rd=x10 imm=1
+@182400ps CPU pc=00002108 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@182560ps CPU pc=0000210c opcode=LW rd=x12 rs1=x15 imm=43
+@182720ps CPU pc=00002110 opcode=SW rd=x13 rs1=x1 imm=44
+@182880ps CPU pc=00002114 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@183040ps CPU pc=00002118 opcode=AND rd=x15 rs1=x3 rs2=x7
+@183200ps CPU pc=0000211c opcode=OR rd=x1 rs1=x4 rs2=x8
+@183360ps CPU pc=00002120 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@183520ps CPU pc=00002124 opcode=ADDI rd=x3 rs1=x6 imm=49
+@183680ps CPU pc=00002128 opcode=JAL rd=x4 imm=a
+@183840ps CPU pc=0000212c opcode=NOP rd=x5 imm=b
+@184000ps CPU pc=00002130 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@184160ps CPU pc=00002134 opcode=LW rd=x7 rs1=x10 imm=4d
+@184320ps CPU pc=00002138 opcode=SW rd=x8 rs1=x11 imm=4e
+@184480ps CPU pc=0000213c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@184640ps CPU pc=00002140 opcode=AND rd=x10 rs1=x13 rs2=x2
+@184800ps CPU pc=00002144 opcode=OR rd=x11 rs1=x14 rs2=x3
+@184960ps CPU pc=00002148 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@185120ps CPU pc=0000214c opcode=ADDI rd=x13 rs1=x1 imm=53
+@185280ps CPU pc=00002150 opcode=JAL rd=x14 imm=14
+@185440ps CPU pc=00002154 opcode=NOP rd=x15 imm=15
+@185600ps CPU pc=00002158 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@185760ps CPU pc=0000215c opcode=LW rd=x2 rs1=x5 imm=57
+@185920ps CPU pc=00002160 opcode=SW rd=x3 rs1=x6 imm=58
+@186080ps CPU pc=00002164 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@186240ps CPU pc=00002168 opcode=AND rd=x5 rs1=x8 rs2=x12
+@186400ps CPU pc=0000216c opcode=OR rd=x6 rs1=x9 rs2=x13
+@186560ps CPU pc=00002170 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@186720ps CPU pc=00002174 opcode=ADDI rd=x8 rs1=x11 imm=5d
+@186880ps CPU pc=00002178 opcode=JAL rd=x9 imm=1e
+@187040ps CPU pc=0000217c opcode=NOP rd=x10 imm=1f
+@187200ps CPU pc=00002180 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@187360ps CPU pc=00002184 opcode=LW rd=x12 rs1=x15 imm=61
+@187520ps CPU pc=00002188 opcode=SW rd=x13 rs1=x1 imm=62
+@187680ps CPU pc=0000218c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@187840ps CPU pc=00002190 opcode=AND rd=x15 rs1=x3 rs2=x7
+@188000ps CPU pc=00002194 opcode=OR rd=x1 rs1=x4 rs2=x8
+@188160ps CPU pc=00002198 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@188320ps CPU pc=0000219c opcode=ADDI rd=x3 rs1=x6 imm=67
+@188480ps CPU pc=000021a0 opcode=JAL rd=x4 imm=8
+@188640ps CPU pc=000021a4 opcode=NOP rd=x5 imm=9
+@188800ps CPU pc=000021a8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@188960ps CPU pc=000021ac opcode=LW rd=x7 rs1=x10 imm=6b
+@189120ps CPU pc=000021b0 opcode=SW rd=x8 rs1=x11 imm=6c
+@189280ps CPU pc=000021b4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@189440ps CPU pc=000021b8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@189600ps CPU pc=000021bc opcode=OR rd=x11 rs1=x14 rs2=x3
+@189760ps CPU pc=000021c0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@189920ps CPU pc=000021c4 opcode=ADDI rd=x13 rs1=x1 imm=71
+@190080ps CPU pc=000021c8 opcode=JAL rd=x14 imm=12
+@190240ps CPU pc=000021cc opcode=NOP rd=x15 imm=13
+@190400ps CPU pc=000021d0 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@190560ps CPU pc=000021d4 opcode=LW rd=x2 rs1=x5 imm=75
+@190720ps CPU pc=000021d8 opcode=SW rd=x3 rs1=x6 imm=76
+@190880ps CPU pc=000021dc opcode=BEQ rs1=x7 rs2=x11 imm=8
+@191040ps CPU pc=000021e0 opcode=AND rd=x5 rs1=x8 rs2=x12
+@191200ps CPU pc=000021e4 opcode=OR rd=x6 rs1=x9 rs2=x13
+@191360ps CPU pc=000021e8 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@191520ps CPU pc=000021ec opcode=ADDI rd=x8 rs1=x11 imm=7b
+@191680ps CPU pc=000021f0 opcode=JAL rd=x9 imm=1c
+@191840ps CPU pc=000021f4 opcode=NOP rd=x10 imm=1d
+@192000ps CPU pc=000021f8 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@192160ps CPU pc=000021fc opcode=LW rd=x12 rs1=x15 imm=7f
+@192320ps CPU pc=00002200 opcode=SW rd=x13 rs1=x1 imm=80
+@192480ps CPU pc=00002204 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@192640ps CPU pc=00002208 opcode=AND rd=x15 rs1=x3 rs2=x7
+@192800ps CPU pc=0000220c opcode=OR rd=x1 rs1=x4 rs2=x8
+@192960ps CPU pc=00002210 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@193120ps CPU pc=00002214 opcode=ADDI rd=x3 rs1=x6 imm=85
+@193280ps CPU pc=00002218 opcode=JAL rd=x4 imm=6
+@193440ps CPU pc=0000221c opcode=NOP rd=x5 imm=7
+@193600ps CPU pc=00002220 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@193760ps CPU pc=00002224 opcode=LW rd=x7 rs1=x10 imm=89
+@193920ps CPU pc=00002228 opcode=SW rd=x8 rs1=x11 imm=8a
+@194080ps CPU pc=0000222c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@194240ps CPU pc=00002230 opcode=AND rd=x10 rs1=x13 rs2=x2
+@194400ps CPU pc=00002234 opcode=OR rd=x11 rs1=x14 rs2=x3
+@194560ps CPU pc=00002238 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@194720ps CPU pc=0000223c opcode=ADDI rd=x13 rs1=x1 imm=8f
+@194880ps CPU pc=00002240 opcode=JAL rd=x14 imm=10
+@195040ps CPU pc=00002244 opcode=NOP rd=x15 imm=11
+@195200ps CPU pc=00002248 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@195360ps CPU pc=0000224c opcode=LW rd=x2 rs1=x5 imm=93
+@195520ps CPU pc=00002250 opcode=SW rd=x3 rs1=x6 imm=94
+@195680ps CPU pc=00002254 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@195840ps CPU pc=00002258 opcode=AND rd=x5 rs1=x8 rs2=x12
+@196000ps CPU pc=0000225c opcode=OR rd=x6 rs1=x9 rs2=x13
+@196160ps CPU pc=00002260 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@196320ps CPU pc=00002264 opcode=ADDI rd=x8 rs1=x11 imm=99
+@196480ps CPU pc=00002268 opcode=JAL rd=x9 imm=1a
+@196640ps CPU pc=0000226c opcode=NOP rd=x10 imm=1b
+@196800ps CPU pc=00002270 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@196960ps CPU pc=00002274 opcode=LW rd=x12 rs1=x15 imm=9d
+@197120ps CPU pc=00002278 opcode=SW rd=x13 rs1=x1 imm=9e
+@197280ps CPU pc=0000227c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@197440ps CPU pc=00002280 opcode=AND rd=x15 rs1=x3 rs2=x7
+@197600ps CPU pc=00002284 opcode=OR rd=x1 rs1=x4 rs2=x8
+@197760ps CPU pc=00002288 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@197920ps CPU pc=0000228c opcode=ADDI rd=x3 rs1=x6 imm=a3
+@198080ps CPU pc=00002290 opcode=JAL rd=x4 imm=4
+@198240ps CPU pc=00002294 opcode=NOP rd=x5 imm=5
+@198400ps CPU pc=00002298 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@198560ps CPU pc=0000229c opcode=LW rd=x7 rs1=x10 imm=a7
+@198720ps CPU pc=000022a0 opcode=SW rd=x8 rs1=x11 imm=a8
+@198880ps CPU pc=000022a4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@199040ps CPU pc=000022a8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@199200ps CPU pc=000022ac opcode=OR rd=x11 rs1=x14 rs2=x3
+@199360ps CPU pc=000022b0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@199520ps CPU pc=000022b4 opcode=ADDI rd=x13 rs1=x1 imm=ad
+@199680ps CPU pc=000022b8 opcode=JAL rd=x14 imm=e
+@199840ps CPU pc=000022bc opcode=NOP rd=x15 imm=f
+@200000ps CPU pc=000022c0 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@200160ps CPU pc=000022c4 opcode=LW rd=x2 rs1=x5 imm=b1
+@200320ps CPU pc=000022c8 opcode=SW rd=x3 rs1=x6 imm=b2
+@200480ps CPU pc=000022cc opcode=BEQ rs1=x7 rs2=x11 imm=8
+@200640ps CPU pc=000022d0 opcode=AND rd=x5 rs1=x8 rs2=x12
+@200800ps CPU pc=000022d4 opcode=OR rd=x6 rs1=x9 rs2=x13
+@200960ps CPU pc=000022d8 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@201120ps CPU pc=000022dc opcode=ADDI rd=x8 rs1=x11 imm=b7
+@201280ps CPU pc=000022e0 opcode=JAL rd=x9 imm=18
+@201440ps CPU pc=000022e4 opcode=NOP rd=x10 imm=19
+@201600ps CPU pc=000022e8 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@201760ps CPU pc=000022ec opcode=LW rd=x12 rs1=x15 imm=bb
+@201920ps CPU pc=000022f0 opcode=SW rd=x13 rs1=x1 imm=bc
+@202080ps CPU pc=000022f4 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@202240ps CPU pc=000022f8 opcode=AND rd=x15 rs1=x3 rs2=x7
+@202400ps CPU pc=000022fc opcode=OR rd=x1 rs1=x4 rs2=x8
+@202560ps CPU pc=00002300 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@202720ps CPU pc=00002304 opcode=ADDI rd=x3 rs1=x6 imm=c1
+@202880ps CPU pc=00002308 opcode=JAL rd=x4 imm=2
+@203040ps CPU pc=0000230c opcode=NOP rd=x5 imm=3
+@203200ps CPU pc=00002310 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@203360ps CPU pc=00002314 opcode=LW rd=x7 rs1=x10 imm=c5
+@203520ps CPU pc=00002318 opcode=SW rd=x8 rs1=x11 imm=c6
+@203680ps CPU pc=0000231c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@203840ps CPU pc=00002320 opcode=AND rd=x10 rs1=x13 rs2=x2
+@204000ps CPU pc=00002324 opcode=OR rd=x11 rs1=x14 rs2=x3
+@204160ps CPU pc=00002328 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@204320ps CPU pc=0000232c opcode=ADDI rd=x13 rs1=x1 imm=cb
+@204480ps CPU pc=00002330 opcode=JAL rd=x14 imm=c
+@204640ps CPU pc=00002334 opcode=NOP rd=x15 imm=d
+@204800ps CPU pc=00002338 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@204960ps CPU pc=0000233c opcode=LW rd=x2 rs1=x5 imm=cf
+@205120ps CPU pc=00002340 opcode=SW rd=x3 rs1=x6 imm=d0
+@205280ps CPU pc=00002344 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@205440ps CPU pc=00002348 opcode=AND rd=x5 rs1=x8 rs2=x12
+@205600ps CPU pc=0000234c opcode=OR rd=x6 rs1=x9 rs2=x13
+@205760ps CPU pc=00002350 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@205920ps CPU pc=00002354 opcode=ADDI rd=x8 rs1=x11 imm=d5
+@206080ps CPU pc=00002358 opcode=JAL rd=x9 imm=16
+@206240ps CPU pc=0000235c opcode=NOP rd=x10 imm=17
+@206400ps CPU pc=00002360 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@206560ps CPU pc=00002364 opcode=LW rd=x12 rs1=x15 imm=d9
+@206720ps CPU pc=00002368 opcode=SW rd=x13 rs1=x1 imm=da
+@206880ps CPU pc=0000236c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@207040ps CPU pc=00002370 opcode=AND rd=x15 rs1=x3 rs2=x7
+@207200ps CPU pc=00002374 opcode=OR rd=x1 rs1=x4 rs2=x8
+@207360ps CPU pc=00002378 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@207520ps CPU pc=0000237c opcode=ADDI rd=x3 rs1=x6 imm=df
+@207680ps CPU pc=00002380 opcode=JAL rd=x4 imm=0
+@207840ps CPU pc=00002384 opcode=NOP rd=x5 imm=1
+@208000ps CPU pc=00002388 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@208160ps CPU pc=0000238c opcode=LW rd=x7 rs1=x10 imm=e3
+@208320ps CPU pc=00002390 opcode=SW rd=x8 rs1=x11 imm=e4
+@208480ps CPU pc=00002394 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@208640ps CPU pc=00002398 opcode=AND rd=x10 rs1=x13 rs2=x2
+@208800ps CPU pc=0000239c opcode=OR rd=x11 rs1=x14 rs2=x3
+@208960ps CPU pc=000023a0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@209120ps CPU pc=000023a4 opcode=ADDI rd=x13 rs1=x1 imm=e9
+@209280ps CPU pc=000023a8 opcode=JAL rd=x14 imm=a
+@209440ps CPU pc=000023ac opcode=NOP rd=x15 imm=b
+@209600ps CPU pc=000023b0 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@209760ps CPU pc=000023b4 opcode=LW rd=x2 rs1=x5 imm=ed
+@209920ps CPU pc=000023b8 opcode=SW rd=x3 rs1=x6 imm=ee
+@210080ps CPU pc=000023bc opcode=BEQ rs1=x7 rs2=x11 imm=8
+@210240ps CPU pc=000023c0 opcode=AND rd=x5 rs1=x8 rs2=x12
+@210400ps CPU pc=000023c4 opcode=OR rd=x6 rs1=x9 rs2=x13
+@210560ps CPU pc=000023c8 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@210720ps CPU pc=000023cc opcode=ADDI rd=x8 rs1=x11 imm=f3
+@210880ps CPU pc=000023d0 opcode=JAL rd=x9 imm=14
+@211040ps CPU pc=000023d4 opcode=NOP rd=x10 imm=15
+@211200ps CPU pc=000023d8 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@211360ps CPU pc=000023dc opcode=LW rd=x12 rs1=x15 imm=f7
+@211520ps CPU pc=000023e0 opcode=SW rd=x13 rs1=x1 imm=f8
+@211680ps CPU pc=000023e4 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@211840ps CPU pc=000023e8 opcode=AND rd=x15 rs1=x3 rs2=x7
+@212000ps CPU pc=000023ec opcode=OR rd=x1 rs1=x4 rs2=x8
+@212160ps CPU pc=000023f0 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@212320ps CPU pc=000023f4 opcode=ADDI rd=x3 rs1=x6 imm=fd
+@212480ps CPU pc=000023f8 opcode=JAL rd=x4 imm=1e
+@212640ps CPU pc=000023fc opcode=NOP rd=x5 imm=1f
+@212800ps CPU pc=00002400 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@212960ps CPU pc=00002404 opcode=LW rd=x7 rs1=x10 imm=1
+@213120ps CPU pc=00002408 opcode=SW rd=x8 rs1=x11 imm=2
+@213280ps CPU pc=0000240c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@213440ps CPU pc=00002410 opcode=AND rd=x10 rs1=x13 rs2=x2
+@213600ps CPU pc=00002414 opcode=OR rd=x11 rs1=x14 rs2=x3
+@213760ps CPU pc=00002418 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@213920ps CPU pc=0000241c opcode=ADDI rd=x13 rs1=x1 imm=7
+@214080ps CPU pc=00002420 opcode=JAL rd=x14 imm=8
+@214240ps CPU pc=00002424 opcode=NOP rd=x15 imm=9
+@214400ps CPU pc=00002428 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@214560ps CPU pc=0000242c opcode=LW rd=x2 rs1=x5 imm=b
+@214720ps CPU pc=00002430 opcode=SW rd=x3 rs1=x6 imm=c
+@214880ps CPU pc=00002434 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@215040ps CPU pc=00002438 opcode=AND rd=x5 rs1=x8 rs2=x12
+@215200ps CPU pc=0000243c opcode=OR rd=x6 rs1=x9 rs2=x13
+@215360ps CPU pc=00002440 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@215520ps CPU pc=00002444 opcode=ADDI rd=x8 rs1=x11 imm=11
+@215680ps CPU pc=00002448 opcode=JAL rd=x9 imm=12
+@215840ps CPU pc=0000244c opcode=NOP rd=x10 imm=13
+@216000ps CPU pc=00002450 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@216160ps CPU pc=00002454 opcode=LW rd=x12 rs1=x15 imm=15
+@216320ps CPU pc=00002458 opcode=SW rd=x13 rs1=x1 imm=16
+@216480ps CPU pc=0000245c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@216640ps CPU pc=00002460 opcode=AND rd=x15 rs1=x3 rs2=x7
+@216800ps CPU pc=00002464 opcode=OR rd=x1 rs1=x4 rs2=x8
+@216960ps CPU pc=00002468 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@217120ps CPU pc=0000246c opcode=ADDI rd=x3 rs1=x6 imm=1b
+@217280ps CPU pc=00002470 opcode=JAL rd=x4 imm=1c
+@217440ps CPU pc=00002474 opcode=NOP rd=x5 imm=1d
+@217600ps CPU pc=00002478 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@217760ps CPU pc=0000247c opcode=LW rd=x7 rs1=x10 imm=1f
+@217920ps CPU pc=00002480 opcode=SW rd=x8 rs1=x11 imm=20
+@218080ps CPU pc=00002484 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@218240ps CPU pc=00002488 opcode=AND rd=x10 rs1=x13 rs2=x2
+@218400ps CPU pc=0000248c opcode=OR rd=x11 rs1=x14 rs2=x3
+@218560ps CPU pc=00002490 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@218720ps CPU pc=00002494 opcode=ADDI rd=x13 rs1=x1 imm=25
+@218880ps CPU pc=00002498 opcode=JAL rd=x14 imm=6
+@219040ps CPU pc=0000249c opcode=NOP rd=x15 imm=7
+@219200ps CPU pc=000024a0 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@219360ps CPU pc=000024a4 opcode=LW rd=x2 rs1=x5 imm=29
+@219520ps CPU pc=000024a8 opcode=SW rd=x3 rs1=x6 imm=2a
+@219680ps CPU pc=000024ac opcode=BEQ rs1=x7 rs2=x11 imm=8
+@219840ps CPU pc=000024b0 opcode=AND rd=x5 rs1=x8 rs2=x12
+@220000ps CPU pc=000024b4 opcode=OR rd=x6 rs1=x9 rs2=x13
+@220160ps CPU pc=000024b8 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@220320ps CPU pc=000024bc opcode=ADDI rd=x8 rs1=x11 imm=2f
+@220480ps CPU pc=000024c0 opcode=JAL rd=x9 imm=10
+@220640ps CPU pc=000024c4 opcode=NOP rd=x10 imm=11
+@220800ps CPU pc=000024c8 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@220960ps CPU pc=000024cc opcode=LW rd=x12 rs1=x15 imm=33
+@221120ps CPU pc=000024d0 opcode=SW rd=x13 rs1=x1 imm=34
+@221280ps CPU pc=000024d4 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@221440ps CPU pc=000024d8 opcode=AND rd=x15 rs1=x3 rs2=x7
+@221600ps CPU pc=000024dc opcode=OR rd=x1 rs1=x4 rs2=x8
+@221760ps CPU pc=000024e0 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@221920ps CPU pc=000024e4 opcode=ADDI rd=x3 rs1=x6 imm=39
+@222080ps CPU pc=000024e8 opcode=JAL rd=x4 imm=1a
+@222240ps CPU pc=000024ec opcode=NOP rd=x5 imm=1b
+@222400ps CPU pc=000024f0 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@222560ps CPU pc=000024f4 opcode=LW rd=x7 rs1=x10 imm=3d
+@222720ps CPU pc=000024f8 opcode=SW rd=x8 rs1=x11 imm=3e
+@222880ps CPU pc=000024fc opcode=BEQ rs1=x12 rs2=x1 imm=8
+@223040ps CPU pc=00002500 opcode=AND rd=x10 rs1=x13 rs2=x2
+@223200ps CPU pc=00002504 opcode=OR rd=x11 rs1=x14 rs2=x3
+@223360ps CPU pc=00002508 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@223520ps CPU pc=0000250c opcode=ADDI rd=x13 rs1=x1 imm=43
+@223680ps CPU pc=00002510 opcode=JAL rd=x14 imm=4
+@223840ps CPU pc=00002514 opcode=NOP rd=x15 imm=5
+@224000ps CPU pc=00002518 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@224160ps CPU pc=0000251c opcode=LW rd=x2 rs1=x5 imm=47
+@224320ps CPU pc=00002520 opcode=SW rd=x3 rs1=x6 imm=48
+@224480ps CPU pc=00002524 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@224640ps CPU pc=00002528 opcode=AND rd=x5 rs1=x8 rs2=x12
+@224800ps CPU pc=0000252c opcode=OR rd=x6 rs1=x9 rs2=x13
+@224960ps CPU pc=00002530 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@225120ps CPU pc=00002534 opcode=ADDI rd=x8 rs1=x11 imm=4d
+@225280ps CPU pc=00002538 opcode=JAL rd=x9 imm=e
+@225440ps CPU pc=0000253c opcode=NOP rd=x10 imm=f
+@225600ps CPU pc=00002540 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@225760ps CPU pc=00002544 opcode=LW rd=x12 rs1=x15 imm=51
+@225920ps CPU pc=00002548 opcode=SW rd=x13 rs1=x1 imm=52
+@226080ps CPU pc=0000254c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@226240ps CPU pc=00002550 opcode=AND rd=x15 rs1=x3 rs2=x7
+@226400ps CPU pc=00002554 opcode=OR rd=x1 rs1=x4 rs2=x8
+@226560ps CPU pc=00002558 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@226720ps CPU pc=0000255c opcode=ADDI rd=x3 rs1=x6 imm=57
+@226880ps CPU pc=00002560 opcode=JAL rd=x4 imm=18
+@227040ps CPU pc=00002564 opcode=NOP rd=x5 imm=19
+@227200ps CPU pc=00002568 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@227360ps CPU pc=0000256c opcode=LW rd=x7 rs1=x10 imm=5b
+@227520ps CPU pc=00002570 opcode=SW rd=x8 rs1=x11 imm=5c
+@227680ps CPU pc=00002574 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@227840ps CPU pc=00002578 opcode=AND rd=x10 rs1=x13 rs2=x2
+@228000ps CPU pc=0000257c opcode=OR rd=x11 rs1=x14 rs2=x3
+@228160ps CPU pc=00002580 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@228320ps CPU pc=00002584 opcode=ADDI rd=x13 rs1=x1 imm=61
+@228480ps CPU pc=00002588 opcode=JAL rd=x14 imm=2
+@228640ps CPU pc=0000258c opcode=NOP rd=x15 imm=3
+@228800ps CPU pc=00002590 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@228960ps CPU pc=00002594 opcode=LW rd=x2 rs1=x5 imm=65
+@229120ps CPU pc=00002598 opcode=SW rd=x3 rs1=x6 imm=66
+@229280ps CPU pc=0000259c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@229440ps CPU pc=000025a0 opcode=AND rd=x5 rs1=x8 rs2=x12
+@229600ps CPU pc=000025a4 opcode=OR rd=x6 rs1=x9 rs2=x13
+@229760ps CPU pc=000025a8 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@229920ps CPU pc=000025ac opcode=ADDI rd=x8 rs1=x11 imm=6b
+@230080ps CPU pc=000025b0 opcode=JAL rd=x9 imm=c
+@230240ps CPU pc=000025b4 opcode=NOP rd=x10 imm=d
+@230400ps CPU pc=000025b8 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@230560ps CPU pc=000025bc opcode=LW rd=x12 rs1=x15 imm=6f
+@230720ps CPU pc=000025c0 opcode=SW rd=x13 rs1=x1 imm=70
+@230880ps CPU pc=000025c4 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@231040ps CPU pc=000025c8 opcode=AND rd=x15 rs1=x3 rs2=x7
+@231200ps CPU pc=000025cc opcode=OR rd=x1 rs1=x4 rs2=x8
+@231360ps CPU pc=000025d0 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@231520ps CPU pc=000025d4 opcode=ADDI rd=x3 rs1=x6 imm=75
+@231680ps CPU pc=000025d8 opcode=JAL rd=x4 imm=16
+@231840ps CPU pc=000025dc opcode=NOP rd=x5 imm=17
+@232000ps CPU pc=000025e0 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@232160ps CPU pc=000025e4 opcode=LW rd=x7 rs1=x10 imm=79
+@232320ps CPU pc=000025e8 opcode=SW rd=x8 rs1=x11 imm=7a
+@232480ps CPU pc=000025ec opcode=BEQ rs1=x12 rs2=x1 imm=8
+@232640ps CPU pc=000025f0 opcode=AND rd=x10 rs1=x13 rs2=x2
+@232800ps CPU pc=000025f4 opcode=OR rd=x11 rs1=x14 rs2=x3
+@232960ps CPU pc=000025f8 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@233120ps CPU pc=000025fc opcode=ADDI rd=x13 rs1=x1 imm=7f
+@233280ps CPU pc=00002600 opcode=JAL rd=x14 imm=0
+@233440ps CPU pc=00002604 opcode=NOP rd=x15 imm=1
+@233600ps CPU pc=00002608 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@233760ps CPU pc=0000260c opcode=LW rd=x2 rs1=x5 imm=83
+@233920ps CPU pc=00002610 opcode=SW rd=x3 rs1=x6 imm=84
+@234080ps CPU pc=00002614 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@234240ps CPU pc=00002618 opcode=AND rd=x5 rs1=x8 rs2=x12
+@234400ps CPU pc=0000261c opcode=OR rd=x6 rs1=x9 rs2=x13
+@234560ps CPU pc=00002620 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@234720ps CPU pc=00002624 opcode=ADDI rd=x8 rs1=x11 imm=89
+@234880ps CPU pc=00002628 opcode=JAL rd=x9 imm=a
+@235040ps CPU pc=0000262c opcode=NOP rd=x10 imm=b
+@235200ps CPU pc=00002630 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@235360ps CPU pc=00002634 opcode=LW rd=x12 rs1=x15 imm=8d
+@235520ps CPU pc=00002638 opcode=SW rd=x13 rs1=x1 imm=8e
+@235680ps CPU pc=0000263c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@235840ps CPU pc=00002640 opcode=AND rd=x15 rs1=x3 rs2=x7
+@236000ps CPU pc=00002644 opcode=OR rd=x1 rs1=x4 rs2=x8
+@236160ps CPU pc=00002648 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@236320ps CPU pc=0000264c opcode=ADDI rd=x3 rs1=x6 imm=93
+@236480ps CPU pc=00002650 opcode=JAL rd=x4 imm=14
+@236640ps CPU pc=00002654 opcode=NOP rd=x5 imm=15
+@236800ps CPU pc=00002658 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@236960ps CPU pc=0000265c opcode=LW rd=x7 rs1=x10 imm=97
+@237120ps CPU pc=00002660 opcode=SW rd=x8 rs1=x11 imm=98
+@237280ps CPU pc=00002664 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@237440ps CPU pc=00002668 opcode=AND rd=x10 rs1=x13 rs2=x2
+@237600ps CPU pc=0000266c opcode=OR rd=x11 rs1=x14 rs2=x3
+@237760ps CPU pc=00002670 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@237920ps CPU pc=00002674 opcode=ADDI rd=x13 rs1=x1 imm=9d
+@238080ps CPU pc=00002678 opcode=JAL rd=x14 imm=1e
+@238240ps CPU pc=0000267c opcode=NOP rd=x15 imm=1f
+@238400ps CPU pc=00002680 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@238560ps CPU pc=00002684 opcode=LW rd=x2 rs1=x5 imm=a1
+@238720ps CPU pc=00002688 opcode=SW rd=x3 rs1=x6 imm=a2
+@238880ps CPU pc=0000268c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@239040ps CPU pc=00002690 opcode=AND rd=x5 rs1=x8 rs2=x12
+@239200ps CPU pc=00002694 opcode=OR rd=x6 rs1=x9 rs2=x13
+@239360ps CPU pc=00002698 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@239520ps CPU pc=0000269c opcode=ADDI rd=x8 rs1=x11 imm=a7
+@239680ps CPU pc=000026a0 opcode=JAL rd=x9 imm=8
+@239840ps CPU pc=000026a4 opcode=NOP rd=x10 imm=9
+@240000ps CPU pc=000026a8 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@240160ps CPU pc=000026ac opcode=LW rd=x12 rs1=x15 imm=ab
+@240320ps CPU pc=000026b0 opcode=SW rd=x13 rs1=x1 imm=ac
+@240480ps CPU pc=000026b4 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@240640ps CPU pc=000026b8 opcode=AND rd=x15 rs1=x3 rs2=x7
+@240800ps CPU pc=000026bc opcode=OR rd=x1 rs1=x4 rs2=x8
+@240960ps CPU pc=000026c0 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@241120ps CPU pc=000026c4 opcode=ADDI rd=x3 rs1=x6 imm=b1
+@241280ps CPU pc=000026c8 opcode=JAL rd=x4 imm=12
+@241440ps CPU pc=000026cc opcode=NOP rd=x5 imm=13
+@241600ps CPU pc=000026d0 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@241760ps CPU pc=000026d4 opcode=LW rd=x7 rs1=x10 imm=b5
+@241920ps CPU pc=000026d8 opcode=SW rd=x8 rs1=x11 imm=b6
+@242080ps CPU pc=000026dc opcode=BEQ rs1=x12 rs2=x1 imm=8
+@242240ps CPU pc=000026e0 opcode=AND rd=x10 rs1=x13 rs2=x2
+@242400ps CPU pc=000026e4 opcode=OR rd=x11 rs1=x14 rs2=x3
+@242560ps CPU pc=000026e8 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@242720ps CPU pc=000026ec opcode=ADDI rd=x13 rs1=x1 imm=bb
+@242880ps CPU pc=000026f0 opcode=JAL rd=x14 imm=1c
+@243040ps CPU pc=000026f4 opcode=NOP rd=x15 imm=1d
+@243200ps CPU pc=000026f8 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@243360ps CPU pc=000026fc opcode=LW rd=x2 rs1=x5 imm=bf
+@243520ps CPU pc=00002700 opcode=SW rd=x3 rs1=x6 imm=c0
+@243680ps CPU pc=00002704 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@243840ps CPU pc=00002708 opcode=AND rd=x5 rs1=x8 rs2=x12
+@244000ps CPU pc=0000270c opcode=OR rd=x6 rs1=x9 rs2=x13
+@244160ps CPU pc=00002710 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@244320ps CPU pc=00002714 opcode=ADDI rd=x8 rs1=x11 imm=c5
+@244480ps CPU pc=00002718 opcode=JAL rd=x9 imm=6
+@244640ps CPU pc=0000271c opcode=NOP rd=x10 imm=7
+@244800ps CPU pc=00002720 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@244960ps CPU pc=00002724 opcode=LW rd=x12 rs1=x15 imm=c9
+@245120ps CPU pc=00002728 opcode=SW rd=x13 rs1=x1 imm=ca
+@245280ps CPU pc=0000272c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@245440ps CPU pc=00002730 opcode=AND rd=x15 rs1=x3 rs2=x7
+@245600ps CPU pc=00002734 opcode=OR rd=x1 rs1=x4 rs2=x8
+@245760ps CPU pc=00002738 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@245920ps CPU pc=0000273c opcode=ADDI rd=x3 rs1=x6 imm=cf
+@246080ps CPU pc=00002740 opcode=JAL rd=x4 imm=10
+@246240ps CPU pc=00002744 opcode=NOP rd=x5 imm=11
+@246400ps CPU pc=00002748 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@246560ps CPU pc=0000274c opcode=LW rd=x7 rs1=x10 imm=d3
+@246720ps CPU pc=00002750 opcode=SW rd=x8 rs1=x11 imm=d4
+@246880ps CPU pc=00002754 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@247040ps CPU pc=00002758 opcode=AND rd=x10 rs1=x13 rs2=x2
+@247200ps CPU pc=0000275c opcode=OR rd=x11 rs1=x14 rs2=x3
+@247360ps CPU pc=00002760 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@247520ps CPU pc=00002764 opcode=ADDI rd=x13 rs1=x1 imm=d9
+@247680ps CPU pc=00002768 opcode=JAL rd=x14 imm=1a
+@247840ps CPU pc=0000276c opcode=NOP rd=x15 imm=1b
+@248000ps CPU pc=00002770 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@248160ps CPU pc=00002774 opcode=LW rd=x2 rs1=x5 imm=dd
+@248320ps CPU pc=00002778 opcode=SW rd=x3 rs1=x6 imm=de
+@248480ps CPU pc=0000277c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@248640ps CPU pc=00002780 opcode=AND rd=x5 rs1=x8 rs2=x12
+@248800ps CPU pc=00002784 opcode=OR rd=x6 rs1=x9 rs2=x13
+@248960ps CPU pc=00002788 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@249120ps CPU pc=0000278c opcode=ADDI rd=x8 rs1=x11 imm=e3
+@249280ps CPU pc=00002790 opcode=JAL rd=x9 imm=4
+@249440ps CPU pc=00002794 opcode=NOP rd=x10 imm=5
+@249600ps CPU pc=00002798 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@249760ps CPU pc=0000279c opcode=LW rd=x12 rs1=x15 imm=e7
+@249920ps CPU pc=000027a0 opcode=SW rd=x13 rs1=x1 imm=e8
+@250080ps CPU pc=000027a4 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@250240ps CPU pc=000027a8 opcode=AND rd=x15 rs1=x3 rs2=x7
+@250400ps CPU pc=000027ac opcode=OR rd=x1 rs1=x4 rs2=x8
+@250560ps CPU pc=000027b0 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@250720ps CPU pc=000027b4 opcode=ADDI rd=x3 rs1=x6 imm=ed
+@250880ps CPU pc=000027b8 opcode=JAL rd=x4 imm=e
+@251040ps CPU pc=000027bc opcode=NOP rd=x5 imm=f
+@251200ps CPU pc=000027c0 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@251360ps CPU pc=000027c4 opcode=LW rd=x7 rs1=x10 imm=f1
+@251520ps CPU pc=000027c8 opcode=SW rd=x8 rs1=x11 imm=f2
+@251680ps CPU pc=000027cc opcode=BEQ rs1=x12 rs2=x1 imm=8
+@251840ps CPU pc=000027d0 opcode=AND rd=x10 rs1=x13 rs2=x2
+@252000ps CPU pc=000027d4 opcode=OR rd=x11 rs1=x14 rs2=x3
+@252160ps CPU pc=000027d8 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@252320ps CPU pc=000027dc opcode=ADDI rd=x13 rs1=x1 imm=f7
+@252480ps CPU pc=000027e0 opcode=JAL rd=x14 imm=18
+@252640ps CPU pc=000027e4 opcode=NOP rd=x15 imm=19
+@252800ps CPU pc=000027e8 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@252960ps CPU pc=000027ec opcode=LW rd=x2 rs1=x5 imm=fb
+@253120ps CPU pc=000027f0 opcode=SW rd=x3 rs1=x6 imm=fc
+@253280ps CPU pc=000027f4 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@253440ps CPU pc=000027f8 opcode=AND rd=x5 rs1=x8 rs2=x12
+@253600ps CPU pc=000027fc opcode=OR rd=x6 rs1=x9 rs2=x13
+@253760ps CPU pc=00002800 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@253920ps CPU pc=00002804 opcode=ADDI rd=x8 rs1=x11 imm=1
+@254080ps CPU pc=00002808 opcode=JAL rd=x9 imm=2
+@254240ps CPU pc=0000280c opcode=NOP rd=x10 imm=3
+@254400ps CPU pc=00002810 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@254560ps CPU pc=00002814 opcode=LW rd=x12 rs1=x15 imm=5
+@254720ps CPU pc=00002818 opcode=SW rd=x13 rs1=x1 imm=6
+@254880ps CPU pc=0000281c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@255040ps CPU pc=00002820 opcode=AND rd=x15 rs1=x3 rs2=x7
+@255200ps CPU pc=00002824 opcode=OR rd=x1 rs1=x4 rs2=x8
+@255360ps CPU pc=00002828 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@255520ps CPU pc=0000282c opcode=ADDI rd=x3 rs1=x6 imm=b
+@255680ps CPU pc=00002830 opcode=JAL rd=x4 imm=c
+@255840ps CPU pc=00002834 opcode=NOP rd=x5 imm=d
+@256000ps CPU pc=00002838 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@256160ps CPU pc=0000283c opcode=LW rd=x7 rs1=x10 imm=f
+@256320ps CPU pc=00002840 opcode=SW rd=x8 rs1=x11 imm=10
+@256480ps CPU pc=00002844 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@256640ps CPU pc=00002848 opcode=AND rd=x10 rs1=x13 rs2=x2
+@256800ps CPU pc=0000284c opcode=OR rd=x11 rs1=x14 rs2=x3
+@256960ps CPU pc=00002850 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@257120ps CPU pc=00002854 opcode=ADDI rd=x13 rs1=x1 imm=15
+@257280ps CPU pc=00002858 opcode=JAL rd=x14 imm=16
+@257440ps CPU pc=0000285c opcode=NOP rd=x15 imm=17
+@257600ps CPU pc=00002860 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@257760ps CPU pc=00002864 opcode=LW rd=x2 rs1=x5 imm=19
+@257920ps CPU pc=00002868 opcode=SW rd=x3 rs1=x6 imm=1a
+@258080ps CPU pc=0000286c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@258240ps CPU pc=00002870 opcode=AND rd=x5 rs1=x8 rs2=x12
+@258400ps CPU pc=00002874 opcode=OR rd=x6 rs1=x9 rs2=x13
+@258560ps CPU pc=00002878 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@258720ps CPU pc=0000287c opcode=ADDI rd=x8 rs1=x11 imm=1f
+@258880ps CPU pc=00002880 opcode=JAL rd=x9 imm=0
+@259040ps CPU pc=00002884 opcode=NOP rd=x10 imm=1
+@259200ps CPU pc=00002888 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@259360ps CPU pc=0000288c opcode=LW rd=x12 rs1=x15 imm=23
+@259520ps CPU pc=00002890 opcode=SW rd=x13 rs1=x1 imm=24
+@259680ps CPU pc=00002894 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@259840ps CPU pc=00002898 opcode=AND rd=x15 rs1=x3 rs2=x7
+@260000ps CPU pc=0000289c opcode=OR rd=x1 rs1=x4 rs2=x8
+@260160ps CPU pc=000028a0 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@260320ps CPU pc=000028a4 opcode=ADDI rd=x3 rs1=x6 imm=29
+@260480ps CPU pc=000028a8 opcode=JAL rd=x4 imm=a
+@260640ps CPU pc=000028ac opcode=NOP rd=x5 imm=b
+@260800ps CPU pc=000028b0 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@260960ps CPU pc=000028b4 opcode=LW rd=x7 rs1=x10 imm=2d
+@261120ps CPU pc=000028b8 opcode=SW rd=x8 rs1=x11 imm=2e
+@261280ps CPU pc=000028bc opcode=BEQ rs1=x12 rs2=x1 imm=8
+@261440ps CPU pc=000028c0 opcode=AND rd=x10 rs1=x13 rs2=x2
+@261600ps CPU pc=000028c4 opcode=OR rd=x11 rs1=x14 rs2=x3
+@261760ps CPU pc=000028c8 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@261920ps CPU pc=000028cc opcode=ADDI rd=x13 rs1=x1 imm=33
+@262080ps CPU pc=000028d0 opcode=JAL rd=x14 imm=14
+@262240ps CPU pc=000028d4 opcode=NOP rd=x15 imm=15
+@262400ps CPU pc=000028d8 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@262560ps CPU pc=000028dc opcode=LW rd=x2 rs1=x5 imm=37
+@262720ps CPU pc=000028e0 opcode=SW rd=x3 rs1=x6 imm=38
+@262880ps CPU pc=000028e4 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@263040ps CPU pc=000028e8 opcode=AND rd=x5 rs1=x8 rs2=x12
+@263200ps CPU pc=000028ec opcode=OR rd=x6 rs1=x9 rs2=x13
+@263360ps CPU pc=000028f0 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@263520ps CPU pc=000028f4 opcode=ADDI rd=x8 rs1=x11 imm=3d
+@263680ps CPU pc=000028f8 opcode=JAL rd=x9 imm=1e
+@263840ps CPU pc=000028fc opcode=NOP rd=x10 imm=1f
+@264000ps CPU pc=00002900 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@264160ps CPU pc=00002904 opcode=LW rd=x12 rs1=x15 imm=41
+@264320ps CPU pc=00002908 opcode=SW rd=x13 rs1=x1 imm=42
+@264480ps CPU pc=0000290c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@264640ps CPU pc=00002910 opcode=AND rd=x15 rs1=x3 rs2=x7
+@264800ps CPU pc=00002914 opcode=OR rd=x1 rs1=x4 rs2=x8
+@264960ps CPU pc=00002918 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@265120ps CPU pc=0000291c opcode=ADDI rd=x3 rs1=x6 imm=47
+@265280ps CPU pc=00002920 opcode=JAL rd=x4 imm=8
+@265440ps CPU pc=00002924 opcode=NOP rd=x5 imm=9
+@265600ps CPU pc=00002928 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@265760ps CPU pc=0000292c opcode=LW rd=x7 rs1=x10 imm=4b
+@265920ps CPU pc=00002930 opcode=SW rd=x8 rs1=x11 imm=4c
+@266080ps CPU pc=00002934 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@266240ps CPU pc=00002938 opcode=AND rd=x10 rs1=x13 rs2=x2
+@266400ps CPU pc=0000293c opcode=OR rd=x11 rs1=x14 rs2=x3
+@266560ps CPU pc=00002940 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@266720ps CPU pc=00002944 opcode=ADDI rd=x13 rs1=x1 imm=51
+@266880ps CPU pc=00002948 opcode=JAL rd=x14 imm=12
+@267040ps CPU pc=0000294c opcode=NOP rd=x15 imm=13
+@267200ps CPU pc=00002950 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@267360ps CPU pc=00002954 opcode=LW rd=x2 rs1=x5 imm=55
+@267520ps CPU pc=00002958 opcode=SW rd=x3 rs1=x6 imm=56
+@267680ps CPU pc=0000295c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@267840ps CPU pc=00002960 opcode=AND rd=x5 rs1=x8 rs2=x12
+@268000ps CPU pc=00002964 opcode=OR rd=x6 rs1=x9 rs2=x13
+@268160ps CPU pc=00002968 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@268320ps CPU pc=0000296c opcode=ADDI rd=x8 rs1=x11 imm=5b
+@268480ps CPU pc=00002970 opcode=JAL rd=x9 imm=1c
+@268640ps CPU pc=00002974 opcode=NOP rd=x10 imm=1d
+@268800ps CPU pc=00002978 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@268960ps CPU pc=0000297c opcode=LW rd=x12 rs1=x15 imm=5f
+@269120ps CPU pc=00002980 opcode=SW rd=x13 rs1=x1 imm=60
+@269280ps CPU pc=00002984 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@269440ps CPU pc=00002988 opcode=AND rd=x15 rs1=x3 rs2=x7
+@269600ps CPU pc=0000298c opcode=OR rd=x1 rs1=x4 rs2=x8
+@269760ps CPU pc=00002990 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@269920ps CPU pc=00002994 opcode=ADDI rd=x3 rs1=x6 imm=65
+@270080ps CPU pc=00002998 opcode=JAL rd=x4 imm=6
+@270240ps CPU pc=0000299c opcode=NOP rd=x5 imm=7
+@270400ps CPU pc=000029a0 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@270560ps CPU pc=000029a4 opcode=LW rd=x7 rs1=x10 imm=69
+@270720ps CPU pc=000029a8 opcode=SW rd=x8 rs1=x11 imm=6a
+@270880ps CPU pc=000029ac opcode=BEQ rs1=x12 rs2=x1 imm=8
+@271040ps CPU pc=000029b0 opcode=AND rd=x10 rs1=x13 rs2=x2
+@271200ps CPU pc=000029b4 opcode=OR rd=x11 rs1=x14 rs2=x3
+@271360ps CPU pc=000029b8 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@271520ps CPU pc=000029bc opcode=ADDI rd=x13 rs1=x1 imm=6f
+@271680ps CPU pc=000029c0 opcode=JAL rd=x14 imm=10
+@271840ps CPU pc=000029c4 opcode=NOP rd=x15 imm=11
+@272000ps CPU pc=000029c8 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@272160ps CPU pc=000029cc opcode=LW rd=x2 rs1=x5 imm=73
+@272320ps CPU pc=000029d0 opcode=SW rd=x3 rs1=x6 imm=74
+@272480ps CPU pc=000029d4 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@272640ps CPU pc=000029d8 opcode=AND rd=x5 rs1=x8 rs2=x12
+@272800ps CPU pc=000029dc opcode=OR rd=x6 rs1=x9 rs2=x13
+@272960ps CPU pc=000029e0 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@273120ps CPU pc=000029e4 opcode=ADDI rd=x8 rs1=x11 imm=79
+@273280ps CPU pc=000029e8 opcode=JAL rd=x9 imm=1a
+@273440ps CPU pc=000029ec opcode=NOP rd=x10 imm=1b
+@273600ps CPU pc=000029f0 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@273760ps CPU pc=000029f4 opcode=LW rd=x12 rs1=x15 imm=7d
+@273920ps CPU pc=000029f8 opcode=SW rd=x13 rs1=x1 imm=7e
+@274080ps CPU pc=000029fc opcode=BEQ rs1=x2 rs2=x6 imm=8
+@274240ps CPU pc=00002a00 opcode=AND rd=x15 rs1=x3 rs2=x7
+@274400ps CPU pc=00002a04 opcode=OR rd=x1 rs1=x4 rs2=x8
+@274560ps CPU pc=00002a08 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@274720ps CPU pc=00002a0c opcode=ADDI rd=x3 rs1=x6 imm=83
+@274880ps CPU pc=00002a10 opcode=JAL rd=x4 imm=4
+@275040ps CPU pc=00002a14 opcode=NOP rd=x5 imm=5
+@275200ps CPU pc=00002a18 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@275360ps CPU pc=00002a1c opcode=LW rd=x7 rs1=x10 imm=87
+@275520ps CPU pc=00002a20 opcode=SW rd=x8 rs1=x11 imm=88
+@275680ps CPU pc=00002a24 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@275840ps CPU pc=00002a28 opcode=AND rd=x10 rs1=x13 rs2=x2
+@276000ps CPU pc=00002a2c opcode=OR rd=x11 rs1=x14 rs2=x3
+@276160ps CPU pc=00002a30 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@276320ps CPU pc=00002a34 opcode=ADDI rd=x13 rs1=x1 imm=8d
+@276480ps CPU pc=00002a38 opcode=JAL rd=x14 imm=e
+@276640ps CPU pc=00002a3c opcode=NOP rd=x15 imm=f
+@276800ps CPU pc=00002a40 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@276960ps CPU pc=00002a44 opcode=LW rd=x2 rs1=x5 imm=91
+@277120ps CPU pc=00002a48 opcode=SW rd=x3 rs1=x6 imm=92
+@277280ps CPU pc=00002a4c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@277440ps CPU pc=00002a50 opcode=AND rd=x5 rs1=x8 rs2=x12
+@277600ps CPU pc=00002a54 opcode=OR rd=x6 rs1=x9 rs2=x13
+@277760ps CPU pc=00002a58 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@277920ps CPU pc=00002a5c opcode=ADDI rd=x8 rs1=x11 imm=97
+@278080ps CPU pc=00002a60 opcode=JAL rd=x9 imm=18
+@278240ps CPU pc=00002a64 opcode=NOP rd=x10 imm=19
+@278400ps CPU pc=00002a68 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@278560ps CPU pc=00002a6c opcode=LW rd=x12 rs1=x15 imm=9b
+@278720ps CPU pc=00002a70 opcode=SW rd=x13 rs1=x1 imm=9c
+@278880ps CPU pc=00002a74 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@279040ps CPU pc=00002a78 opcode=AND rd=x15 rs1=x3 rs2=x7
+@279200ps CPU pc=00002a7c opcode=OR rd=x1 rs1=x4 rs2=x8
+@279360ps CPU pc=00002a80 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@279520ps CPU pc=00002a84 opcode=ADDI rd=x3 rs1=x6 imm=a1
+@279680ps CPU pc=00002a88 opcode=JAL rd=x4 imm=2
+@279840ps CPU pc=00002a8c opcode=NOP rd=x5 imm=3
+@280000ps CPU pc=00002a90 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@280160ps CPU pc=00002a94 opcode=LW rd=x7 rs1=x10 imm=a5
+@280320ps CPU pc=00002a98 opcode=SW rd=x8 rs1=x11 imm=a6
+@280480ps CPU pc=00002a9c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@280640ps CPU pc=00002aa0 opcode=AND rd=x10 rs1=x13 rs2=x2
+@280800ps CPU pc=00002aa4 opcode=OR rd=x11 rs1=x14 rs2=x3
+@280960ps CPU pc=00002aa8 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@281120ps CPU pc=00002aac opcode=ADDI rd=x13 rs1=x1 imm=ab
+@281280ps CPU pc=00002ab0 opcode=JAL rd=x14 imm=c
+@281440ps CPU pc=00002ab4 opcode=NOP rd=x15 imm=d
+@281600ps CPU pc=00002ab8 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@281760ps CPU pc=00002abc opcode=LW rd=x2 rs1=x5 imm=af
+@281920ps CPU pc=00002ac0 opcode=SW rd=x3 rs1=x6 imm=b0
+@282080ps CPU pc=00002ac4 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@282240ps CPU pc=00002ac8 opcode=AND rd=x5 rs1=x8 rs2=x12
+@282400ps CPU pc=00002acc opcode=OR rd=x6 rs1=x9 rs2=x13
+@282560ps CPU pc=00002ad0 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@282720ps CPU pc=00002ad4 opcode=ADDI rd=x8 rs1=x11 imm=b5
+@282880ps CPU pc=00002ad8 opcode=JAL rd=x9 imm=16
+@283040ps CPU pc=00002adc opcode=NOP rd=x10 imm=17
+@283200ps CPU pc=00002ae0 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@283360ps CPU pc=00002ae4 opcode=LW rd=x12 rs1=x15 imm=b9
+@283520ps CPU pc=00002ae8 opcode=SW rd=x13 rs1=x1 imm=ba
+@283680ps CPU pc=00002aec opcode=BEQ rs1=x2 rs2=x6 imm=8
+@283840ps CPU pc=00002af0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@284000ps CPU pc=00002af4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@284160ps CPU pc=00002af8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@284320ps CPU pc=00002afc opcode=ADDI rd=x3 rs1=x6 imm=bf
+@284480ps CPU pc=00002b00 opcode=JAL rd=x4 imm=0
+@284640ps CPU pc=00002b04 opcode=NOP rd=x5 imm=1
+@284800ps CPU pc=00002b08 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@284960ps CPU pc=00002b0c opcode=LW rd=x7 rs1=x10 imm=c3
+@285120ps CPU pc=00002b10 opcode=SW rd=x8 rs1=x11 imm=c4
+@285280ps CPU pc=00002b14 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@285440ps CPU pc=00002b18 opcode=AND rd=x10 rs1=x13 rs2=x2
+@285600ps CPU pc=00002b1c opcode=OR rd=x11 rs1=x14 rs2=x3
+@285760ps CPU pc=00002b20 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@285920ps CPU pc=00002b24 opcode=ADDI rd=x13 rs1=x1 imm=c9
+@286080ps CPU pc=00002b28 opcode=JAL rd=x14 imm=a
+@286240ps CPU pc=00002b2c opcode=NOP rd=x15 imm=b
+@286400ps CPU pc=00002b30 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@286560ps CPU pc=00002b34 opcode=LW rd=x2 rs1=x5 imm=cd
+@286720ps CPU pc=00002b38 opcode=SW rd=x3 rs1=x6 imm=ce
+@286880ps CPU pc=00002b3c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@287040ps CPU pc=00002b40 opcode=AND rd=x5 rs1=x8 rs2=x12
+@287200ps CPU pc=00002b44 opcode=OR rd=x6 rs1=x9 rs2=x13
+@287360ps CPU pc=00002b48 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@287520ps CPU pc=00002b4c opcode=ADDI rd=x8 rs1=x11 imm=d3
+@287680ps CPU pc=00002b50 opcode=JAL rd=x9 imm=14
+@287840ps CPU pc=00002b54 opcode=NOP rd=x10 imm=15
+@288000ps CPU pc=00002b58 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@288160ps CPU pc=00002b5c opcode=LW rd=x12 rs1=x15 imm=d7
+@288320ps CPU pc=00002b60 opcode=SW rd=x13 rs1=x1 imm=d8
+@288480ps CPU pc=00002b64 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@288640ps CPU pc=00002b68 opcode=AND rd=x15 rs1=x3 rs2=x7
+@288800ps CPU pc=00002b6c opcode=OR rd=x1 rs1=x4 rs2=x8
+@288960ps CPU pc=00002b70 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@289120ps CPU pc=00002b74 opcode=ADDI rd=x3 rs1=x6 imm=dd
+@289280ps CPU pc=00002b78 opcode=JAL rd=x4 imm=1e
+@289440ps CPU pc=00002b7c opcode=NOP rd=x5 imm=1f
+@289600ps CPU pc=00002b80 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@289760ps CPU pc=00002b84 opcode=LW rd=x7 rs1=x10 imm=e1
+@289920ps CPU pc=00002b88 opcode=SW rd=x8 rs1=x11 imm=e2
+@290080ps CPU pc=00002b8c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@290240ps CPU pc=00002b90 opcode=AND rd=x10 rs1=x13 rs2=x2
+@290400ps CPU pc=00002b94 opcode=OR rd=x11 rs1=x14 rs2=x3
+@290560ps CPU pc=00002b98 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@290720ps CPU pc=00002b9c opcode=ADDI rd=x13 rs1=x1 imm=e7
+@290880ps CPU pc=00002ba0 opcode=JAL rd=x14 imm=8
+@291040ps CPU pc=00002ba4 opcode=NOP rd=x15 imm=9
+@291200ps CPU pc=00002ba8 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@291360ps CPU pc=00002bac opcode=LW rd=x2 rs1=x5 imm=eb
+@291520ps CPU pc=00002bb0 opcode=SW rd=x3 rs1=x6 imm=ec
+@291680ps CPU pc=00002bb4 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@291840ps CPU pc=00002bb8 opcode=AND rd=x5 rs1=x8 rs2=x12
+@292000ps CPU pc=00002bbc opcode=OR rd=x6 rs1=x9 rs2=x13
+@292160ps CPU pc=00002bc0 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@292320ps CPU pc=00002bc4 opcode=ADDI rd=x8 rs1=x11 imm=f1
+@292480ps CPU pc=00002bc8 opcode=JAL rd=x9 imm=12
+@292640ps CPU pc=00002bcc opcode=NOP rd=x10 imm=13
+@292800ps CPU pc=00002bd0 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@292960ps CPU pc=00002bd4 opcode=LW rd=x12 rs1=x15 imm=f5
+@293120ps CPU pc=00002bd8 opcode=SW rd=x13 rs1=x1 imm=f6
+@293280ps CPU pc=00002bdc opcode=BEQ rs1=x2 rs2=x6 imm=8
+@293440ps CPU pc=00002be0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@293600ps CPU pc=00002be4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@293760ps CPU pc=00002be8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@293920ps CPU pc=00002bec opcode=ADDI rd=x3 rs1=x6 imm=fb
+@294080ps CPU pc=00002bf0 opcode=JAL rd=x4 imm=1c
+@294240ps CPU pc=00002bf4 opcode=NOP rd=x5 imm=1d
+@294400ps CPU pc=00002bf8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@294560ps CPU pc=00002bfc opcode=LW rd=x7 rs1=x10 imm=ff
+@294720ps CPU pc=00002c00 opcode=SW rd=x8 rs1=x11 imm=0
+@294880ps CPU pc=00002c04 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@295040ps CPU pc=00002c08 opcode=AND rd=x10 rs1=x13 rs2=x2
+@295200ps CPU pc=00002c0c opcode=OR rd=x11 rs1=x14 rs2=x3
+@295360ps CPU pc=00002c10 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@295520ps CPU pc=00002c14 opcode=ADDI rd=x13 rs1=x1 imm=5
+@295680ps CPU pc=00002c18 opcode=JAL rd=x14 imm=6
+@295840ps CPU pc=00002c1c opcode=NOP rd=x15 imm=7
+@296000ps CPU pc=00002c20 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@296160ps CPU pc=00002c24 opcode=LW rd=x2 rs1=x5 imm=9
+@296320ps CPU pc=00002c28 opcode=SW rd=x3 rs1=x6 imm=a
+@296480ps CPU pc=00002c2c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@296640ps CPU pc=00002c30 opcode=AND rd=x5 rs1=x8 rs2=x12
+@296800ps CPU pc=00002c34 opcode=OR rd=x6 rs1=x9 rs2=x13
+@296960ps CPU pc=00002c38 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@297120ps CPU pc=00002c3c opcode=ADDI rd=x8 rs1=x11 imm=f
+@297280ps CPU pc=00002c40 opcode=JAL rd=x9 imm=10
+@297440ps CPU pc=00002c44 opcode=NOP rd=x10 imm=11
+@297600ps CPU pc=00002c48 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@297760ps CPU pc=00002c4c opcode=LW rd=x12 rs1=x15 imm=13
+@297920ps CPU pc=00002c50 opcode=SW rd=x13 rs1=x1 imm=14
+@298080ps CPU pc=00002c54 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@298240ps CPU pc=00002c58 opcode=AND rd=x15 rs1=x3 rs2=x7
+@298400ps CPU pc=00002c5c opcode=OR rd=x1 rs1=x4 rs2=x8
+@298560ps CPU pc=00002c60 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@298720ps CPU pc=00002c64 opcode=ADDI rd=x3 rs1=x6 imm=19
+@298880ps CPU pc=00002c68 opcode=JAL rd=x4 imm=1a
+@299040ps CPU pc=00002c6c opcode=NOP rd=x5 imm=1b
+@299200ps CPU pc=00002c70 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@299360ps CPU pc=00002c74 opcode=LW rd=x7 rs1=x10 imm=1d
+@299520ps CPU pc=00002c78 opcode=SW rd=x8 rs1=x11 imm=1e
+@299680ps CPU pc=00002c7c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@299840ps CPU pc=00002c80 opcode=AND rd=x10 rs1=x13 rs2=x2
+@300000ps CPU pc=00002c84 opcode=OR rd=x11 rs1=x14 rs2=x3
+@300160ps CPU pc=00002c88 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@300320ps CPU pc=00002c8c opcode=ADDI rd=x13 rs1=x1 imm=23
+@300480ps CPU pc=00002c90 opcode=JAL rd=x14 imm=4
+@300640ps CPU pc=00002c94 opcode=NOP rd=x15 imm=5
+@300800ps CPU pc=00002c98 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@300960ps CPU pc=00002c9c opcode=LW rd=x2 rs1=x5 imm=27
+@301120ps CPU pc=00002ca0 opcode=SW rd=x3 rs1=x6 imm=28
+@301280ps CPU pc=00002ca4 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@301440ps CPU pc=00002ca8 opcode=AND rd=x5 rs1=x8 rs2=x12
+@301600ps CPU pc=00002cac opcode=OR rd=x6 rs1=x9 rs2=x13
+@301760ps CPU pc=00002cb0 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@301920ps CPU pc=00002cb4 opcode=ADDI rd=x8 rs1=x11 imm=2d
+@302080ps CPU pc=00002cb8 opcode=JAL rd=x9 imm=e
+@302240ps CPU pc=00002cbc opcode=NOP rd=x10 imm=f
+@302400ps CPU pc=00002cc0 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@302560ps CPU pc=00002cc4 opcode=LW rd=x12 rs1=x15 imm=31
+@302720ps CPU pc=00002cc8 opcode=SW rd=x13 rs1=x1 imm=32
+@302880ps CPU pc=00002ccc opcode=BEQ rs1=x2 rs2=x6 imm=8
+@303040ps CPU pc=00002cd0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@303200ps CPU pc=00002cd4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@303360ps CPU pc=00002cd8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@303520ps CPU pc=00002cdc opcode=ADDI rd=x3 rs1=x6 imm=37
+@303680ps CPU pc=00002ce0 opcode=JAL rd=x4 imm=18
+@303840ps CPU pc=00002ce4 opcode=NOP rd=x5 imm=19
+@304000ps CPU pc=00002ce8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@304160ps CPU pc=00002cec opcode=LW rd=x7 rs1=x10 imm=3b
+@304320ps CPU pc=00002cf0 opcode=SW rd=x8 rs1=x11 imm=3c
+@304480ps CPU pc=00002cf4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@304640ps CPU pc=00002cf8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@304800ps CPU pc=00002cfc opcode=OR rd=x11 rs1=x14 rs2=x3
+@304960ps CPU pc=00002d00 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@305120ps CPU pc=00002d04 opcode=ADDI rd=x13 rs1=x1 imm=41
+@305280ps CPU pc=00002d08 opcode=JAL rd=x14 imm=2
+@305440ps CPU pc=00002d0c opcode=NOP rd=x15 imm=3
+@305600ps CPU pc=00002d10 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@305760ps CPU pc=00002d14 opcode=LW rd=x2 rs1=x5 imm=45
+@305920ps CPU pc=00002d18 opcode=SW rd=x3 rs1=x6 imm=46
+@306080ps CPU pc=00002d1c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@306240ps CPU pc=00002d20 opcode=AND rd=x5 rs1=x8 rs2=x12
+@306400ps CPU pc=00002d24 opcode=OR rd=x6 rs1=x9 rs2=x13
+@306560ps CPU pc=00002d28 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@306720ps CPU pc=00002d2c opcode=ADDI rd=x8 rs1=x11 imm=4b
+@306880ps CPU pc=00002d30 opcode=JAL rd=x9 imm=c
+@307040ps CPU pc=00002d34 opcode=NOP rd=x10 imm=d
+@307200ps CPU pc=00002d38 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@307360ps CPU pc=00002d3c opcode=LW rd=x12 rs1=x15 imm=4f
+@307520ps CPU pc=00002d40 opcode=SW rd=x13 rs1=x1 imm=50
+@307680ps CPU pc=00002d44 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@307840ps CPU pc=00002d48 opcode=AND rd=x15 rs1=x3 rs2=x7
+@308000ps CPU pc=00002d4c opcode=OR rd=x1 rs1=x4 rs2=x8
+@308160ps CPU pc=00002d50 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@308320ps CPU pc=00002d54 opcode=ADDI rd=x3 rs1=x6 imm=55
+@308480ps CPU pc=00002d58 opcode=JAL rd=x4 imm=16
+@308640ps CPU pc=00002d5c opcode=NOP rd=x5 imm=17
+@308800ps CPU pc=00002d60 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@308960ps CPU pc=00002d64 opcode=LW rd=x7 rs1=x10 imm=59
+@309120ps CPU pc=00002d68 opcode=SW rd=x8 rs1=x11 imm=5a
+@309280ps CPU pc=00002d6c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@309440ps CPU pc=00002d70 opcode=AND rd=x10 rs1=x13 rs2=x2
+@309600ps CPU pc=00002d74 opcode=OR rd=x11 rs1=x14 rs2=x3
+@309760ps CPU pc=00002d78 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@309920ps CPU pc=00002d7c opcode=ADDI rd=x13 rs1=x1 imm=5f
+@310080ps CPU pc=00002d80 opcode=JAL rd=x14 imm=0
+@310240ps CPU pc=00002d84 opcode=NOP rd=x15 imm=1
+@310400ps CPU pc=00002d88 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@310560ps CPU pc=00002d8c opcode=LW rd=x2 rs1=x5 imm=63
+@310720ps CPU pc=00002d90 opcode=SW rd=x3 rs1=x6 imm=64
+@310880ps CPU pc=00002d94 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@311040ps CPU pc=00002d98 opcode=AND rd=x5 rs1=x8 rs2=x12
+@311200ps CPU pc=00002d9c opcode=OR rd=x6 rs1=x9 rs2=x13
+@311360ps CPU pc=00002da0 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@311520ps CPU pc=00002da4 opcode=ADDI rd=x8 rs1=x11 imm=69
+@311680ps CPU pc=00002da8 opcode=JAL rd=x9 imm=a
+@311840ps CPU pc=00002dac opcode=NOP rd=x10 imm=b
+@312000ps CPU pc=00002db0 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@312160ps CPU pc=00002db4 opcode=LW rd=x12 rs1=x15 imm=6d
+@312320ps CPU pc=00002db8 opcode=SW rd=x13 rs1=x1 imm=6e
+@312480ps CPU pc=00002dbc opcode=BEQ rs1=x2 rs2=x6 imm=8
+@312640ps CPU pc=00002dc0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@312800ps CPU pc=00002dc4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@312960ps CPU pc=00002dc8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@313120ps CPU pc=00002dcc opcode=ADDI rd=x3 rs1=x6 imm=73
+@313280ps CPU pc=00002dd0 opcode=JAL rd=x4 imm=14
+@313440ps CPU pc=00002dd4 opcode=NOP rd=x5 imm=15
+@313600ps CPU pc=00002dd8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@313760ps CPU pc=00002ddc opcode=LW rd=x7 rs1=x10 imm=77
+@313920ps CPU pc=00002de0 opcode=SW rd=x8 rs1=x11 imm=78
+@314080ps CPU pc=00002de4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@314240ps CPU pc=00002de8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@314400ps CPU pc=00002dec opcode=OR rd=x11 rs1=x14 rs2=x3
+@314560ps CPU pc=00002df0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@314720ps CPU pc=00002df4 opcode=ADDI rd=x13 rs1=x1 imm=7d
+@314880ps CPU pc=00002df8 opcode=JAL rd=x14 imm=1e
+@315040ps CPU pc=00002dfc opcode=NOP rd=x15 imm=1f
+@315200ps CPU pc=00002e00 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@315360ps CPU pc=00002e04 opcode=LW rd=x2 rs1=x5 imm=81
+@315520ps CPU pc=00002e08 opcode=SW rd=x3 rs1=x6 imm=82
+@315680ps CPU pc=00002e0c opcode=BEQ rs1=x7 rs2=x11 imm=8
+@315840ps CPU pc=00002e10 opcode=AND rd=x5 rs1=x8 rs2=x12
+@316000ps CPU pc=00002e14 opcode=OR rd=x6 rs1=x9 rs2=x13
+@316160ps CPU pc=00002e18 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@316320ps CPU pc=00002e1c opcode=ADDI rd=x8 rs1=x11 imm=87
+@316480ps CPU pc=00002e20 opcode=JAL rd=x9 imm=8
+@316640ps CPU pc=00002e24 opcode=NOP rd=x10 imm=9
+@316800ps CPU pc=00002e28 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@316960ps CPU pc=00002e2c opcode=LW rd=x12 rs1=x15 imm=8b
+@317120ps CPU pc=00002e30 opcode=SW rd=x13 rs1=x1 imm=8c
+@317280ps CPU pc=00002e34 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@317440ps CPU pc=00002e38 opcode=AND rd=x15 rs1=x3 rs2=x7
+@317600ps CPU pc=00002e3c opcode=OR rd=x1 rs1=x4 rs2=x8
+@317760ps CPU pc=00002e40 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@317920ps CPU pc=00002e44 opcode=ADDI rd=x3 rs1=x6 imm=91
+@318080ps CPU pc=00002e48 opcode=JAL rd=x4 imm=12
+@318240ps CPU pc=00002e4c opcode=NOP rd=x5 imm=13
+@318400ps CPU pc=00002e50 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@318560ps CPU pc=00002e54 opcode=LW rd=x7 rs1=x10 imm=95
+@318720ps CPU pc=00002e58 opcode=SW rd=x8 rs1=x11 imm=96
+@318880ps CPU pc=00002e5c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@319040ps CPU pc=00002e60 opcode=AND rd=x10 rs1=x13 rs2=x2
+@319200ps CPU pc=00002e64 opcode=OR rd=x11 rs1=x14 rs2=x3
+@319360ps CPU pc=00002e68 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@319520ps CPU pc=00002e6c opcode=ADDI rd=x13 rs1=x1 imm=9b
+@319680ps CPU pc=00002e70 opcode=JAL rd=x14 imm=1c
+@319840ps CPU pc=00002e74 opcode=NOP rd=x15 imm=1d
+@320000ps CPU pc=00002e78 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@320160ps CPU pc=00002e7c opcode=LW rd=x2 rs1=x5 imm=9f
+@320320ps CPU pc=00002e80 opcode=SW rd=x3 rs1=x6 imm=a0
+@320480ps CPU pc=00002e84 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@320640ps CPU pc=00002e88 opcode=AND rd=x5 rs1=x8 rs2=x12
+@320800ps CPU pc=00002e8c opcode=OR rd=x6 rs1=x9 rs2=x13
+@320960ps CPU pc=00002e90 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@321120ps CPU pc=00002e94 opcode=ADDI rd=x8 rs1=x11 imm=a5
+@321280ps CPU pc=00002e98 opcode=JAL rd=x9 imm=6
+@321440ps CPU pc=00002e9c opcode=NOP rd=x10 imm=7
+@321600ps CPU pc=00002ea0 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@321760ps CPU pc=00002ea4 opcode=LW rd=x12 rs1=x15 imm=a9
+@321920ps CPU pc=00002ea8 opcode=SW rd=x13 rs1=x1 imm=aa
+@322080ps CPU pc=00002eac opcode=BEQ rs1=x2 rs2=x6 imm=8
+@322240ps CPU pc=00002eb0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@322400ps CPU pc=00002eb4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@322560ps CPU pc=00002eb8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@322720ps CPU pc=00002ebc opcode=ADDI rd=x3 rs1=x6 imm=af
+@322880ps CPU pc=00002ec0 opcode=JAL rd=x4 imm=10
+@323040ps CPU pc=00002ec4 opcode=NOP rd=x5 imm=11
+@323200ps CPU pc=00002ec8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@323360ps CPU pc=00002ecc opcode=LW rd=x7 rs1=x10 imm=b3
+@323520ps CPU pc=00002ed0 opcode=SW rd=x8 rs1=x11 imm=b4
+@323680ps CPU pc=00002ed4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@323840ps CPU pc=00002ed8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@324000ps CPU pc=00002edc opcode=OR rd=x11 rs1=x14 rs2=x3
+@324160ps CPU pc=00002ee0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@324320ps CPU pc=00002ee4 opcode=ADDI rd=x13 rs1=x1 imm=b9
+@324480ps CPU pc=00002ee8 opcode=JAL rd=x14 imm=1a
+@324640ps CPU pc=00002eec opcode=NOP rd=x15 imm=1b
+@324800ps CPU pc=00002ef0 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@324960ps CPU pc=00002ef4 opcode=LW rd=x2 rs1=x5 imm=bd
+@325120ps CPU pc=00002ef8 opcode=SW rd=x3 rs1=x6 imm=be
+@325280ps CPU pc=00002efc opcode=BEQ rs1=x7 rs2=x11 imm=8
+@325440ps CPU pc=00002f00 opcode=AND rd=x5 rs1=x8 rs2=x12
+@325600ps CPU pc=00002f04 opcode=OR rd=x6 rs1=x9 rs2=x13
+@325760ps CPU pc=00002f08 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@325920ps CPU pc=00002f0c opcode=ADDI rd=x8 rs1=x11 imm=c3
+@326080ps CPU pc=00002f10 opcode=JAL rd=x9 imm=4
+@326240ps CPU pc=00002f14 opcode=NOP rd=x10 imm=5
+@326400ps CPU pc=00002f18 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@326560ps CPU pc=00002f1c opcode=LW rd=x12 rs1=x15 imm=c7
+@326720ps CPU pc=00002f20 opcode=SW rd=x13 rs1=x1 imm=c8
+@326880ps CPU pc=00002f24 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@327040ps CPU pc=00002f28 opcode=AND rd=x15 rs1=x3 rs2=x7
+@327200ps CPU pc=00002f2c opcode=OR rd=x1 rs1=x4 rs2=x8
+@327360ps CPU pc=00002f30 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@327520ps CPU pc=00002f34 opcode=ADDI rd=x3 rs1=x6 imm=cd
+@327680ps CPU pc=00002f38 opcode=JAL rd=x4 imm=e
+@327840ps CPU pc=00002f3c opcode=NOP rd=x5 imm=f
+@328000ps CPU pc=00002f40 opcode=ADD rd=x6 rs1=x9 rs2=x13
+@328160ps CPU pc=00002f44 opcode=LW rd=x7 rs1=x10 imm=d1
+@328320ps CPU pc=00002f48 opcode=SW rd=x8 rs1=x11 imm=d2
+@328480ps CPU pc=00002f4c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@328640ps CPU pc=00002f50 opcode=AND rd=x10 rs1=x13 rs2=x2
+@328800ps CPU pc=00002f54 opcode=OR rd=x11 rs1=x14 rs2=x3
+@328960ps CPU pc=00002f58 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@329120ps CPU pc=00002f5c opcode=ADDI rd=x13 rs1=x1 imm=d7
+@329280ps CPU pc=00002f60 opcode=JAL rd=x14 imm=18
+@329440ps CPU pc=00002f64 opcode=NOP rd=x15 imm=19
+@329600ps CPU pc=00002f68 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@329760ps CPU pc=00002f6c opcode=LW rd=x2 rs1=x5 imm=db
+@329920ps CPU pc=00002f70 opcode=SW rd=x3 rs1=x6 imm=dc
+@330080ps CPU pc=00002f74 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@330240ps CPU pc=00002f78 opcode=AND rd=x5 rs1=x8 rs2=x12
+@330400ps CPU pc=00002f7c opcode=OR rd=x6 rs1=x9 rs2=x13
+@330560ps CPU pc=00002f80 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@330720ps CPU pc=00002f84 opcode=ADDI rd=x8 rs1=x11 imm=e1
+@330880ps CPU pc=00002f88 opcode=JAL rd=x9 imm=2
+@331040ps CPU pc=00002f8c opcode=NOP rd=x10 imm=3
+@331200ps CPU pc=00002f90 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@331360ps CPU pc=00002f94 opcode=LW rd=x12 rs1=x15 imm=e5
+@331520ps CPU pc=00002f98 opcode=SW rd=x13 rs1=x1 imm=e6
+@331680ps CPU pc=00002f9c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@331840ps CPU pc=00002fa0 opcode=AND rd=x15 rs1=x3 rs2=x7
+@332000ps CPU pc=00002fa4 opcode=OR rd=x1 rs1=x4 rs2=x8
+@332160ps CPU pc=00002fa8 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@332320ps CPU pc=00002fac opcode=ADDI rd=x3 rs1=x6 imm=eb
+@332480ps CPU pc=00002fb0 opcode=JAL rd=x4 imm=c
+@332640ps CPU pc=00002fb4 opcode=NOP rd=x5 imm=d
+@332800ps CPU pc=00002fb8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@332960ps CPU pc=00002fbc opcode=LW rd=x7 rs1=x10 imm=ef
+@333120ps CPU pc=00002fc0 opcode=SW rd=x8 rs1=x11 imm=f0
+@333280ps CPU pc=00002fc4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@333440ps CPU pc=00002fc8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@333600ps CPU pc=00002fcc opcode=OR rd=x11 rs1=x14 rs2=x3
+@333760ps CPU pc=00002fd0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@333920ps CPU pc=00002fd4 opcode=ADDI rd=x13 rs1=x1 imm=f5
+@334080ps CPU pc=00002fd8 opcode=JAL rd=x14 imm=16
+@334240ps CPU pc=00002fdc opcode=NOP rd=x15 imm=17
+@334400ps CPU pc=00002fe0 opcode=ADD rd=x1 rs1=x4 rs2=x8
+@334560ps CPU pc=00002fe4 opcode=LW rd=x2 rs1=x5 imm=f9
+@334720ps CPU pc=00002fe8 opcode=SW rd=x3 rs1=x6 imm=fa
+@334880ps CPU pc=00002fec opcode=BEQ rs1=x7 rs2=x11 imm=8
+@335040ps CPU pc=00002ff0 opcode=AND rd=x5 rs1=x8 rs2=x12
+@335200ps CPU pc=00002ff4 opcode=OR rd=x6 rs1=x9 rs2=x13
+@335360ps CPU pc=00002ff8 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@335520ps CPU pc=00002ffc opcode=ADDI rd=x8 rs1=x11 imm=ff
+@335680ps CPU pc=00003000 opcode=JAL rd=x9 imm=0
+@335840ps CPU pc=00003004 opcode=NOP rd=x10 imm=1
+@336000ps CPU pc=00003008 opcode=SUB rd=x11 rs1=x14 rs2=x3
+@336160ps CPU pc=0000300c opcode=LW rd=x12 rs1=x15 imm=3
+@336320ps CPU pc=00003010 opcode=SW rd=x13 rs1=x1 imm=4
+@336480ps CPU pc=00003014 opcode=BEQ rs1=x2 rs2=x6 imm=8
+@336640ps CPU pc=00003018 opcode=AND rd=x15 rs1=x3 rs2=x7
+@336800ps CPU pc=0000301c opcode=OR rd=x1 rs1=x4 rs2=x8
+@336960ps CPU pc=00003020 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@337120ps CPU pc=00003024 opcode=ADDI rd=x3 rs1=x6 imm=9
+@337280ps CPU pc=00003028 opcode=JAL rd=x4 imm=a
+@337440ps CPU pc=0000302c opcode=NOP rd=x5 imm=b
+@337600ps CPU pc=00003030 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@337760ps CPU pc=00003034 opcode=LW rd=x7 rs1=x10 imm=d
+@337920ps CPU pc=00003038 opcode=SW rd=x8 rs1=x11 imm=e
+@338080ps CPU pc=0000303c opcode=BEQ rs1=x12 rs2=x1 imm=8
+@338240ps CPU pc=00003040 opcode=AND rd=x10 rs1=x13 rs2=x2
+@338400ps CPU pc=00003044 opcode=OR rd=x11 rs1=x14 rs2=x3
+@338560ps CPU pc=00003048 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@338720ps CPU pc=0000304c opcode=ADDI rd=x13 rs1=x1 imm=13
+@338880ps CPU pc=00003050 opcode=JAL rd=x14 imm=14
+@339040ps CPU pc=00003054 opcode=NOP rd=x15 imm=15
+@339200ps CPU pc=00003058 opcode=SUB rd=x1 rs1=x4 rs2=x8
+@339360ps CPU pc=0000305c opcode=LW rd=x2 rs1=x5 imm=17
+@339520ps CPU pc=00003060 opcode=SW rd=x3 rs1=x6 imm=18
+@339680ps CPU pc=00003064 opcode=BEQ rs1=x7 rs2=x11 imm=8
+@339840ps CPU pc=00003068 opcode=AND rd=x5 rs1=x8 rs2=x12
+@340000ps CPU pc=0000306c opcode=OR rd=x6 rs1=x9 rs2=x13
+@340160ps CPU pc=00003070 opcode=XOR rd=x7 rs1=x10 rs2=x14
+@340320ps CPU pc=00003074 opcode=ADDI rd=x8 rs1=x11 imm=1d
+@340480ps CPU pc=00003078 opcode=JAL rd=x9 imm=1e
+@340640ps CPU pc=0000307c opcode=NOP rd=x10 imm=1f
+@340800ps CPU pc=00003080 opcode=ADD rd=x11 rs1=x14 rs2=x3
+@340960ps CPU pc=00003084 opcode=LW rd=x12 rs1=x15 imm=21
+@341120ps CPU pc=00003088 opcode=SW rd=x13 rs1=x1 imm=22
+@341280ps CPU pc=0000308c opcode=BEQ rs1=x2 rs2=x6 imm=8
+@341440ps CPU pc=00003090 opcode=AND rd=x15 rs1=x3 rs2=x7
+@341600ps CPU pc=00003094 opcode=OR rd=x1 rs1=x4 rs2=x8
+@341760ps CPU pc=00003098 opcode=XOR rd=x2 rs1=x5 rs2=x9
+@341920ps CPU pc=0000309c opcode=ADDI rd=x3 rs1=x6 imm=27
+@342080ps CPU pc=000030a0 opcode=JAL rd=x4 imm=8
+@342240ps CPU pc=000030a4 opcode=NOP rd=x5 imm=9
+@342400ps CPU pc=000030a8 opcode=SUB rd=x6 rs1=x9 rs2=x13
+@342560ps CPU pc=000030ac opcode=LW rd=x7 rs1=x10 imm=2b
+@342720ps CPU pc=000030b0 opcode=SW rd=x8 rs1=x11 imm=2c
+@342880ps CPU pc=000030b4 opcode=BEQ rs1=x12 rs2=x1 imm=8
+@343040ps CPU pc=000030b8 opcode=AND rd=x10 rs1=x13 rs2=x2
+@343200ps CPU pc=000030bc opcode=OR rd=x11 rs1=x14 rs2=x3
+@343360ps CPU pc=000030c0 opcode=XOR rd=x12 rs1=x15 rs2=x4
+@343520ps CPU pc=000030c4 opcode=ADDI rd=x13 rs1=x1 imm=31
+@343680ps CPU pc=000030c8 opcode=JAL rd=x14 imm=12
+@343840ps CPU pc=000030cc opcode=NOP rd=x15 imm=13
+INFO cpu trace closed
