@@ -5,6 +5,7 @@
 import { create } from 'zustand';
 import type { ScopeInfo, SessionInfo, SignalInfo, WaveformData } from '../api/types';
 import { DEMO_SESSION, DEMO_SIGNALS, DEMO_WAVEFORM_DATA } from '../demo/demoData';
+import { newId } from '../utils/id';
 
 export function canParentStory(
   items: Array<{ id: string; time: number; parentId?: string | null }>,
@@ -36,7 +37,7 @@ function storyContains(
 
 function materializeRows(rows: WaveRow[], signals: SignalInfo[]): WaveRow[] {
   if (rows.length > 0 || signals.length === 0) return [...rows];
-  return signals.map((signal) => ({ id: crypto.randomUUID(), type: 'signal' as const, path: signal.path }));
+  return signals.map((signal) => ({ id: newId(), type: 'signal' as const, path: signal.path }));
 }
 
 // Named marker type
@@ -160,8 +161,6 @@ interface WaveformState {
 
   notes: WaveNote[];
   logTraces: LogTrace[];
-  logsExpanded: boolean;
-  setLogsExpanded: (expanded: boolean) => void;
   selectedLogEvent: SelectedLogEvent | null;
   selectLogEvent: (event: SelectedLogEvent) => void;
   addLogSignal: (trace: LogTrace, signal: SignalInfo, data: WaveformData, atStart?: boolean) => void;
@@ -245,7 +244,6 @@ export const useWaveformStore = create<WaveformState>((set) => ({
     markers: [],
     notes: [],
     logTraces: [],
-    logsExpanded: false,
     selectedLogEvent: null,
     selectedNoteId: null,
     selectedStoryId: null,
@@ -277,7 +275,6 @@ export const useWaveformStore = create<WaveformState>((set) => ({
       { id: 'demo-n1', time: 100, signalPath: 'tb.clk', text: 'counting starts' },
     ],
     logTraces: [],
-    logsExpanded: false,
     selectedLogEvent: null,
     selectedNoteId: null,
     selectedStoryId: null,
@@ -309,7 +306,7 @@ export const useWaveformStore = create<WaveformState>((set) => ({
     }
     return {
       displayedSignals: [...state.displayedSignals, signal],
-      waveRows: [...state.waveRows, { id: crypto.randomUUID(), type: 'signal', path: signal.path }],
+      waveRows: [...state.waveRows, { id: newId(), type: 'signal', path: signal.path }],
     };
   }),
   addSignals: (signals) => set((state) => {
@@ -320,7 +317,7 @@ export const useWaveformStore = create<WaveformState>((set) => ({
       displayedSignals: [...state.displayedSignals, ...newSignals],
       waveRows: [
         ...state.waveRows,
-        ...newSignals.map((signal) => ({ id: crypto.randomUUID(), type: 'signal' as const, path: signal.path })),
+        ...newSignals.map((signal) => ({ id: newId(), type: 'signal' as const, path: signal.path })),
       ],
     };
   }),
@@ -357,7 +354,7 @@ export const useWaveformStore = create<WaveformState>((set) => ({
   // Named markers
   markers: [],
   addMarker: (name, time) => set((state) => ({
-    markers: [...state.markers, { id: crypto.randomUUID(), name, time }],
+    markers: [...state.markers, { id: newId(), name, time }],
   })),
   removeMarker: (id) => set((state) => ({
     markers: state.markers
@@ -372,9 +369,7 @@ export const useWaveformStore = create<WaveformState>((set) => ({
 
   notes: [],
   logTraces: [],
-  logsExpanded: false,
   selectedLogEvent: null,
-  setLogsExpanded: (expanded) => set({ logsExpanded: expanded }),
   selectLogEvent: (event) => set({
     selectedLogEvent: event,
     selectedSignal: event.signalPath,
@@ -385,7 +380,7 @@ export const useWaveformStore = create<WaveformState>((set) => ({
   }),
   addLogSignal: (trace, signal, data, atStart = false) => set((state) => {
     if (state.displayedSignals.some((item) => item.path === signal.path)) return state;
-    const row = { id: crypto.randomUUID(), type: 'signal' as const, path: signal.path };
+    const row = { id: newId(), type: 'signal' as const, path: signal.path };
     if (!atStart) {
       return {
         displayedSignals: [...state.displayedSignals, signal],
@@ -408,7 +403,7 @@ export const useWaveformStore = create<WaveformState>((set) => ({
   }),
   selectedNoteId: null,
   addNote: (text, time, signalPath) => set((state) => ({
-    notes: [...state.notes, { id: crypto.randomUUID(), text, time, signalPath }],
+    notes: [...state.notes, { id: newId(), text, time, signalPath }],
   })),
   removeNote: (id) => set((state) => ({
     notes: state.notes
@@ -480,7 +475,7 @@ export const useWaveformStore = create<WaveformState>((set) => ({
       ? rows.findIndex((row) => row.type === 'signal' && row.path === state.selectedSignal)
       : -1;
     const at = selectedIndex < 0 ? 0 : selectedIndex;
-    rows.splice(at, 0, { id: crypto.randomUUID(), type: 'group', name, collapsed: false });
+    rows.splice(at, 0, { id: newId(), type: 'group', name, collapsed: false });
     return { waveRows: rows };
   }),
   insertDivider: (name) => set((state) => {
@@ -489,7 +484,7 @@ export const useWaveformStore = create<WaveformState>((set) => ({
       ? rows.findIndex((row) => row.type === 'signal' && row.path === state.selectedSignal)
       : -1;
     const at = selectedIndex < 0 ? rows.length : selectedIndex + 1;
-    rows.splice(at, 0, { id: crypto.randomUUID(), type: 'divider', name });
+    rows.splice(at, 0, { id: newId(), type: 'divider', name });
     return { waveRows: rows };
   }),
   removeWaveRow: (id) => set((state) => ({
@@ -522,7 +517,7 @@ export const useWaveformStore = create<WaveformState>((set) => ({
   // Signal groups
   signalGroups: [],
   addSignalGroup: (name, signalPaths) => set((state) => ({
-    signalGroups: [...state.signalGroups, { id: crypto.randomUUID(), name, collapsed: false, signalPaths }],
+    signalGroups: [...state.signalGroups, { id: newId(), name, collapsed: false, signalPaths }],
   })),
   removeSignalGroup: (id) => set((state) => ({
     signalGroups: state.signalGroups.filter(g => g.id !== id),

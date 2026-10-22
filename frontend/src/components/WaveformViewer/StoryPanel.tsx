@@ -4,6 +4,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Bookmark, Circle, MessageSquare, Pause, Play } from 'lucide-react';
+import { ExpandPaneButton } from '../layout/Panes';
 import { canParentStory, useWaveformStore, type NamedMarker, type WaveNote } from '../../store';
 import type { WaveMenuTarget } from './WaveContextMenu';
 import { DisplayCapture } from './displayCapture';
@@ -500,9 +501,10 @@ export function StoryPanel({ onContextMenu }: StoryPanelProps) {
 
   return (
     <div className="h-full min-h-0 bg-wave-panel flex flex-col" data-panel="story">
-      <div className="px-3 py-1 text-[11px] uppercase tracking-wide text-wave-text/50 border-b border-wave-border flex items-center justify-between">
+      <div className="px-3 py-1 text-[11px] uppercase tracking-wide text-wave-text/50 border-b border-wave-border flex items-center justify-between gap-2">
         <span>Story</span>
-        <span className="normal-case tracking-normal">Drag a later event onto an earlier one</span>
+        <span className="normal-case tracking-normal truncate">Drag a later event onto an earlier one</span>
+        <ExpandPaneButton id="story" label="story" />
       </div>
       <div className="flex-1 overflow-auto px-1 py-1">
         {forest.length === 0 ? (

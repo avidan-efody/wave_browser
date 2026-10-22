@@ -13,6 +13,7 @@ import { scanText } from '../logs/scan';
 import { applyStoryLinks } from '../rc/applyStory';
 import { parseSignalRc } from '../rc/signalRc';
 import { useWaveformStore, type LogTrace, type WaveRow } from '../store';
+import { newId } from '../utils/id';
 import { parseVcd } from './parseVcd';
 
 function stubSignal(path: string): SignalInfo {
@@ -99,7 +100,7 @@ export function loadBundledStory(): void {
     );
     waveformData[built.signal.path] = built.data;
     logSignals.push(built.signal);
-    logRows.push({ id: crypto.randomUUID(), type: 'signal' as const, path: built.signal.path });
+    logRows.push({ id: newId(), type: 'signal' as const, path: built.signal.path });
     logTraces.push(built.trace);
   }
   const story = JSON.parse(storyText) as { links?: { child: string; parent: string }[] };

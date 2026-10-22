@@ -5,7 +5,7 @@
  */
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { Maximize2, Minimize2 } from 'lucide-react';
+import { ExpandPaneButton } from '../layout/Panes';
 import { filesApi } from '../../api';
 import { bundledLogList, waveDirectory, type ListedLog } from '../../logs/bundled';
 import { buildLogSignal, loadLogPreview } from '../../logs/query';
@@ -59,8 +59,6 @@ export function LogsPanel() {
   const {
     currentSession,
     isDemoMode,
-    logsExpanded,
-    setLogsExpanded,
     logTraces,
     addLogSignal,
     selectedLogEvent,
@@ -263,14 +261,7 @@ export function LogsPanel() {
         >
           {status}
         </span>
-        <button
-          type="button"
-          onClick={() => setLogsExpanded(!logsExpanded)}
-          className="shrink-0 p-1 hover:bg-wave-border rounded"
-          title={logsExpanded ? 'Show the wave' : 'Expand logs over the wave'}
-        >
-          {logsExpanded ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
-        </button>
+        <ExpandPaneButton id="logs" label="logs" />
       </div>
       <div className="flex-1 min-h-0 flex">
         <div className="flex-1 min-w-0 overflow-auto font-mono text-[11px] leading-5">

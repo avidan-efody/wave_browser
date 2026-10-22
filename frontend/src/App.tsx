@@ -20,9 +20,12 @@ import { CodePanel } from './components/CodePanel';
 import { useWaveformStore } from './store';
 import { setBackendUrl, sessionsApi, filesApi, examplesApi, type WaveExample } from './api';
 import { applySignalRc } from './rc/applySignalRc';
+import { chooseCompanionRc } from './rc/companionRc';
 import { loadBundledStory } from './demo/loadBundledStory';
 import { applyStoryLinks } from './rc/applyStory';
 import { waveDirectory } from './logs/bundled';
+import { PaneLayoutProvider, ResizeHandle } from './components/layout/Panes';
+import { newId } from './utils/id';
 import { useUrlParams, buildConnectionUrl, clearConnectionUrl, useCodePanel } from './hooks';
 
 // Version for debugging - update when making changes
@@ -44,7 +47,7 @@ interface ServerConnection {
 }
 
 function AppContent() {
-  const { currentSession, isDemoMode, demoTree, loadDemoMode, setCurrentSession, logsExpanded } = useWaveformStore();
+  const { currentSession, isDemoMode, demoTree, loadDemoMode, setCurrentSession } = useWaveformStore();
   const urlParams = useUrlParams();
   const codePanel = useCodePanel();
   
@@ -57,11 +60,12 @@ function AppContent() {
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [examples, setExamples] = useState<WaveExample[]>([]);
   const [activeExampleId, setActiveExampleId] = useState<string | null>(null);
+  const [hierarchyWidth, setHierarchyWidth] = useState(320);
 
   // Add a log entry
   const addLog = useCallback((level: LogEntry['level'], message: string, details?: string) => {
     const entry: LogEntry = {
-      id: crypto.randomUUID(),
+      id: newId(),
       timestamp: new Date(),
       level,
       message,
@@ -141,12 +145,12 @@ function AppContent() {
         if (directory) {
           try {
             const listing = await filesApi.list(directory);
-            const rcFiles = listing.entries
-              .filter((entry) => !entry.is_dir && entry.name.toLowerCase().endsWith('.rc'))
-              .sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
-            if (rcFiles.length > 0) resolvedRc = rcFiles[0].path;
-          } catch {
-            resolvedRc = null;
+            const choice = chooseCompanionRc(fsdbPath, listing.entries);
+            if (choice.path) resolvedRc = choice.path;
+            else if (choice.error) addLog('error', 'Could not load an RC file', choice.error);
+          } catch (listError) {
+            const listMsg = listError instanceof Error ? listError.message : 'Unknown error';
+            addLog('error', 'Could not look for an RC file next to the waveform', listMsg);
           }
         }
       }
@@ -283,6 +287,7 @@ function AppContent() {
   };
 
   return (
+    <PaneLayoutProvider>
     <div className="h-screen flex flex-col bg-wave-bg text-wave-text">
       {/* Header */}
       <header className="flex items-center justify-between px-4 py-2 border-b border-wave-border bg-wave-panel">
@@ -401,34 +406,34 @@ function AppContent() {
 
       {/* Main content */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="flex-1 flex overflow-hidden">
-          {/* Left panel - Hierarchy */}
-          {!logsExpanded && (
-            <div className="w-80 border-r border-wave-border flex-shrink-0 overflow-hidden">
-              <HierarchyPanel onViewCode={codePanel.viewCode} />
-            </div>
-          )}
+        <div className="flex-1 flex overflow-hidden min-h-0">
+          <div className="shrink-0 overflow-hidden h-full" style={{ width: hierarchyWidth }}>
+            <HierarchyPanel onViewCode={codePanel.viewCode} />
+          </div>
+          <ResizeHandle
+            axis="x"
+            label="Resize hierarchy"
+            size={hierarchyWidth}
+            min={200}
+            getMax={() => Math.max(240, window.innerWidth - 320)}
+            onSize={setHierarchyWidth}
+          />
 
-          {/* Right panel - Waveform Viewer + Code Panel */}
-          <div className="flex-1 overflow-hidden flex flex-col">
-            <div className="flex-1 overflow-hidden">
+          <div className="flex-1 min-w-0 overflow-hidden flex flex-col">
+            <div className="flex-1 min-h-0 overflow-hidden">
               <WaveformViewer />
             </div>
-            {/* Code Panel (collapsible) */}
-            {!logsExpanded && (
-              <CodePanel
-                location={codePanel.location}
-                content={codePanel.content}
-                isLoading={codePanel.isLoading}
-                error={codePanel.error}
-                onClose={codePanel.close}
-              />
-            )}
+            <CodePanel
+              location={codePanel.location}
+              content={codePanel.content}
+              isLoading={codePanel.isLoading}
+              error={codePanel.error}
+              onClose={codePanel.close}
+            />
           </div>
         </div>
 
-        {/* Application message log. Hidden while the transaction logs fill the window. */}
-        {!logsExpanded && <LogPanel logs={logs} onClear={clearLogs} isLoading={isLoading} />}
+        <LogPanel logs={logs} onClear={clearLogs} isLoading={isLoading} />
       </div>
 
       {/* Status bar */}
@@ -466,6 +471,7 @@ function AppContent() {
         serverInfo={connection ? { host: connection.host, port: connection.port } : null}
       />
     </div>
+    </PaneLayoutProvider>
   );
 }
 

@@ -12,6 +12,7 @@ import re
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
 
+from .scope_kind import refine_scope_type
 from .base import (
     BaseAdapter,
     DatabaseInfo,
@@ -302,7 +303,10 @@ def _parse_vcd(
                     scope_name = parts[2]
                     parent = stack[-1].path if stack else ""
                     scope_path = f"{parent}.{scope_name}" if parent else scope_name
-                    scope_type = _VCD_SCOPE_TYPES.get(parts[1].lower(), ScopeType.MODULE)
+                    scope_type = refine_scope_type(
+                        _VCD_SCOPE_TYPES.get(parts[1].lower(), ScopeType.MODULE),
+                        scope_name,
+                    )
                     scope = _Scope(scope_path, scope_name, scope_type, None)
                     scopes[scope_path] = scope
                     if stack:
@@ -509,7 +513,7 @@ def _add_module_scope(
     name = instance_name or str(mod.get("origName") or mod.get("name"))
     path = f"{parent_path}.{name}" if parent_path else name
     def_name = str(mod.get("origName") or mod.get("name") or name)
-    scope = _Scope(path, name, _scope_type_of(mod), def_name)
+    scope = _Scope(path, name, refine_scope_type(_scope_type_of(mod), name, def_name), def_name)
     scopes[path] = scope
     _walk_stmts(mod, scope, scopes, signals, by_addr)
     return scope

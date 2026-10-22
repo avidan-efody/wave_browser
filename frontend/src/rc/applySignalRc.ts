@@ -19,22 +19,6 @@ export interface ApplySignalRcResult {
   missing: string[];
 }
 
-function stubSignal(path: string): SignalInfo {
-  const name = path.split('.').pop() || path;
-  return {
-    path,
-    name,
-    width: 1,
-    left_range: 0,
-    right_range: 0,
-    direction: 'none',
-    is_real: false,
-    is_array: false,
-    is_composite: false,
-    has_members: false,
-  };
-}
-
 export async function applySignalRc(
   sessionId: string,
   timeUnit: string,
@@ -44,20 +28,24 @@ export async function applySignalRc(
   const paths = parsed.rows.filter((row) => row.type === 'signal').map((row) => row.path);
   const unique = [...new Set(paths)];
   const missing: string[] = [];
+  const resolved: SignalInfo[] = [];
 
-  const resolved = await Promise.all(unique.map(async (path) => {
+  for (const path of unique) {
     try {
-      return await hierarchyApi.getSignalInfo(sessionId, path);
-    } catch {
-      missing.push(path);
-      return stubSignal(path);
+      resolved.push(await hierarchyApi.getSignalInfo(sessionId, path));
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'lookup failed';
+      missing.push(`${path} (${message})`);
     }
-  }));
+  }
+
+  const present = new Set(resolved.map((signal) => signal.path));
+  const rows = parsed.rows.filter((row) => row.type !== 'signal' || present.has(row.path));
 
   const store = useWaveformStore.getState();
   store.applyRcLayout({
     signals: resolved,
-    rows: parsed.rows,
+    rows,
     markers: parsed.markers,
     notes: parsed.notes,
     cursorTime: parsed.cursorTime,
@@ -98,8 +86,8 @@ export async function applySignalRc(
 
   return {
     signalCount: resolved.length,
-    groupCount: parsed.rows.filter((row) => row.type === 'group').length,
-    dividerCount: parsed.rows.filter((row) => row.type === 'divider').length,
+    groupCount: rows.filter((row) => row.type === 'group').length,
+    dividerCount: rows.filter((row) => row.type === 'divider').length,
     markerCount: parsed.markers.length,
     noteCount: parsed.notes.length,
     logCount,

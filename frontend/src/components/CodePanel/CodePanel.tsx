@@ -15,6 +15,7 @@ import { defaultHighlightStyle, syntaxHighlighting } from '@codemirror/language'
 import { search, highlightSelectionMatches } from '@codemirror/search';
 import { Minimize2, Maximize2, X, FileCode, Loader2, Copy } from 'lucide-react';
 import { verilog } from './verilogLanguage';
+import { ResizeHandle } from '../layout/Panes';
 
 // Dark theme for editor
 const darkTheme = EditorView.theme({
@@ -86,6 +87,7 @@ export function CodePanel({ location, content, isLoading, error, onClose }: Code
   const viewRef = useRef<EditorView | null>(null);
   const [isMaximized, setIsMaximized] = useState(false);
   const [isMinimized, setIsMinimized] = useState(true);
+  const [panelHeight, setPanelHeight] = useState(256);
 
   // Create/update editor when content changes or panel expands
   useEffect(() => {
@@ -217,10 +219,21 @@ export function CodePanel({ location, content, isLoading, error, onClose }: Code
   // Full or maximized state
   const panelClasses = isMaximized
     ? 'fixed inset-0 z-50 flex flex-col bg-wave-bg'
-    : 'flex flex-col h-64 border-t border-wave-border';
+    : 'flex flex-col border-t border-wave-border';
 
   return (
-    <div className={panelClasses}>
+    <div className={panelClasses} style={isMaximized ? undefined : { height: panelHeight }}>
+      {!isMaximized && (
+        <ResizeHandle
+          axis="y"
+          label="Resize source"
+          size={panelHeight}
+          min={96}
+          getMax={() => Math.max(160, window.innerHeight - 180)}
+          sign={-1}
+          onSize={setPanelHeight}
+        />
+      )}
       {/* Header */}
       <div className="flex items-center justify-between px-3 py-1.5 bg-wave-panel border-b border-wave-border">
         <div className="flex items-center gap-2 text-sm">

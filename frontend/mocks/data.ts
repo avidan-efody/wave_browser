@@ -48,6 +48,15 @@ export const topScopes: ScopeInfo[] = [
     has_children: false,
     has_signals: false,
   },
+  {
+    // Some FSDB dumps label a package as a module. The filter still hides it.
+    name: 'uvm_pkg',
+    path: 'uvm_pkg',
+    def_name: 'uvm_pkg',
+    scope_type: 'module',
+    has_children: false,
+    has_signals: false,
+  },
 ];
 
 export const tbCounterChildren: ScopeInfo[] = [

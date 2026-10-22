@@ -7,6 +7,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { ChevronDown, ChevronUp, Terminal, Trash2 } from 'lucide-react';
+import { ExpandPaneButton, ResizeHandle, usePaneLayout } from './layout/Panes';
 
 export interface LogEntry {
   id: string;
@@ -24,8 +25,10 @@ interface LogPanelProps {
 
 export function LogPanel({ logs, onClear, isLoading }: LogPanelProps) {
   const [isExpanded, setIsExpanded] = useState(true);
-  const [height] = useState(150);
+  const [height, setHeight] = useState(150);
   const logEndRef = useRef<HTMLDivElement>(null);
+  const { maximized } = usePaneLayout();
+  const full = maximized === 'output';
 
   // Auto-scroll to bottom when new logs arrive
   useEffect(() => {
@@ -68,41 +71,24 @@ export function LogPanel({ logs, onClear, isLoading }: LogPanelProps) {
     });
   };
 
-  if (logs.length === 0 && !isLoading) {
-    // Show collapsed panel even when empty so user knows it exists
-    return (
-      <div className="border-t border-wave-border bg-wave-panel">
-        <div 
-          className="flex items-center justify-between px-3 py-1.5 bg-gray-800 cursor-pointer hover:bg-gray-750"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          <div className="flex items-center gap-2">
-            <Terminal className="w-4 h-4 text-gray-500" />
-            <span className="text-sm text-gray-500">Output</span>
-          </div>
-        </div>
+  const header = (
+    <div
+      className="flex items-center justify-between px-3 py-1.5 bg-gray-800 cursor-pointer hover:bg-gray-750"
+      onClick={() => setIsExpanded(!isExpanded)}
+    >
+      <div className="flex items-center gap-2">
+        <Terminal className={`w-4 h-4 ${logs.length === 0 && !isLoading ? 'text-gray-500' : 'text-wave-accent'}`} />
+        <span className={`text-sm ${logs.length === 0 && !isLoading ? 'text-gray-500' : 'font-medium'}`}>Output</span>
+        {isLoading && (
+          <span className="text-xs text-blue-400 animate-pulse">● Loading...</span>
+        )}
+        {!isLoading && logs.length > 0 && (
+          <span className="text-xs text-gray-500">({logs.length} messages)</span>
+        )}
       </div>
-    );
-  }
-
-  return (
-    <div className="border-t border-wave-border bg-wave-panel flex flex-col">
-      {/* Header */}
-      <div 
-        className="flex items-center justify-between px-3 py-1.5 bg-gray-800 cursor-pointer hover:bg-gray-750"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <div className="flex items-center gap-2">
-          <Terminal className="w-4 h-4 text-wave-accent" />
-          <span className="text-sm font-medium">Output</span>
-          {isLoading && (
-            <span className="text-xs text-blue-400 animate-pulse">● Loading...</span>
-          )}
-          {!isLoading && logs.length > 0 && (
-            <span className="text-xs text-gray-500">({logs.length} messages)</span>
-          )}
-        </div>
-        <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1">
+        <ExpandPaneButton id="output" label="output" />
+        {logs.length > 0 && (
           <button
             onClick={(e) => { e.stopPropagation(); onClear(); }}
             className="p-1 hover:bg-gray-700 rounded"
@@ -110,19 +96,36 @@ export function LogPanel({ logs, onClear, isLoading }: LogPanelProps) {
           >
             <Trash2 className="w-3.5 h-3.5 text-gray-500 hover:text-gray-300" />
           </button>
-          {isExpanded ? (
-            <ChevronDown className="w-4 h-4 text-gray-500" />
-          ) : (
-            <ChevronUp className="w-4 h-4 text-gray-500" />
-          )}
-        </div>
+        )}
+        {isExpanded ? (
+          <ChevronDown className="w-4 h-4 text-gray-500" />
+        ) : (
+          <ChevronUp className="w-4 h-4 text-gray-500" />
+        )}
       </div>
+    </div>
+  );
 
-      {/* Log content */}
-      {isExpanded && (
-        <div 
+  const showBody = full || (isExpanded && (logs.length > 0 || isLoading));
+
+  return (
+    <div className={full ? 'fixed inset-0 z-40 flex flex-col bg-gray-900' : 'border-t border-wave-border bg-wave-panel flex flex-col'}>
+      {showBody && !full && (
+        <ResizeHandle
+          axis="y"
+          label="Resize output"
+          size={height}
+          min={72}
+          getMax={() => Math.max(120, window.innerHeight - 200)}
+          sign={-1}
+          onSize={setHeight}
+        />
+      )}
+      {header}
+      {showBody && (
+        <div
           className="overflow-auto font-mono text-xs bg-gray-900"
-          style={{ height: `${height}px` }}
+          style={full ? { flex: 1 } : { height: `${height}px` }}
         >
           <div className="p-2 space-y-0.5">
             {logs.map((log) => (

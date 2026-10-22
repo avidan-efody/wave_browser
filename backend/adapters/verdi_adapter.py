@@ -16,6 +16,7 @@ from .base import (
     BaseAdapter, DatabaseInfo, ScopeInfo, SignalInfo, 
     WaveformData, ValueChange, SignalDirection, ScopeType
 )
+from .scope_kind import package_type_values, refine_scope_type
 
 # Configure logging for NPI operations
 logger = logging.getLogger("wave_browser.npi")
@@ -30,8 +31,19 @@ except ImportError as e:
     logger.warning(f"pynpi not available: {e}. Set VERDI_HOME and PYTHONPATH correctly.")
 
 
-def _map_scope_type(npi_type: int) -> ScopeType:
+def _map_scope_type(npi_type) -> ScopeType:
     """Map NPI scope type to our generic ScopeType enum."""
+    if isinstance(npi_type, str):
+        lowered = npi_type.lower()
+        if "package" in lowered:
+            return ScopeType.PACKAGE
+        if "interface" in lowered:
+            return ScopeType.INTERFACE
+        return ScopeType.UNKNOWN
+    try:
+        npi_type = int(npi_type)
+    except (TypeError, ValueError):
+        return ScopeType.UNKNOWN
     scope_map = {
         wave.ScopeSvModule: ScopeType.MODULE,
         wave.ScopeSvTask: ScopeType.TASK,
@@ -45,9 +57,8 @@ def _map_scope_type(npi_type: int) -> ScopeType:
         wave.ScopeVhBlock: ScopeType.BLOCK,
         wave.ScopeScModule: ScopeType.MODULE,
     }
-    # Present on Verdi builds that expose SV packages as their own scope type.
-    package_type = getattr(wave, "ScopeSvPackage", None)
-    if package_type is not None:
+    # Verdi builds name the package scope constant differently.
+    for package_type in package_type_values(wave):
         scope_map[package_type] = ScopeType.PACKAGE
     return scope_map.get(npi_type, ScopeType.UNKNOWN)
 
@@ -376,7 +387,7 @@ class VerdiAdapter(BaseAdapter):
         return ScopeInfo(
             path=full_name,
             name=name,
-            scope_type=_map_scope_type(scope_type_val),
+            scope_type=refine_scope_type(_map_scope_type(scope_type_val), name, def_name),
             def_name=def_name,
             has_children=has_children,
             has_signals=has_signals
@@ -399,7 +410,7 @@ class VerdiAdapter(BaseAdapter):
         return ScopeInfo(
             path=full_name,
             name=name,
-            scope_type=ScopeType.MODULE,
+            scope_type=refine_scope_type(ScopeType.MODULE, name, def_name),
             def_name=def_name,
             has_children=len(real_children) > 0,
             has_signals=len(nets) > 0

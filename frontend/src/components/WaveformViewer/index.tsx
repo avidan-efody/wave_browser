@@ -4,7 +4,8 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { X, ZoomIn, ZoomOut, Maximize2, ChevronLeft, ChevronRight, Bookmark, Search, Save, Minus, FolderPlus, Download, MessageSquare } from 'lucide-react';
+import { X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, Bookmark, Search, Save, Minus, FolderPlus, Download, MessageSquare } from 'lucide-react';
+import { ExpandPaneButton, FitAllIcon, ResizeHandle, usePaneLayout } from '../layout/Panes';
 import { WaveformCanvas } from './WaveformCanvas';
 import { StoryPanel } from './StoryPanel';
 import { LogsPanel } from './LogsPanel';
@@ -31,8 +32,12 @@ export function WaveformViewer() {
   const [showSaveMenu, setShowSaveMenu] = useState(false);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; target: WaveMenuTarget } | null>(null);
   const [logsWidth, setLogsWidth] = useState<number | null>(null);
-  const logsDrag = useRef<{ startX: number; startWidth: number; parent: number } | null>(null);
+  const [bandHeight, setBandHeight] = useState(288);
   const bandRef = useRef<HTMLDivElement>(null);
+  const { maximized } = usePaneLayout();
+  const waveFull = maximized === 'wave';
+  const storyFull = maximized === 'story';
+  const logsFull = maximized === 'logs';
   
   const {
     currentSession,
@@ -50,7 +55,6 @@ export function WaveformViewer() {
     addMarker,
     notes,
     logTraces,
-    logsExpanded,
     addNote,
     removeNote,
     removeMarker,
@@ -68,21 +72,20 @@ export function WaveformViewer() {
     return layoutHeight(buildLayout(waveRows, displayedSignals));
   }, [displayedSignals, waveRows]);
 
-  // Update dimensions on resize
   useEffect(() => {
+    const node = containerRef.current;
+    if (!node) return;
     const updateDimensions = () => {
-      if (containerRef.current) {
-        setDimensions({
-          width: containerRef.current.clientWidth,
-          height: calculateCanvasHeight(),
-        });
-      }
+      setDimensions({
+        width: node.clientWidth,
+        height: calculateCanvasHeight(),
+      });
     };
-
     updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
-  }, [displayedSignals.length, waveRows, calculateCanvasHeight]);
+    const observer = new ResizeObserver(updateDimensions);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [displayedSignals.length, waveRows, calculateCanvasHeight, waveFull]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -318,9 +321,13 @@ export function WaveformViewer() {
   }
 
   return (
-    <div ref={containerRef} data-capture="wave-display" className="h-full flex flex-col bg-wave-bg">
+    <div data-capture="wave-display" className="h-full min-h-0 flex flex-col bg-wave-bg">
+      <div
+        ref={containerRef}
+        className={waveFull ? 'fixed inset-0 z-40 flex flex-col bg-wave-bg' : 'flex-1 min-h-0 flex flex-col'}
+      >
       {/* Toolbar */}
-      {!logsExpanded && <div className="flex items-center gap-2 px-4 py-2 border-b border-wave-border bg-wave-panel">
+      <div className="flex items-center gap-2 px-4 py-2 border-b border-wave-border bg-wave-panel">
         {/* Zoom controls */}
         <button
           onClick={handleZoomIn}
@@ -339,9 +346,10 @@ export function WaveformViewer() {
         <button
           onClick={handleFitAll}
           className="p-1.5 hover:bg-wave-border rounded"
-          title="Fit All"
+          title="Fit all"
+          aria-label="Fit all"
         >
-          <Maximize2 className="w-4 h-4" />
+          <FitAllIcon />
         </button>
 
         <div className="w-px h-5 bg-wave-border mx-1" />
@@ -583,6 +591,8 @@ export function WaveformViewer() {
         )}
         
         <div className="flex-1" />
+
+        <ExpandPaneButton id="wave" label="wave" />
         
         <div className="text-xs text-wave-text/70">
           Time: {viewStart} - {viewEnd} {currentSession.time_unit}
@@ -593,10 +603,10 @@ export function WaveformViewer() {
             Cursor: {cursorTime} {currentSession.time_unit}
           </div>
         )}
-      </div>}
+      </div>
 
       {/* Waveform display */}
-      {!logsExpanded && <div className="flex-1 overflow-auto">
+      <div className="flex-1 min-h-0 overflow-auto">
         {displayedSignals.length === 0 && waveRows.length === 0 ? (
           <div className="h-full flex items-center justify-center text-wave-text/50">
             Add signals from the hierarchy panel
@@ -610,73 +620,9 @@ export function WaveformViewer() {
             onContextMenuTarget={(x, y, target) => setContextMenu({ x, y, target })}
           />
         )}
-      </div>}
-
-      <div
-        ref={bandRef}
-        className={logsExpanded ? 'flex-1 min-h-0 flex flex-col' : 'h-72 shrink-0 border-t border-wave-border flex min-h-0'}
-      >
-        {!logsExpanded && (
-          <div className="flex-1 min-w-0 overflow-hidden">
-            <StoryPanel onContextMenu={(x, y, target) => setContextMenu({ x, y, target })} />
-          </div>
-        )}
-        {!logsExpanded && (
-          <button
-            type="button"
-            aria-orientation="vertical"
-            aria-label="Resize logs"
-            className="w-1.5 shrink-0 cursor-col-resize bg-wave-border hover:bg-wave-accent/80 p-0 border-0"
-            onPointerDown={(event) => {
-              event.preventDefault();
-              const logsPane = event.currentTarget.nextElementSibling as HTMLElement | null;
-              logsDrag.current = {
-                startX: event.clientX,
-                startWidth: logsWidth ?? logsPane?.clientWidth ?? 460,
-                parent: bandRef.current?.clientWidth ?? 900,
-              };
-              try {
-                event.currentTarget.setPointerCapture(event.pointerId);
-              } catch {
-                // Capture is unavailable for this pointer. Moves still update while the pointer stays on the bar.
-              }
-            }}
-            onPointerMove={(event) => {
-              const drag = logsDrag.current;
-              if (!drag) return;
-              const next = drag.startWidth - (event.clientX - drag.startX);
-              setLogsWidth(Math.min(Math.max(260, next), Math.max(260, drag.parent - 180)));
-            }}
-            onPointerUp={() => {
-              logsDrag.current = null;
-            }}
-          />
-        )}
-        <div
-          className={
-            logsExpanded
-              ? 'flex-1 min-h-0 overflow-hidden'
-              : logsWidth == null
-                ? 'flex-1 min-w-0 border-l border-wave-border overflow-hidden'
-                : 'shrink-0 border-l border-wave-border overflow-hidden'
-          }
-          style={logsExpanded || logsWidth == null ? undefined : { width: logsWidth }}
-        >
-          <LogsPanel />
-        </div>
       </div>
 
-      {contextMenu && (
-        <WaveContextMenu
-          x={contextMenu.x}
-          y={contextMenu.y}
-          target={contextMenu.target}
-          onClose={() => setContextMenu(null)}
-        />
-      )}
-
-      {/* Status bar - shows selected signal full path */}
-      {!logsExpanded && <div className="border-t border-wave-border bg-wave-panel px-4 py-1.5 flex items-center justify-between">
+      <div className="border-t border-wave-border bg-wave-panel px-4 py-1.5 flex items-center justify-between">
         <div className="text-xs text-wave-text/70">
           {selectedDivider ? (
             <span className="flex items-center gap-2">
@@ -725,7 +671,62 @@ export function WaveformViewer() {
             ))}
           </div>
         )}
-      </div>}
+      </div>
+      </div>
+
+      {!waveFull && (
+        <ResizeHandle
+          axis="y"
+          label="Resize story and logs"
+          size={bandHeight}
+          min={120}
+          getMax={() => Math.max(160, window.innerHeight - 220)}
+          sign={-1}
+          onSize={setBandHeight}
+        />
+      )}
+
+      <div
+        ref={bandRef}
+        className="shrink-0 border-t border-wave-border flex min-h-0"
+        style={{ height: bandHeight }}
+      >
+        <div className={storyFull ? 'fixed inset-0 z-40 flex flex-col bg-wave-bg' : 'flex-1 min-w-0 overflow-hidden'}>
+          <StoryPanel onContextMenu={(x, y, target) => setContextMenu({ x, y, target })} />
+        </div>
+        {!storyFull && !logsFull && (
+          <ResizeHandle
+            axis="x"
+            label="Resize logs"
+            size={logsWidth ?? 460}
+            min={260}
+            getMax={() => Math.max(280, (bandRef.current?.clientWidth ?? 900) - 180)}
+            sign={-1}
+            onSize={setLogsWidth}
+          />
+        )}
+        <div
+          className={
+            logsFull
+              ? 'fixed inset-0 z-40 flex flex-col bg-wave-bg'
+              : logsWidth == null
+                ? 'flex-1 min-w-0 border-l border-wave-border overflow-hidden'
+                : 'shrink-0 border-l border-wave-border overflow-hidden'
+          }
+          style={logsFull || logsWidth == null ? undefined : { width: logsWidth }}
+        >
+          <LogsPanel />
+        </div>
+      </div>
+
+      {contextMenu && (
+        <WaveContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          target={contextMenu.target}
+          onClose={() => setContextMenu(null)}
+        />
+      )}
     </div>
   );
 }

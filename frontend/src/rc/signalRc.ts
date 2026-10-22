@@ -9,6 +9,7 @@
 
 import type { SignalInfo } from '../api/types';
 import type { NamedMarker, WaveNote, WaveRow } from '../store/waveformStore';
+import { newId } from '../utils/id';
 
 /** A log file plus the regex that should become a wave of event arrows. */
 export interface LogCommand {
@@ -45,10 +46,6 @@ const FLAGS_WITH_VALUE = new Set([
   '-risingDelay',
   '-fallingDelay',
 ]);
-
-function newId(): string {
-  return crypto.randomUUID();
-}
 
 function tokenize(line: string): string[] {
   const tokens: string[] = [];
