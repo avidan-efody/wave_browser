@@ -1,3 +1,4 @@
+// Issues: #4 ids without crypto.randomUUID, #5 top-level package filter, #7 companion RC.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { newId } from '../src/utils/id.ts';
